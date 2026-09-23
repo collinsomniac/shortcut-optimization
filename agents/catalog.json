@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.1",
+  "updated": "2026-09-23",
+  "packages": [
+    {
+      "id": "so.echo",
+      "name": "SO Echo",
+      "version": null,
+      "lifecycle": "proposed",
+      "guide": "../shortcuts/README.md",
+      "install_url": null,
+      "artifact": null,
+      "input_type": "text",
+      "output_type": "text",
+      "device_tests": [],
+      "required_apps": [
+        "Shortcuts"
+      ],
+      "minimum_ios": null
+    }
+  ]
+}
