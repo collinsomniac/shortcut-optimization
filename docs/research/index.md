@@ -20,7 +20,7 @@ A useful north-star is not unrestricted UI control. It is a versioned capability
 | Extension providers | typed third-party actions, code runners, remote execution | Actions, Scriptable, a-Shell, Pyto, Toolbox Pro, Pushcut | provider-documented; project recipes not reproduced |
 | Web and shell extension | arbitrary-but-bounded programmable work | Run JavaScript on Webpage, a-Shell commands/WASM/files | documented; project recipes not reproduced |
 | Persistent state | context across invocations | Shortcuts Storage/global values, files, Data Jar candidates | documented/reported depending on backend |
-| Fast learned decisions | bounded classification and scoring | Laya and task-specific checkpoints | model-documented; no phone result |
+| Fast learned decisions | bounded classification, scoring, zero-shot labels and calibration | Jev, Laya, GLiClass, SetFit-style specialists | model/provider-documented; no project phone result |
 | Generative inference | interpretation, synthesis, planning | Use Model, Gemma, wllama, remote providers | documented/model-documented; no project benchmark |
 | Native AI integration | bring custom/local/remote models into Apple model sessions | Foundation Models LanguageModel/Executor, Dynamic Profiles, Core AI | documented for app developers; no project app |
 | External control plane | durable coordination, builds, training, optional inference | GitHub, Supabase, Colab, OpenRouter | plan-documented; account/device measurements separate |
@@ -30,7 +30,7 @@ Primary platform references include Apple's [Shortcuts User Guide](https://suppo
 ## Current architectural hypotheses
 
 1. **Use the smallest adequate primitive.** A deterministic Shortcuts action should beat an LLM for known arithmetic, date logic, filtering, fixed transformations and direct app actions. A specialized decision model is interesting when the output is bounded but semantics are fuzzy. A generative model earns its cost only when the output space or reasoning really requires generation.
-2. **Treat model routing as part of the program.** Rules, Laya, Apple on-device models, local generative models and cloud models can be interchangeable implementations behind typed contracts rather than independent demos. See [Model routing](model-routing.md).
+2. **Treat model routing as part of the program.** Rules, typed decision models, zero-shot classifiers, Apple on-device models, local generative models and cloud models can be interchangeable implementations behind typed contracts rather than independent demos. See [System-One decision models](system-one-decision-models.md) and [Model routing](model-routing.md).
 3. **Treat a Shortcut as a program, not a screenshot.** A useful optimizer eventually needs a graph/IR view of actions, typed edges, side effects, permissions and costs. See [Shortcut as program](shortcut-as-program.md).
 4. **Separate planner, decision, executor and transport.** A conversation agent can plan without pretending it directly controls iOS; Shortcuts/App Intents remain execution authorities, while explicit receipts close the loop.
 5. **Compose capabilities into skills.** The most valuable workflows are likely to combine context collection, state, bounded decisions, app/API actions, verification and recovery rather than expose hundreds of raw actions directly to a model. See [Use-case atlas](use-cases.md) and [Extension ecosystem](extension-ecosystem.md).
@@ -47,7 +47,8 @@ During the current research phase, optimize for breadth plus traceability: disco
 
 - Which Shortcuts action types and App Intent entity types form the most useful stable semantic vocabulary for an agent?
 - How much of shortcut creation, refinement, organization and export can be composed from Shortcuts itself on released iOS 27, versus hidden/prototype actions or macOS-only tooling?
-- Can Laya-like typed decision models become reusable learned branch nodes, and what specialization/data strategy would make them reliable enough?
+- Can Jev/Laya-style typed decision models become reusable learned branch nodes, and when should GLiClass/SetFit-style zero-shot or distilled classifiers be preferred?
+- Can a frontier model act mainly as schema teacher, choice-elevation engine and active-learning labeler while a small classifier handles the hot loop?
 - Which local model runtime boundary is best for each workload: browser ONNX/WebGPU, wllama, a native Core AI model, or a remote provider?
 - Which workflows become substantially more capable when persistent Storage, notification/screenshot triggers, onscreen input and model sessions are combined?
 - What representation would let an optimizer reason about latency, energy, quota, privacy, determinism, permissions and expected error without knowing every app implementation?
