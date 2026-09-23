@@ -1,5 +1,7 @@
 # Import, export, and versioned packages
 
+For the exact transport/audience distinction in the sharing sheet, see [sharing modes](sharing-modes.md). For existing updater and authoring approaches, see [ecosystem](ecosystem.md).
+
 Apple documents iCloud sharing links and exported files on iPhone, plus import questions for recipient configuration [S7]. Users can therefore install a real workflow without reconstructing it from a prompt.
 
 ## Release procedure

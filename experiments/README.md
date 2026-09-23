@@ -1,6 +1,6 @@
 # Device experiments
 
-All experiments are currently **not run**.
+The device experiments below are currently **not run**. A separate [supplied-artifact inspection](restaurant-assistant-inspection.md) has been completed; it is not a device execution test.
 
 | ID | Test | Success evidence |
 |---|---|---|

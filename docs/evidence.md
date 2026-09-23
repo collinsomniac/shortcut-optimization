@@ -5,6 +5,7 @@ Each substantive capability claim needs a scope, evidence level, and source or r
 | Label | Meaning |
 |---|---|
 | documented | A primary source explicitly describes the behavior |
+| artifact-inspected | Directly observed in serialized action data; does not establish runtime behavior |
 | reproduced | A saved test records the behavior on a named device/build |
 | reported | A user or community participant describes it; not independently tested here |
 | hypothesis | A proposed explanation or design to investigate |
@@ -16,4 +17,4 @@ Record date, hardware, exact iOS build, app versions, language/region, AI availa
 
 Capture generation success, successful import, successful execution, and correct output separately. Preserve negative results and exact error text. If sources disagree, retain both and name the unresolved difference.
 
-This initial collection contains documentation and reported observations, not device reproduction. Sources were reviewed 2026-09-23; release-specific features need build verification.
+This collection contains documentation, reported observations, and a supplied artifact inspection, not device reproduction. Sources were reviewed 2026-09-23; release-specific features need build verification.

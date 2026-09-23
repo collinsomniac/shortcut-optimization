@@ -1,5 +1,7 @@
 # Roadmap and acceptance gates
 
+The [ecosystem comparison](ecosystem.md) favors reusing authoring/validation tooling. The [next experiments](next-experiments.md) prioritize preservation and install receipts, using synthetic specimens rather than a personal collection.
+
 ## 1. Establish the real handoff
 
 Release SO Echo from an Apple-device export. Verify installation, text fidelity, ChatGPT/Safari launch, user cancellation, and explicit return to chat. Pass ASCII, emoji, multiline text, ampersands, literal percent signs, and JSON. Record failures by client/build.

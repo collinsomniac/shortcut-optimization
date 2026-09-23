@@ -14,6 +14,10 @@ Do not transfer an integration guarantee from runtime Use Model to the shortcut 
 
 **Hypotheses to separate:** the builder edits only native nodes; it preserves third-party nodes opaquely; it can use some exposed metadata; support differs by app/action; apparent success changes the graph incorrectly.
 
+**Additional first-person reports:** Federico Viticci's [iOS 27 review](https://www.macstories.net/stories/ios-and-ipados-27-review/13/) describes testing the builder and finding third-party creation unsupported. Matthew Cassinelli's [July 2026 account](https://matthewcassinelli.com/ios-27-open-shortcuts-to-editor-instead-of-describe-a-shortcut/) also describes third-party friction. These strengthen the reported creation limitation, but do not resolve edits around existing third-party actions. Treat them as scoped observations rather than an Apple compatibility guarantee.
+
+Claims based on a model printing its supposed system prompt would not by themselves prove the builder's architecture. Require independent corroboration before documenting internal implementation details.
+
 ## Architecture: what is actually known
 
 Apple attributes description-based creation to Apple Intelligence [S4]. The reviewed source does not specify the builder's model identifier, parameter count, context limit, action schema, training data, validation/repair loop, or per-request routing. Do not infer those from general Apple Intelligence architecture.

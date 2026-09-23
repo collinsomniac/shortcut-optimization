@@ -11,6 +11,9 @@ Phone-first research and reusable building blocks for AI, Apple Shortcuts, and l
 | Trigger a shortcut from chat or the browser | [Links and handoffs](docs/links-and-handoffs.md) |
 | Build with AI, then replace pieces with app actions | [Builder and third-party actions](docs/ai-builder.md) |
 | Install, share, or modify a shortcut | [Distribution](docs/distribution.md) |
+| Understand File / iCloud / audience options | [Sharing modes](docs/sharing-modes.md) |
+| Compare existing compilers, collections, and agents | [Ecosystem](docs/ecosystem.md) |
+| Inspect a supplied workflow without rebuilding it | [Intake design](docs/intake-and-roundtrip.md) |
 | Keep reusable state on my phone | [Local storage](docs/local-storage.md) |
 | Connect an agent to this collection | [Agent entry point](agents/README.md) |
 | Contribute a finding | [Evidence rules](docs/evidence.md) and [test plan](experiments/README.md) |
@@ -30,12 +33,14 @@ A proposed path is **agent selects capability → user opens a link → installe
 - `tooling/`: dependency-free URL builder.
 - `experiments/`: reproducible tests, including negative results.
 
-Evidence labels: **documented**, **reproduced**, **reported**, **hypothesis**, **unknown**. “Documented” is not “tested on this phone.” See [evidence rules](docs/evidence.md).
+Evidence labels: **documented**, **artifact-inspected**, **reproduced**, **reported**, **hypothesis**, **unknown**. “Documented” is not “tested on this phone.” See [evidence rules](docs/evidence.md).
 
 ## First milestone
 
 Ship one genuinely reusable diagnostic shortcut: **SO Echo**, which accepts text and returns it unchanged. Use it to measure import, launch, encoding, cancellation, and return behavior before building local memory or multi-step agents. [Roadmap](docs/roadmap.md)
 
 Core scope: iPhone, Shortcuts, browser, and ChatGPT handoffs. Remote workers and hosted databases are outside the initial roadmap. Local execution, offline operation, and absence of cloud sync are separate properties.
+
+Research now includes a [static inspection of a supplied example](experiments/restaurant-assistant-inspection.md) and [prioritized follow-up experiments](docs/next-experiments.md). The example is a research specimen, not an installable project release. Personal shortcut collections are outside this intake.
 
 [Research sources](docs/sources.md) · [Community questions](docs/community.md) · [Contributing](CONTRIBUTING.md) · [MIT license](LICENSE)
