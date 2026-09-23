@@ -286,16 +286,22 @@ The frontier model should be a **teacher/compiler/escalation engine**, not autom
 6. **Distillation.** Train the fast model against teacher probabilities plus gold/human outcomes.
 7. **Calibration set creation.** Reserve independently generated or real cases for temperature/threshold fitting; do not calibrate on training examples.
 
-### Online roles
+### Online roles: optional learned escalation
+
+The frontier model should **not** sit permanently in the inference chain. Treat escalation as one candidate control decision:
 
 1. Fast classifier evaluates the routine state.
-2. Deterministic policy acts only above calibrated thresholds.
-3. Low confidence, high entropy, OOD signals, repeated failure, or `unknown` trigger **choice elevation**.
-4. Frontier model may propose up to N candidate subchoices, rewrite criteria, request missing fields, or generate a structured artifact.
-5. The classifier re-scores the bounded candidates when possible.
-6. Executor performs only an allowed capability.
-7. A post-action classifier verifies completion/recovery state.
-8. Interesting failures are logged for the next training round.
+2. It emits task decisions plus a control outcome such as `act`, `local_replan`, `frontier_assist`, or `halt`.
+3. Deterministic policy executes locally when `act` is selected and authority permits it.
+4. `frontier_assist` is allowed only when both the learned policy selects it and the external latency/cost budget permits it.
+5. The frontier model may then propose finer choices, missing context, or a generated artifact.
+6. The fast classifier re-scores bounded choices when possible.
+7. Executor performs only an allowed capability.
+8. Outcomes and receipts become new training/evaluation examples.
+
+Confidence, entropy, OOD distance and repeated failure are useful **features or safeguards**, but they should not force a frontier call after every low-confidence output. The interesting research problem is learning when assistance has positive expected value.
+
+See [CourierGrid game-policy benchmark](game-policy-benchmark.md) for a counterfactual training target and [Learning to Defer](https://papers.neurips.cc/paper_files/paper/2018/hash/09d37c08f7b129e96277388757530c72-Abstract.html) / [FrugalGPT](https://arxiv.org/abs/2305.05176) for related selective-decision and cascade literature.
 
 ### Choice elevation versus choice mutation
 
@@ -328,6 +334,14 @@ priority =
 ```
 
 Those are exactly the expensive examples worth sending to a frontier teacher or human instead of labeling random traffic.
+
+## 8. Direct Shortcuts inference boundary
+
+For a generic Shortcut, the preferred long-term path is a **background App Intent backed by a native local model runtime**, not repeated app/browser handoffs. Apple's current `supportedModes` API explicitly allows an App Intent to run entirely in the background. A Shortcut can therefore invoke a semantic action such as `EvaluateDecisionSchema` and receive typed output while the helper app owns model weights and preprocessing.
+
+A Safari-specific prototype is also unusually direct: Apple's Run JavaScript on Webpage action accepts an active Safari webpage, supports asynchronous JavaScript, and returns JSON-compatible values through `completion(result)`. With a warm page-local ONNX/WebGPU classifier, this can test one-step end-to-end decision transport. It is not a generic background JavaScript action, and repeatedly crossing Safari → Shortcuts is the wrong architecture for a high-frequency game loop.
+
+See [Sub-second decision inference from Shortcuts](shortcuts-fast-inference.md).
 
 ## 8. iOS execution surfaces
 
