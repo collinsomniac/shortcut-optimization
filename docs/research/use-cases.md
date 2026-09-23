@@ -19,12 +19,15 @@ Purpose: widen the design space without confusing an idea with a supported produ
 | Error recovery router | action/API error → normalized error state → bounded retry/alternate/escalate decision | Makes failure behavior a first-class skill rather than prompt improvisation |
 | Local knowledge lookup | app/native search or future Spotlight search tool → structured evidence → model summary/action | Potential native RAG path in a later app/provider bridge |
 | Workflow generator-of-generators | capability catalog + constraints → produce native-first skeleton → preserve adapters → inspect/share | Could turn the repo's knowledge base into authoring guidance for future agents |
+| Capability broker | semantic request → retrieve native/Actions/Scriptable/a-Shell/etc. candidates → filter by installed dependencies/evidence → invoke chosen adapter | Separates what the agent wants from which provider currently implements it |
 
 ## Platform anchors
 
 Apple's [WWDC26 Shortcuts session](https://developer.apple.com/videos/play/wwdc2026/310/) documents notification/screenshot-style automation additions, persistent/global Storage, richer Use Model behavior and transcript inspection. [Receive What's On Screen](https://support.apple.com/guide/shortcuts/receive-whats-onscreen-apd350ce757a/ios), [Run JavaScript on a webpage](https://support.apple.com/guide/shortcuts/run-javascript-on-a-webpage-apdb71a01d93/ios), and [Get Contents of URL](https://support.apple.com/guide/shortcuts/request-your-first-api-apd58d46713f/ios) provide three distinct context/transport routes.
 
 Apple's Foundation Models work adds a second, app-development-oriented research axis. [What's new in Foundation Models](https://developer.apple.com/videos/play/wwdc2026/241/) describes built-in tools including OCR/barcode capabilities and Spotlight search, while [agentic app experiences](https://developer.apple.com/videos/play/wwdc2026/242/) presents Dynamic Profiles and orchestration patterns. These should inspire later native bridges without being mislabeled as stock Shortcuts actions.
+
+Third-party action providers widen the implementation space without changing the semantic goal. [Extension ecosystem](extension-ecosystem.md) compares Actions, Data Jar, Scriptable, a-Shell, Pyto, Toolbox Pro, Pushcut and AI Actions; Actions is especially interesting because its maintainer publishes typed action descriptions/parameters/returns as AI-readable source data.
 
 Community examples are useful for discovering demand, not proving compatibility. The project's [research landscape](../research-landscape.md) already tracks multi-shortcut agents, notification-driven automations, generated Shortcut builders and everyday contextual workflows.
 
