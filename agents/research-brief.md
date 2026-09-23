@@ -27,6 +27,8 @@ Keep planner, decision, executor, transport/state and verification separable. Tr
 - Foundation Models/Core AI: `LanguageModel`/`LanguageModelExecutor`, Dynamic Profiles and native model deployment create a later custom-provider bridge.
 - Jev/Laya-style decision models: typed probabilistic choices/scores/booleans remove ordinary prose decoding from bounded decisions. Laya is open and its own benchmark strongly favors task fine-tuning/calibration over base zero-shot use; Jev is a closed API reference point. See [System-One decision models](../docs/research/system-one-decision-models.md).
 - GLiClass/SetFit: useful alternate routes for dynamic zero-shot labels and cheap teacher-distilled specialists.
+- Learned deferral: treat frontier escalation as a cost-sensitive policy action, informed by selective-classification / learning-to-defer research rather than requiring a frontier check every inference.
+- CourierGrid: MiniGrid-inspired browser environment for comparing Laya/GLiClass/SetFit policies, optional frontier assistance and end-to-end Shortcut/browser integration. See [game benchmark](../docs/research/game-policy-benchmark.md).
 - Independent Laya ONNX ports plus Safari 26 WebGPU/ONNX Runtime support: plausible browser classifier path; extension/PWA lifecycle and iPhone latency remain unverified.
 - wllama: browser llama.cpp/WebGPU/WASM path for GGUF generative models; mobile memory and lifetime are unresolved.
 - Third-party capability providers: Actions publishes 180+ actions plus AI-readable parameter/return metadata; Scriptable, a-Shell, Pyto, Toolbox Pro and Pushcut cover JS/shell/Python/action-library/remote-execution niches. See [extension ecosystem](../docs/research/extension-ecosystem.md).
@@ -54,6 +56,6 @@ Do not claim silent Shortcut installation, unrestricted phone control, stable ac
 
 Two questions organize the eventual engineering work: (1) can an optimizer reduce model/network/interaction cost in agent-generated Shortcuts without changing intended behavior, and (2) can specialized non-generative decision models replace a useful fraction of generative inference calls while preserving decision quality?
 
-The first concrete architecture specimen is [Adaptive Capture Router](../examples/adaptive-capture-router/): a batched decision schema, confidence/risk gates, frontier choice elevation, bounded executor and verification loop.
+Concrete architecture specimens now include [Adaptive Capture Router](../examples/adaptive-capture-router/) for workflow autonomy and [CourierGrid](../examples/courier-grid/) for repeated sequential decisions and learned optional frontier assistance. For iOS deployment boundaries, see [Sub-second decision inference from Shortcuts](../docs/research/shortcuts-fast-inference.md).
 
 Until the project enters the experiment phase, the job is to make those questions—and alternative architectures that might beat them—better informed.
