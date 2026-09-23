@@ -17,6 +17,8 @@ Reviewed 2026-09-22/23. This ledger complements the smaller [core source list](.
 | [Share shortcuts](https://support.apple.com/guide/shortcuts/share-shortcuts-apdf01f8c054/ios) | primary | iCloud/file export, audience modes, import questions |
 | [App Intents](https://developer.apple.com/documentation/AppIntents) | primary | Semantic actions/entities apps expose to system experiences |
 | [App Intents Testing](https://developer.apple.com/documentation/AppIntentsTesting) | primary | Out-of-process intent/entity/query testing surface |
+| [AppIntent supportedModes](https://developer.apple.com/documentation/appintents/appintent/supportedmodes) | primary | explicit background/immediate/dynamic/deferred execution modes for App Intents |
+| [Run JavaScript on Webpage](https://support.apple.com/guide/shortcuts/intro-to-the-run-javascript-on-webpage-action-apd218e2187d/ios) | primary | active-Safari requirement, async completion, JSON return types and time-limit boundary |
 | [Shortcuts command-line tool](https://support.apple.com/guide/shortcuts-mac/run-shortcuts-from-the-command-line-apd455c82f02/mac) | primary | macOS list/view/run/sign artifact backend |
 | [Safari 26 WebGPU](https://webkit.org/blog/17333/webkit-features-in-safari-26-0/) | primary/WebKit | WebGPU on iOS Safari; explicitly names ONNX Runtime and Transformers.js support |
 | [Safari Web Extensions](https://developer.apple.com/documentation/safariservices/safari-web-extensions) | primary | iOS Safari extension packaging, page integration and browser-extension surface |
@@ -45,6 +47,9 @@ Reviewed 2026-09-22/23. This ledger complements the smaller [core source list](.
 | [GLiClass](https://github.com/Knowledgator/GLiClass) | upstream/model | dynamic zero-shot labels, hierarchical labels and single-pass classifier alternative |
 | [SetFit zero-shot](https://huggingface.co/docs/setfit/how_to/zero_shot) | upstream/framework | synthetic class-name training and published fast classifier comparison |
 | [SetFit distillation](https://huggingface.co/docs/setfit/how_to/knowledge_distillation) | upstream/framework | larger-teacher to small-student distillation pattern |
+| [Learning to Defer](https://papers.neurips.cc/paper_files/paper/2018/hash/09d37c08f7b129e96277388757530c72-Abstract.html) | research | learned PASS/defer action to an external decision-maker; conceptual basis for optional frontier assistance |
+| [FrugalGPT](https://arxiv.org/abs/2305.05176) | research | learned model cascades under cost/quality constraints |
+| [Adaptive inference / early exits](https://arxiv.org/abs/2106.05022) | research survey | broader adaptive-compute context for input-dependent inference cost |
 | [Laya model card](https://huggingface.co/convaiinnovations/laya) | upstream/model | architecture, typed decisions, latency and benchmark caveats |
 | [Laya typed-decisions checkpoint](https://huggingface.co/convaiinnovations/laya-typed-decisions) | upstream/model | fine-tuned benchmark and calibration data |
 | [Laya training README](https://github.com/NandhaKishorM/laya/blob/main/README.md) | project/community | training recipe and specialization guidance |
@@ -59,6 +64,16 @@ Reviewed 2026-09-22/23. This ledger complements the smaller [core source list](.
 | [Llamas on the Web](https://reeselevine.github.io/llamas-on-the-web/) | research/independent | browser GPU implementation and mobile-memory warnings |
 | [iPhone local LLM runtime comparison](https://rockyshikoku.medium.com/local-llm-on-iphone-which-runtime-is-actually-fastest-58096685481e) | first-person benchmark | runtime-dependent E2B speed/memory lead; not E4B/browser proof |
 | [WebKit RAM internals](https://www.catchmetrics.io/blog/deep-dive-ram-internals-webkit) | independent analysis | directional browser memory/process-pressure research |
+
+
+## Sequential-control and game benchmarks
+
+| Source | Type | Why it matters |
+|---|---|---|
+| [MiniGrid](https://minigrid.farama.org/) | benchmark/framework | lightweight configurable discrete grid worlds with language missions and partial observations |
+| [MiniGrid GoToObject](https://minigrid.farama.org/environments/minigrid/GoToObjectEnv/) | benchmark docs | representative 7-action, local-view + mission task structure |
+| [LunarLander](https://gymnasium.farama.org/environments/box2d/lunar_lander/) | benchmark docs | established 4-action / 8-state-vector real-time control comparison |
+| [BrowserGym](https://github.com/ServiceNow/BrowserGym) | research framework | later bridge from toy browser game to realistic web-agent tasks |
 
 ## Extension and artifact tooling
 
