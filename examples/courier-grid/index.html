@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CourierGrid</title>
+<style>
+:root{font-family:system-ui,-apple-system,sans-serif;color-scheme:light dark}
+body{margin:0;padding:20px;display:grid;gap:16px;justify-items:center;background:Canvas;color:CanvasText}
+header{max-width:720px;width:100%} h1{margin:.2rem 0}.sub{opacity:.72}
+#grid{display:grid;grid-template-columns:repeat(9,min(9vw,52px));gap:2px;touch-action:none}
+.cell{aspect-ratio:1;display:grid;place-items:center;border:1px solid color-mix(in srgb,CanvasText 18%,transparent);border-radius:5px;font-size:min(5vw,28px);background:color-mix(in srgb,Canvas 92%,CanvasText 8%)}
+.wall{background:color-mix(in srgb,CanvasText 70%,Canvas)} .dock{background:color-mix(in srgb,#35c46a 35%,Canvas)}
+.gate{background:color-mix(in srgb,#b7791f 45%,Canvas)} .gate.open{opacity:.35}.agent{outline:3px solid #5a8dee}
+.controls{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:720px}
+button{font:inherit;padding:10px 13px;border-radius:10px;border:1px solid color-mix(in srgb,CanvasText 24%,transparent);background:ButtonFace;color:ButtonText}
+pre{width:min(720px,94vw);max-height:300px;overflow:auto;padding:12px;border-radius:10px;background:color-mix(in srgb,CanvasText 7%,Canvas);box-sizing:border-box}
+.status{width:min(720px,94vw);display:flex;gap:14px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<header><h1>CourierGrid</h1><div class="sub">Collect 🔑, open 🚪, collect 📦, deliver to 🟩.</div></header>
+<div id="grid"></div>
+<div class="controls" id="controls"></div>
+<div class="status" id="status"></div>
+<pre id="observation"></pre>
+<script src="./game.js"></script>
+</body>
+</html>
