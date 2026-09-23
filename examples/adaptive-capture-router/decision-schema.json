@@ -1,0 +1,78 @@
+{
+  "schema_version": "0.1",
+  "observe": {
+    "primary_intent": {
+      "type": "choice",
+      "instructions": "Which stable capability family best matches the user's likely desired outcome from this captured item?",
+      "criteria": {
+        "capture": "save, bookmark, archive, or organize information for later",
+        "task": "create or update something the user needs to do",
+        "reminder": "remember something at a time, place, or condition",
+        "research": "investigate, compare, verify, or gather more information",
+        "communicate": "draft, send, reply, or otherwise communicate with someone",
+        "transform": "extract, summarize, convert, rename, clean, or restructure content",
+        "navigate": "open or move to an app, page, location, or known resource",
+        "ignore": "no useful follow-up action is warranted",
+        "unknown": "the desired outcome is not represented or cannot be inferred"
+      }
+    },
+    "urgency": {
+      "type": "score",
+      "instructions": "How time-sensitive is useful follow-up?",
+      "criteria": [
+        "no meaningful time pressure",
+        "worth handling when convenient",
+        "should be handled soon",
+        "blocking, expiring, or deadline-critical"
+      ]
+    },
+    "schema_fit": {
+      "type": "score",
+      "instructions": "How well do the available primary_intent choices represent the user's likely desired outcome?",
+      "criteria": [
+        "poor fit; an important intent is missing",
+        "partial fit; closest label loses important meaning",
+        "good fit",
+        "very precise fit"
+      ]
+    },
+    "needs_more_context": {
+      "type": "noul",
+      "instructions": "Would an important decision be unreliable without asking for additional user or app context?"
+    },
+    "needs_generation": {
+      "type": "noul",
+      "instructions": "Does the next useful step require generating substantial new natural-language content rather than selecting, filtering, extracting, or routing?"
+    },
+    "sensitive_data": {
+      "type": "noul",
+      "instructions": "Does the captured state contain or strongly imply private, financial, authentication, health, or otherwise sensitive personal data?"
+    },
+    "external_or_irreversible": {
+      "type": "noul",
+      "instructions": "Would the likely next action communicate externally, spend money, delete data, commit a transaction, or cause another hard-to-reverse side effect?"
+    }
+  },
+  "verify": {
+    "complete": {
+      "type": "noul",
+      "instructions": "Given the requested outcome and the action receipts, is the useful task now complete?"
+    },
+    "receipt_consistent": {
+      "type": "noul",
+      "instructions": "Do the latest action receipt and state appear internally consistent with what the executor claims happened?"
+    },
+    "recovery": {
+      "type": "choice",
+      "instructions": "What should the controller do next?",
+      "criteria": {
+        "stop": "the task is complete or no further action is useful",
+        "continue": "perform the next already-understood bounded step",
+        "retry": "repeat the prior capability because it plausibly failed transiently",
+        "elevate": "ask a frontier model to reason, generate, or propose a refined choice set",
+        "ask_user": "user input or approval is required",
+        "abort": "stop because the workflow is unsafe, contradictory, or outside its authority"
+      }
+    }
+  }
+}
