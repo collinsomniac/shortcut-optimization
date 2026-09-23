@@ -1,13 +1,19 @@
 # Shortcut Optimization
 
-Phone-first research and reusable building blocks for AI, Apple Shortcuts, and local iOS workflows.
+Phone-first research and reusable building blocks for AI, Apple Shortcuts, local iOS workflows, and a future capability-oriented agent harness.
 
-**Status:** research foundation. No installable shortcut releases or device-verified results yet. Documentation reviewed 2026-09-23.
+**Status:** active research foundation. The current phase prioritizes literature/ecosystem research, capability mapping, examples, architecture hypotheses, and durable documentation. Device benchmarking and installable releases come later. Documentation reviewed 2026-09-23.
 
 ## Start with a goal
 
 | I want to… | Start here |
 |---|---|
+| Understand the project and current research state | [Research home base](docs/research/index.md) |
+| Understand how the technologies could compose into a harness | [Capability stack](docs/research/capability-stack.md) |
+| Explore compound workflow/agent-skill ideas | [Use-case atlas](docs/research/use-cases.md) |
+| Understand workflow representation and optimization | [Shortcut as program](docs/research/shortcut-as-program.md) |
+| Compare rules, Laya, local LLMs and cloud models | [Model routing](docs/research/model-routing.md) and [inference routes](docs/inference-routes.md) |
+| Trace research claims back to sources | [Research source ledger](docs/research/source-ledger.md) |
 | Trigger a shortcut from chat or the browser | [Links and handoffs](docs/links-and-handoffs.md) |
 | Build with AI, then replace pieces with app actions | [Builder and third-party actions](docs/ai-builder.md) |
 | Install, share, or modify a shortcut | [Distribution](docs/distribution.md) |
@@ -15,36 +21,40 @@ Phone-first research and reusable building blocks for AI, Apple Shortcuts, and l
 | Compare existing compilers, collections, and agents | [Ecosystem](docs/ecosystem.md) |
 | Inspect a supplied workflow without rebuilding it | [Intake design](docs/intake-and-roundtrip.md) |
 | Keep reusable state on my phone | [Local storage](docs/local-storage.md) |
-| Compare local models, Laya, and browser inference | [Inference routes](docs/inference-routes.md) |
 | Use subscriptions and free tiers deliberately | [Compute inventory](docs/compute-inventory.md) |
 | Give an agent useful, bounded phone capabilities | [Agent harness](docs/agent-harness.md) |
-| Turn community ideas into testable packages | [Research landscape](docs/research-landscape.md) |
-| Connect an agent to this collection | [Agent entry point](agents/README.md) |
-| Contribute a finding | [Evidence rules](docs/evidence.md) and [test plan](experiments/README.md) |
+| Turn community ideas into research leads | [Research landscape](docs/research-landscape.md) |
+| Connect a future agent to this collection | [Agent research brief](agents/research-brief.md) and [agent entry point](agents/README.md) |
+| Contribute a finding | [Evidence rules](docs/evidence.md) |
 
 ## Project thesis
 
-Make useful phone capabilities discoverable, installable, callable, and verifiable. A shortcut should come with an installation artifact, a small input/output contract, requirements, and evidence—not just a screenshot or a prompt.
+Make useful phone capabilities discoverable, composable, inspectable and eventually verifiable. Treat Shortcuts as more than a gallery of recipes: it can become a typed execution layer whose deterministic actions, App Intents, state, web/shell extensions and model calls are selected behind explicit capability contracts.
 
-A proposed path is **agent selects capability → user opens a link → installed shortcut validates input and runs → user shares a result**. Fully automatic installation and delivery back into an existing chat remain research questions.
+The central research hypothesis is that a future optimizer/harness can **use the smallest adequate primitive**: deterministic action → bounded learned decision → local generative model → remote/cloud model → user escalation. A second hypothesis is that agent-generated Shortcuts can be inspected and transformed like programs to reduce unnecessary model/network/interaction cost without changing intended behavior.
+
+A proposed later handoff remains **agent selects capability → user/device authorizes a known workflow → installed shortcut validates input and runs → explicit result is verified**. Fully automatic installation and same-chat result delivery remain research questions.
 
 ## What is here
 
-- `docs/`: concise capability guides and source-backed boundaries.
-- `shortcuts/`: package convention and first release specifications.
-- `agents/`: discovery catalog and operating instructions.
+- `docs/research/`: synthesis layer, capability map, use cases, model-routing work, source ledger and optimizer hypotheses.
+- `docs/`: narrower capability guides and source-backed platform boundaries.
+- `shortcuts/`: package convention and future release specifications.
+- `agents/`: durable handoff for future agents plus discovery/catalog conventions.
 - `skills/`: reusable task recipes for agents and humans.
-- `tooling/`: dependency-free URL builder.
-- `experiments/`: reproducible tests, including negative results.
+- `tooling/`: structural inspection and URL utilities.
+- `experiments/`: future reproducible tests plus preserved inspection records.
 
 Evidence labels: **documented**, **artifact-inspected**, **reproduced**, **reported**, **hypothesis**, **unknown**. “Documented” is not “tested on this phone.” See [evidence rules](docs/evidence.md).
 
-## First milestone
+## Current phase: research accumulation
 
-Ship one genuinely reusable diagnostic shortcut: **SO Echo**, which accepts text and returns it unchanged. Use it to measure import, launch, encoding, cancellation, and return behavior before building local memory or multi-step agents. [Roadmap](docs/roadmap.md)
+Before beginning the device-test roadmap, expand the source-backed map of what Shortcuts, App Intents, Apple Intelligence/Foundation Models/Core AI, local model runtimes, browser/shell tools and external control-plane services can do separately and in combination. Prefer primary documentation, retain useful community reports as reported evidence, and turn promising combinations into falsifiable architecture hypotheses.
 
-Core scope: iPhone, Shortcuts, browser, and ChatGPT handoffs. Remote workers and hosted databases are outside the initial roadmap. Local execution, offline operation, and absence of cloud sync are separate properties.
+The later first execution milestone remains **SO Echo**, a diagnostic shortcut that accepts text and returns it unchanged. That milestone is intentionally deferred while the project builds its research base. See [roadmap](docs/roadmap.md).
 
-Research now includes a [static inspection of a supplied example](experiments/restaurant-assistant-inspection.md) and [prioritized follow-up experiments](docs/next-experiments.md). The example is a research specimen, not an installable project release. Personal shortcut collections are outside this intake.
+Core scope remains phone-first. Desktop/cloud components are welcome where they provide a clear compiler, build, training, control-plane or escalation role; they should not silently become prerequisites for ordinary phone use.
 
-[Research sources](docs/sources.md) · [Community questions](docs/community.md) · [Contributing](CONTRIBUTING.md) · [MIT license](LICENSE)
+Research also includes a [static inspection of a supplied example](experiments/restaurant-assistant-inspection.md). The example is a research specimen, not an installable project release.
+
+[Core sources](docs/sources.md) · [Research source ledger](docs/research/source-ledger.md) · [Community questions](docs/community.md) · [Contributing](CONTRIBUTING.md) · [MIT license](LICENSE)
