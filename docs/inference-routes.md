@@ -1,33 +1,51 @@
 # Local inference: which model does which job?
 
-Research snapshot 2026-09-23. **No model below has been run on the project owner's phone or in this repo's Pages site.** A checkpoint, a format, a runtime, and an execution surface are four different compatibility questions.
+Research snapshot 2026-09-23. **No model below has been run by this repository on the target phone or Pages origin.** A checkpoint, artifact format, runtime and execution surface are four different compatibility questions.
 
 | Candidate | Documented shape | Useful role | Hard question before release |
 |---|---|---|---|
-| [Laya](https://huggingface.co/convaiinnovations/laya) | 421M-parameter ModernBERT decision model; English root, separate multilingual and typed-decisions checkpoints; Apache 2.0 | Typed classification/score of a compact state and options | Can it run locally on iPhone through a suitable encoder runtime, and is it accurate on *our* labels? |
-| [Gemma 4 E4B](https://huggingface.co/google/gemma-4-E4B) | Pretrained multimodal generative model, 4.5B effective / 8B total including embeddings, 128K specified context | Fine-tuning or comparisons | Pretrained is not the default conversational assistant. |
-| [Gemma 4 E4B-it](https://huggingface.co/google/gemma-4-E4B-it) | Instruction-tuned model of the same family | Generative interpretation, drafts, constrained tool proposals | Device memory and correct output parsing at a practical context size. |
-| [Unsloth E4B-it QAT GGUF](https://huggingface.co/unsloth/gemma-4-E4B-it-qat-GGUF) | Quantized distribution for llama.cpp; includes multiple quantizations and an optional MTP drafter | Candidate artifact for GGUF runtimes | Exact variant size, modality support, current wllama build compatibility, and phone memory. |
-| [wllama](https://github.com/ngxson/wllama) | Browser llama.cpp binding; WASM and recent WebGPU support | Optional local inference in a browser page | iOS Safari WebGPU availability, performance, CORS/isolation headers, cache and tab lifetime. |
+| [Laya](https://huggingface.co/convaiinnovations/laya) | ~421M ModernBERT decision model for English/typed-decision variants; separate multilingual and typed-decisions checkpoints | Typed classification/score/probability over compact state and options | Which task-specific checkpoint/calibration is actually accurate enough, and which iPhone runtime keeps latency/load worthwhile? |
+| Independent Laya ONNX ports | [laya-onnx](https://huggingface.co/Mattepiu/laya-onnx), [receptron/laya](https://github.com/receptron/laya), [mizchi browser/WebGPU port](https://huggingface.co/mizchi/laya-multilingual-onnx) | Possible browser/JS decision runtime | Do exports preserve upstream outputs closely enough on target browser, and what are cold/warm retention costs? |
+| [Gemma 4 E4B](https://huggingface.co/google/gemma-4-E4B) | Pretrained multimodal generative model; ~4.5B effective / 8B total including embeddings, 128K specified context | Fine-tuning/base-model comparisons | Pretrained is not the default conversational assistant and theoretical context is not mobile-feasible context. |
+| [Gemma 4 E4B-it](https://huggingface.co/google/gemma-4-E4B-it) | Instruction-tuned model of the family | Generative interpretation, drafting, constrained tool proposals | Device memory, cold load and structured-output correctness. |
+| [Unsloth E4B-it QAT GGUF](https://huggingface.co/unsloth/gemma-4-E4B-it-qat-GGUF) | Current QAT GGUF distribution includes ~3.22 GB Q2_K_XL and ~4.22 GB Q4_K_XL files, ~990 MB multimodal projector and optional small MTP drafter | Candidate GGUF artifact for llama.cpp-style runtimes | Combined memory/load behavior, modality support and wllama compatibility on iPhone. |
+| [wllama](https://github.com/ngxson/wllama) | Browser llama.cpp binding with WASM/WebGPU, splitting, multimodal/tool-call and worker support | Optional local generative inference in a browser/PWA | Safari memory, WebGPU stability, cache/tab lifetime and isolation/header constraints. |
+| Foundation Models custom provider + Core AI | Apple documents `LanguageModel`/`LanguageModelExecutor`, Dynamic Profiles and Core AI native model deployment | Later native app bridge exposing local/remote providers behind one Apple session/tool abstraction | Requires an app implementation; not a stock Shortcut-only path. |
 
-**Important correction:** Laya's authors report ~33–40 ms per question on a *T4 GPU*, with substantial CPU and cold-load differences. They explicitly report base English/multilingual checkpoints near chance on their typed-decision benchmark (0.362/0.352; majority-class baseline 0.461); 0.766 belongs to the checkpoint fine-tuned on that benchmark. Its 512-token English budget also constrains large dictionaries and many choices. A model card's calibrated probabilities are not a calibrated guarantee for a new workflow. [Laya card](https://huggingface.co/convaiinnovations/laya)
+## Laya: specialization matters more than headline latency
 
-## Proposed `SO Decide` interface
+Laya's authors report roughly 33–40 ms per single question on a **T4 GPU**, with substantial CPU/cold-load differences. On the project's typed-decisions benchmark, the base English and multilingual checkpoints score about **0.362 and 0.342**, while the task-fine-tuned checkpoint reaches **0.766**. Its English budget is 512 tokens and the docs recommend keeping ordinary choice sets relatively small. A model card's calibration on its benchmark is not a guarantee for a new workflow. [Laya card](https://huggingface.co/convaiinnovations/laya)
 
-Model-neutral input is a JSON object containing `schema_version`, `request_id`, redacted `state`, a finite `choices` map with one-line descriptions, and an allowed `default`. Output is `choice`, `score` (if used), `confidence`, `model_id`, `status`, and `request_id`. The Shortcuts wrapper validates types, the choice against the declared set, threshold, and timeout before a `Choose from Menu`/`If` branch. Return `default` on invalid output, low confidence, timeout or canceled user action; require user approval for irreversible branches. Example values are illustrative, not model-tested:
+The published training material describes specialization as where most value appears; one recipe is roughly 30,000 questions and about 4–5 hours on free Kaggle 2×T4. [Training README](https://github.com/NandhaKishorM/laya/blob/main/README.md) This makes small domain specialists more plausible than one universal zero-shot router.
 
-```json
-{"schema_version":1,"request_id":"demo-001","state":{"text":"Invoice billed twice"},"choices":{"billing":"refunds and invoices","other":"all other cases"},"default":"other"}
-```
+## Proposed `SO Decide` contract
 
-Start with deterministic Shortcuts rules for unambiguous decisions. Evaluate Laya only on ambiguous classification where it improves measured accuracy. Its Python SDK and ModernBERT architecture are **not GGUF**; wllama's ability to run Gemma GGUF does not run Laya. A server/Colab inference endpoint would add connectivity and availability dependencies, so it is a research control rather than the default phone path. A native app could expose Laya via an App Intent if someone implements and measures the encoder runtime; no such integration is demonstrated here.
+Model-neutral input can contain `schema_version`, `request_id`, redacted `state`, a finite `choices` map with one-line descriptions, and an allowed `default`. Output can contain `choice`, optional `score`, `confidence`, `model_id`, `status` and `request_id`. The Shortcuts wrapper validates types, declared choices, confidence/abstention and timeout before an If/Menu branch; irreversible actions retain user approval.
 
-## Browser versus native
+Start with deterministic Shortcuts rules for unambiguous decisions. Laya is interesting for fuzzy bounded classification only when later evidence shows an advantage. Its ModernBERT architecture is **not GGUF**; wllama's support for Gemma GGUF does not run Laya.
 
-wllama V3 documents WASM, WebGPU, multimodal and tool calls, a 2 GB per-file limit with model splitting, and cross-origin isolation headers for multithreading. GPU support is not a promise of fast iOS Safari generation; static GitHub Pages may require a separate header strategy to enable threaded WASM. Start with single-thread or WebGPU detection and test the actual origin. A large GGUF can exceed the web process budget even when physical iPhone RAM is larger. [wllama README](https://github.com/ngxson/wllama)
+## Browser classifier route
 
-The [WebKit memory discussion](https://www.catchmetrics.io/blog/deep-dive-ram-internals-webkit) provides directional estimates for browsers, not an Apple-supported per-device heap limit. A [first-person iPhone 17 Pro comparison](https://rockyshikoku.medium.com/local-llm-on-iphone-which-runtime-is-actually-fastest-58096685481e) reports Gemma 4 **E2B** at 55.4 tok/s in LiteRT-LM, 47.5 in MLX and 37.8 in llama.cpp (median of three cold runs on iOS 26.4.2); formats, output lengths and runtimes differ, and this is neither E4B nor browser wllama. The [llamas-on-the-web project](https://reeselevine.github.io/llamas-on-the-web/) is a browser GPU/WASM research lead; its site did not expose benchmark data in this review, so we derive no phone throughput from it.
+Independent ONNX ports materially lower the barrier to a future browser experiment. [ONNX Runtime Web](https://github.com/microsoft/onnxruntime/tree/main/js/web) supports browser-side WASM/GPU inference, while the Laya ports above demonstrate that the architecture can be exported by third parties. These are implementation leads, not upstream compatibility guarantees.
 
-## Measurement contract
+A useful later experiment is therefore Shortcuts → compact JSON state → local Laya PWA/JS runtime → typed result → Shortcut continuation. The important unknown may be lifecycle overhead—page/app handoff, model compilation, cache residency and WebKit process eviction—rather than forward-pass time.
 
-Record phone/iOS/browser/app versions, exact model revision and GGUF file hashes/sizes, WASM/WebGPU feature detection, cold/warm download and load time, first-token latency, prompt tokens/s, decode tokens/s, context length, peak memory or crash, battery/thermal state, offline reload, 3+ repetitions, and comparable prompt/output lengths. A model's theoretical 128K context is not a measured feasible mobile context. Include deterministic baseline and a small model before E4B. Do not publish an unqualified tokens/day capacity from one burst benchmark.
+## Browser generative route
+
+wllama V3 documents WASM, WebGPU, multimodal/tool calls, model splitting and an individual ArrayBuffer limit around 2 GB; multithreaded WASM requires cross-origin isolation headers. GPU support does not imply fast or stable iOS Safari generation. [wllama README](https://github.com/ngxson/wllama)
+
+The [WebKit memory analysis](https://www.catchmetrics.io/blog/deep-dive-ram-internals-webkit) is directional rather than an Apple-supported per-device heap guarantee. [Llamas on the Web](https://reeselevine.github.io/llamas-on-the-web/) is another useful independent browser-GPU lead and explicitly treats smartphone memory as a constraint.
+
+A [first-person iPhone 17 Pro comparison](https://rockyshikoku.medium.com/local-llm-on-iphone-which-runtime-is-actually-fastest-58096685481e) reports Gemma 4 **E2B** at about 55.4 tok/s in LiteRT-LM, 47.5 in MLX and 37.8 in llama.cpp (median of three cold runs on the author's iOS 26.4.2 setup), with large runtime-dependent memory differences. It is neither E4B nor browser wllama; its value here is evidence that runtime choice can dominate model choice.
+
+## Native Apple provider route
+
+Apple now documents a more integrated long-term path. [Bring an LLM provider to Foundation Models](https://developer.apple.com/videos/play/wwdc2026/339/) describes `LanguageModel` plus `LanguageModelExecutor`; the executor handles prewarming, transcript conversion, context/generation options and streamed events. [Dynamic Profiles](https://developer.apple.com/documentation/updates/foundationmodels) can vary models, tools and instructions in a session. [Meet Core AI](https://developer.apple.com/videos/play/wwdc2026/324/) describes native model conversion/runtime and integration with Foundation Models.
+
+A later companion app could therefore expose `LayaLanguageModel`, `GemmaLanguageModel` or remote providers and surface selected operations to Shortcuts through App Intents. That architecture could reduce custom orchestration glue, but it requires native development and remains a hypothesis until implemented.
+
+## Measurement contract for the later experiment phase
+
+Record phone/iOS/browser/app versions; exact model revision and artifact hashes/sizes; runtime/backend; WASM/WebGPU/ANE/GPU feature path; cold/warm download/load; first-token latency; prompt/decode throughput; context length; peak memory/crash; battery/thermal state; offline reload; at least three repetitions; and comparable prompts/outputs. For classifiers also record confusion, calibration, abstention and cost of errors.
+
+A model's theoretical context or one burst decode number is not a usable mobile capacity claim. Include deterministic and small-model baselines before E4B. See [model-routing synthesis](research/model-routing.md).
