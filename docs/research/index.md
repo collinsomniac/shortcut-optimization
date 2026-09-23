@@ -2,7 +2,7 @@
 
 Snapshot: 2026-09-22/23. This directory is the durable research layer for Shortcut Optimization. The active phase is intentionally research-first: collect capabilities, examples, constraints, and composition patterns before committing to a runtime or beginning device benchmarks.
 
-Read this page before treating a conversation summary as project state. Claims still follow [the evidence policy](../evidence.md): documented, artifact-inspected, reproduced, reported, hypothesis, or unknown.
+Read this page before treating a conversation summary as project state. Use [research methodology](methodology.md) to add findings consistently and [capability record template](capability-record-template.md) for substantial new surfaces. Claims still follow [the evidence policy](../evidence.md): documented, artifact-inspected, reproduced, reported, hypothesis, or unknown.
 
 ## What the project is becoming
 
@@ -39,7 +39,7 @@ These are hypotheses and design directions, not device-verified performance clai
 
 ## How future agents should use this repository
 
-Start with [agents/research-brief.md](../../agents/research-brief.md), then this page, [evidence policy](../evidence.md), and the relevant topical guide. Prefer primary Apple/developer/model documentation; use community posts as leads and examples. Date release-specific findings. Preserve contradictions instead of silently resolving them. Add a source once, then cross-link it rather than repeatedly copying claims into unrelated files.
+Start with [agents/research-brief.md](../../agents/research-brief.md), then this page, [research methodology](methodology.md), [evidence policy](../evidence.md), and the relevant topical guide. Prefer primary Apple/developer/model documentation; use community posts as leads and examples. Date release-specific findings. Preserve contradictions instead of silently resolving them. Add a source once, then cross-link it rather than repeatedly copying claims into unrelated files.
 
 During the current research phase, optimize for breadth plus traceability: discover new capability surfaces, identify interfaces between them, and turn promising combinations into explicit hypotheses. Do not convert a plausible architecture into a claim that it works on the target phone until a later experiment records it.
 
