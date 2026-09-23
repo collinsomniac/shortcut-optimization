@@ -55,13 +55,20 @@ Reviewed 2026-09-22/23. This ledger complements the smaller [core source list](.
 
 | Source | Type | Why it matters |
 |---|---|---|
+| [Actions](https://sindresorhus.com/actions) and [AI-readable action data](https://gist.githubusercontent.com/sindresorhus/fbba65a774fb9da915e624807a02a6d2/raw/7be21a65977b6dd82d1a6cc34be4476df057ea06/actions.md) | maintainer | 180+ typed Shortcuts actions and a machine-readable capability-catalog precedent |
+| [Data Jar](https://datajar.app/) | developer | JSON-compatible offline/iCloud Shortcuts state backend |
+| [Scriptable docs](https://docs.scriptable.app/) / [URL scheme](https://docs.scriptable.app/urlscheme/) | developer | JavaScript runner, typed Shortcut I/O and URL/universal-link invocation |
+| [Pyto](https://pyto.app/) | developer | iOS Python/scientific runtime with Shortcuts integration |
+| [Toolbox Pro](https://toolboxpro.app/) | developer | large action library, persistent state/UI/file/device precedents |
+| [Pushcut Automation Server](https://www.pushcut.io/support/automation-server) | developer | dedicated-device remote Shortcut execution through schedules/API/webhooks |
+| [AI Actions](https://sindresorhus.com/ai-actions) | developer | model-provider Shortcuts actions and Keychain-backed user API credentials |
 | [a-Shell](https://github.com/holzschu/a-shell#shortcuts) | maintainer | Shortcuts Execute Command/Put File/Get File and mobile shell |
 | [a-Shell commands](https://github.com/holzschu/a-Shell-commands) | maintainer | reusable WASM command ecosystem |
 | [shortcuts-generator skill](https://github.com/cranecj/shortcuts-generator/blob/main/SKILL.md) | community | programmatic plist generation + Apple signing precedent |
 | [shortcut-lib format notes](https://github.com/findlaywebb/shortcut-lib/blob/main/docs/format.md) | community | reverse-engineered serialized structure |
 | [Hidden Generate Shortcut report](https://www.reddit.com/r/shortcuts/comments/1vgk21f/new_shortcut_action_generate_shortcut_from/) | reported/community | prototype self-generation/management lead; not a released API guarantee |
 
-See [ecosystem](../ecosystem.md) for Cherri, Shortcuts Playground, Jelly/Open Jellycuts, RoutineHub updater, ScPL and catalog precedents.
+See [extension ecosystem](extension-ecosystem.md) for a comparative synthesis of action providers/code runners and [ecosystem](../ecosystem.md) for Cherri, Shortcuts Playground, Jelly/Open Jellycuts, RoutineHub updater, ScPL and catalog precedents.
 
 ## Compute/control-plane resources
 
