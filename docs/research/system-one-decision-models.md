@@ -42,6 +42,26 @@ The customer-service example asks many independent questions about intent, frust
 
 That is almost exactly the programming model this repository should investigate.
 
+
+### Independent Jev measurement
+
+[DecisionEval](https://decisioneval.dev/models/typesafe-jev/) reports an independent run of Jev 1.13.0 on the frozen `LocalLLaMA/typed-decisions` test split: 400 requests / 2,000 decisions, all requests successful.
+
+| Metric | Independent result |
+|---|---:|
+| Accuracy | 0.740 [0.721, 0.759] |
+| Brier | 0.148 [0.139, 0.156] |
+| ECE, 10 bins | 0.045 [0.037, 0.066] |
+| Score MAE | 0.389 |
+| Request latency | p50 687 ms / p95 777 ms, client/network included, five decisions/request |
+| Total input cost reported | $0.0159 for the 2,000-decision run |
+
+The most useful result for autonomy is **accuracy at coverage** rather than raw accuracy: DecisionEval reports 57.6% coverage / 0.864 accuracy at confidence ≥0.7, and 24.5% coverage / 0.937 accuracy at confidence ≥0.9.
+
+There is a calibration discrepancy worth preserving. Laya's comparison card cites Jev ECE 0.144, while DecisionEval obtains 0.045 and says it cannot reproduce 0.144; different binning/definitions are a plausible explanation but are not published. Do not compare ECE values without matching the exact computation.
+
+DecisionEval also points out that 40.6% of the benchmark decisions lack teacher-ensemble argmax agreement. Jev scores 0.841 where teachers agree and 0.591 where they disagree in that run. This makes the dataset useful for system comparison but not equivalent to human ground truth.
+
 ## 3. Laya: open typed-decision implementation
 
 [Laya](https://github.com/NandhaKishorM/laya) is currently the most directly useful open implementation for this project.
@@ -167,6 +187,17 @@ result = classifier(
 Recent GLiClass versions support hierarchical labels. That makes the family particularly interesting for **coarse capability family → fine action** classification.
 
 GLiClass is not a drop-in substitute for Laya's `choice/score/noul` schema, but it may be a stronger zero-shot label matcher in places where Laya would otherwise need domain fine-tuning.
+
+
+### GLiClass V3 scale/speed spectrum
+
+Current GLiClass V3 model cards publish a useful edge→large spectrum on an A6000. The detailed zero-shot benchmark table reports average F1 values of roughly 0.490 (32.7M edge), 0.558 (151M modern-base), 0.620 (399M modern-large), 0.676 (187M base), and 0.719 (439M large). The accompanying speed table averages about 97.3, 54.5, 43.8, 51.6 and 25.2 examples/s respectively across 64–512-token inputs and 1–128 labels.
+
+Source: [GLiClass large v3 model card](https://huggingface.co/knowledgator/gliclass-large-v3.0).
+
+The card itself contains a small reporting inconsistency: its summary table lists a lower "Average Benchmark" value for several variants than the detailed zero-shot table. Preserve the individual/detailed table when doing comparisons and re-check the model revision before eventual benchmarking.
+
+The striking systems result is label scaling: GLiClass edge stays around 103.8 examples/s at one label and 82.6 at 128 labels in the published A6000 table, while the DeBERTa cross-encoder baselines collapse toward sub-1 example/s at 64–128 labels. That is precisely why dynamic single-pass label encoders deserve a place beside Laya in our capability-router research.
 
 ## 5. SetFit: teacher-generated data and very cheap specialists
 
