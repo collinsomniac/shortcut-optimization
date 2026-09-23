@@ -14,6 +14,7 @@ Phone-first research and reusable building blocks for AI, Apple Shortcuts, local
 | Explore compound workflow/agent-skill ideas | [Use-case atlas](docs/research/use-cases.md) |
 | Compare third-party action/code/remote-execution providers | [Extension ecosystem](docs/research/extension-ecosystem.md) |
 | Understand workflow representation and optimization | [Shortcut as program](docs/research/shortcut-as-program.md) |
+| Compare Jev/Laya-style decision models, training, teacher pairing and iOS/ChatGPT surfaces | [System-One decision models](docs/research/system-one-decision-models.md) |
 | Compare rules, Laya, local LLMs and cloud models | [Model routing](docs/research/model-routing.md) and [inference routes](docs/inference-routes.md) |
 | Trace research claims back to sources | [Research source ledger](docs/research/source-ledger.md) |
 | Trigger a shortcut from chat or the browser | [Links and handoffs](docs/links-and-handoffs.md) |
@@ -46,6 +47,7 @@ A proposed later handoff remains **agent selects capability → user/device auth
 - `skills/`: reusable task recipes for agents and humans.
 - `tooling/`: structural inspection and URL utilities.
 - `experiments/`: future reproducible tests plus preserved inspection records.
+- `examples/`: executable research architectures that illustrate the design without claiming production validation.
 
 Evidence labels: **documented**, **artifact-inspected**, **reproduced**, **reported**, **hypothesis**, **unknown**. “Documented” is not “tested on this phone.” See [evidence rules](docs/evidence.md).
 
