@@ -9,8 +9,10 @@ Phone-first research and reusable building blocks for AI, Apple Shortcuts, local
 | I want to… | Start here |
 |---|---|
 | Understand the project and current research state | [Research home base](docs/research/index.md) |
+| Continue research consistently across agents | [Research methodology](docs/research/methodology.md) and [capability template](docs/research/capability-record-template.md) |
 | Understand how the technologies could compose into a harness | [Capability stack](docs/research/capability-stack.md) |
 | Explore compound workflow/agent-skill ideas | [Use-case atlas](docs/research/use-cases.md) |
+| Compare third-party action/code/remote-execution providers | [Extension ecosystem](docs/research/extension-ecosystem.md) |
 | Understand workflow representation and optimization | [Shortcut as program](docs/research/shortcut-as-program.md) |
 | Compare rules, Laya, local LLMs and cloud models | [Model routing](docs/research/model-routing.md) and [inference routes](docs/inference-routes.md) |
 | Trace research claims back to sources | [Research source ledger](docs/research/source-ledger.md) |
