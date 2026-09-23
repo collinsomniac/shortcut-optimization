@@ -18,6 +18,9 @@ Reviewed 2026-09-22/23. This ledger complements the smaller [core source list](.
 | [App Intents](https://developer.apple.com/documentation/AppIntents) | primary | Semantic actions/entities apps expose to system experiences |
 | [App Intents Testing](https://developer.apple.com/documentation/AppIntentsTesting) | primary | Out-of-process intent/entity/query testing surface |
 | [Shortcuts command-line tool](https://support.apple.com/guide/shortcuts-mac/run-shortcuts-from-the-command-line-apd455c82f02/mac) | primary | macOS list/view/run/sign artifact backend |
+| [Safari 26 WebGPU](https://webkit.org/blog/17333/webkit-features-in-safari-26-0/) | primary/WebKit | WebGPU on iOS Safari; explicitly names ONNX Runtime and Transformers.js support |
+| [Safari Web Extensions](https://developer.apple.com/documentation/safariservices/safari-web-extensions) | primary | iOS Safari extension packaging, page integration and browser-extension surface |
+| [Safari extension native messaging](https://developer.apple.com/documentation/safariservices/messaging-between-the-app-and-javascript-in-a-safari-web-extension) | primary | browser-extension ↔ native app-extension messaging and app-group boundaries |
 
 ## Apple: model and agent frameworks
 
@@ -36,6 +39,12 @@ Reviewed 2026-09-22/23. This ledger complements the smaller [core source list](.
 
 | Source | Type | Why it matters |
 |---|---|---|
+| [TypeSafe: Introducing System One Models & Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) | primary/provider | Jev framing, typed probabilistic decisions, parallel sampling, launch performance/cost claims and explicit caveats |
+| [TypeSafe workflow evals](https://evals.typesafe.ai/) | primary/provider | decomposed workflow examples using noul/choice/score plus deterministic code |
+| [TypeSafe OpenAPI](https://api.typesafe.ai/docs) | primary/provider | public typed System One API and schemas |
+| [GLiClass](https://github.com/Knowledgator/GLiClass) | upstream/model | dynamic zero-shot labels, hierarchical labels and single-pass classifier alternative |
+| [SetFit zero-shot](https://huggingface.co/docs/setfit/how_to/zero_shot) | upstream/framework | synthetic class-name training and published fast classifier comparison |
+| [SetFit distillation](https://huggingface.co/docs/setfit/how_to/knowledge_distillation) | upstream/framework | larger-teacher to small-student distillation pattern |
 | [Laya model card](https://huggingface.co/convaiinnovations/laya) | upstream/model | architecture, typed decisions, latency and benchmark caveats |
 | [Laya typed-decisions checkpoint](https://huggingface.co/convaiinnovations/laya-typed-decisions) | upstream/model | fine-tuned benchmark and calibration data |
 | [Laya training README](https://github.com/NandhaKishorM/laya/blob/main/README.md) | project/community | training recipe and specialization guidance |
@@ -82,6 +91,17 @@ See [extension ecosystem](extension-ecosystem.md) for a comparative synthesis of
 | [Supabase Edge Function limits](https://supabase.com/docs/guides/functions/limits) | primary | CPU/memory/wall-clock boundaries |
 | [OpenRouter pricing](https://openrouter.ai/pricing) | primary/provider | current free-model/request surface |
 | [OpenAI: ChatGPT vs API billing](https://help.openai.com/en/articles/9039756-billing-settings-in-chatgpt-vs-platform) | primary/provider | ChatGPT subscription and API are separate billing systems |
+
+
+## ChatGPT/plugin integration
+
+| Source | Type | Why it matters |
+|---|---|---|
+| [Build for ChatGPT](https://developers.openai.com/chatgpt) | primary/provider | current ChatGPT developer surfaces and MCP/plugin entry point |
+| [Plugins](https://developers.openai.com/plugins) | primary/provider | skills + MCP servers + optional UI packaging |
+| [Plugin quickstart](https://developers.openai.com/plugins/quickstart) | primary/provider | connecting a remote MCP server and invoking it from ChatGPT Work |
+| [Developer mode and MCP apps](https://help.openai.com/en/articles/12584461-developer-mode-and-mcp-apps-in-chatgpt) | primary/provider | current account/workspace caveats for custom/full MCP behavior |
+| [Chrome Web Store mobile limitation](https://support.google.com/chrome_webstore/answer/1698338?hl=en) | primary/provider | Chrome extensions are not installable on mobile devices, including iOS |
 
 ## Community/discourse index
 
