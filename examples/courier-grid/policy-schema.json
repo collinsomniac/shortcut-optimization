@@ -1,0 +1,50 @@
+{
+  "schema_version": "0.1",
+  "questions": {
+    "phase": {
+      "type": "choice",
+      "instructions": "Which subgoal phase should the agent pursue now?",
+      "criteria": {
+        "explore": "required objects or routes are not yet sufficiently known",
+        "get_key": "reach and collect the key required for the gate",
+        "open_gate": "reach and unlock or open the gate",
+        "get_package": "reach and collect the package to be delivered",
+        "deliver": "reach the dock while carrying the package and deliver it",
+        "recover": "recover from an invalid action, contradiction, blockage, or lost progress"
+      }
+    },
+    "action": {
+      "type": "choice",
+      "instructions": "Which single environment action should execute next?",
+      "criteria": {
+        "turn_left": "rotate 90 degrees counter-clockwise",
+        "turn_right": "rotate 90 degrees clockwise",
+        "forward": "move one traversable cell in the facing direction",
+        "pickup": "collect an interactable item directly ahead",
+        "drop": "drop or deliver the carried package directly ahead",
+        "toggle": "toggle or interact with the gate directly ahead",
+        "wait": "take no spatial action for one step"
+      }
+    },
+    "control": {
+      "type": "choice",
+      "instructions": "How should the controller handle this state?",
+      "criteria": {
+        "act": "execute the selected local action without expensive assistance",
+        "local_replan": "recompute a bounded local subgoal without a frontier call",
+        "frontier_assist": "pay for slow semantic or planning assistance because it is expected to materially improve the episode",
+        "halt": "stop because the state is invalid or outside policy authority"
+      }
+    },
+    "progress": {
+      "type": "score",
+      "instructions": "How much useful progress toward the mission does the state represent?",
+      "criteria": [
+        "stalled or regressing",
+        "limited progress",
+        "good progress",
+        "near completion"
+      ]
+    }
+  }
+}
