@@ -1,0 +1,40 @@
+{
+  "request_id": "capture-demo-001",
+  "source": {
+    "surface": "share_sheet",
+    "app": "Safari",
+    "content_type": "url+text"
+  },
+  "capture": {
+    "title": "Used Kona e-bike conversion listing",
+    "url": "https://example.invalid/listing/123",
+    "text": "48V 750W Bafang conversion on a used Kona. Seller wants $350 and says the battery is healthy, but does not give its age or a recent range test. I might pick it up after work. Compare it with the other bikes I saved and make sure I remember to ask about battery age, charger, and proof of purchase."
+  },
+  "context": {
+    "user_goal_hint": "avoid another bad purchase while keeping the process quick",
+    "saved_item_count": 4
+  },
+  "capabilities": [
+    {
+      "id": "capture.save_reference",
+      "effect": "local_write",
+      "approval": "auto"
+    },
+    {
+      "id": "research.queue_comparison",
+      "effect": "local_write",
+      "approval": "auto"
+    },
+    {
+      "id": "task.create_draft_checklist",
+      "effect": "local_write",
+      "approval": "auto"
+    },
+    {
+      "id": "message.send",
+      "effect": "external_write",
+      "approval": "user"
+    }
+  ],
+  "receipts": []
+}
