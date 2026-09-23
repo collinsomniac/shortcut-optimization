@@ -1,14 +1,30 @@
 # Roadmap and acceptance gates
 
-The [ecosystem comparison](ecosystem.md) favors reusing authoring/validation tooling. The [next experiments](next-experiments.md) prioritize preservation and install receipts, using synthetic specimens rather than a personal collection.
+## 0. Research consolidation — active
 
-The [research landscape](research-landscape.md) now adds model and subscription work. These are optional tracks after the basic handoff; their benchmarks must use the same fixture and target device before choosing a runtime.
+The project is currently in a deliberate research-first phase. Before running the phone/runtime experiments below, make this repository the durable source of truth for relevant Shortcuts surfaces, App Intents, Apple Intelligence/Foundation Models/Core AI, local/browser inference, shell/web extensions, existing compilers/catalogs, community examples and optional compute/control-plane services.
+
+Work in this phase should:
+
+- widen the source-backed capability map rather than prematurely selecting one implementation;
+- distinguish documented primitive, first-person/community report and project hypothesis;
+- capture how multiple primitives might compound into workflows/skills;
+- identify existing open-source tools that should be integrated or learned from rather than rebuilt;
+- turn promising architectures into explicit questions and eventual falsification criteria;
+- keep volatile OS/model/plan facts dated and traceable through the [research source ledger](research/source-ledger.md);
+- improve the future-agent handoff in [agents/research-brief.md](../agents/research-brief.md).
+
+**Done when:** the major architecture choices have a well-cited comparison, unknowns are explicit, representative use cases are mapped to candidate primitives, and entering the experiment phase no longer requires reconstructing research from old conversations.
+
+See [research home base](research/index.md), [capability stack](research/capability-stack.md), [model routing](research/model-routing.md), [Shortcut as program](research/shortcut-as-program.md), and [use-case atlas](research/use-cases.md).
+
+The execution phases below are intentionally deferred, not canceled.
 
 ## 1. Establish the real handoff
 
-Release SO Echo from an Apple-device export. Verify installation, text fidelity, ChatGPT/Safari launch, user cancellation, and explicit return to chat. Pass ASCII, emoji, multiline text, ampersands, literal percent signs, and JSON. Record failures by client/build.
+Release SO Echo from an Apple-device export. Verify installation, text fidelity, ChatGPT/Safari launch, user cancellation and explicit return to chat. Pass ASCII, emoji, multiline text, ampersands, literal percent signs and JSON. Record failures by client/build.
 
-**Done when:** a newcomer can install it, run a fixture, and return a matching result without recreating actions.
+**Done when:** a newcomer can install it, run a fixture and return a matching result without recreating actions.
 
 ## 2. Explain the builder boundary
 
@@ -18,22 +34,31 @@ Run the native/third-party creation/edit matrix. Inspect before/after graphs and
 
 ## 3. Add local memory
 
-Prototype the same get/put interface with Native Storage and a JSON-file adapter. Test no network, restart, simultaneous invocations, export/restore, and data exposure when sharing. Escalate to SQLite only for a requirement the simple backends cannot meet.
+Prototype the same get/put interface with Shortcuts Storage/global values and a JSON-file adapter; compare other backends only where they add a concrete property. Test offline behavior, restart, simultaneous invocations, export/restore and data exposure when sharing.
 
 **Done when:** state survives the stated lifecycle and failures cannot silently corrupt it.
 
-## 4. Make discovery useful
+## 4. Add bounded decision/model adapters
 
-Populate the agent catalog only with real installation links and evidence. Add filters for dependencies, offline behavior, permissions, and evidence level. A launch is not a completed task.
+Compare a native rule/If decision with a task-specific Laya adapter on a labeled fixture. Check accuracy, confusion, calibration, abstention, cold start, battery and lifecycle overhead, not only inference latency. Separately measure a small browser generative model before attempting Gemma 4 E4B.
 
-## 5. Publish the documentation
+**Done when:** the repository can explain which decision/generation class deserves which runtime on the target device using measured evidence.
 
-Use GitHub Pages for the documentation and explicit launch links. Begin with this Markdown collection; add an interactive catalog once actual packages exist. See [Pages preparation](pages.md).
+## 5. Make discovery useful
 
-Future: vetted compilation/signing, installer-assisted organization, browser result callbacks, and a browser database. These need experiments before architecture commitments.
+Populate the agent catalog only with real installation links and evidence. Add filters for dependencies, offline behavior, permissions, model/runtime needs and evidence level. A launch is not a completed task.
 
-## Parallel research gates
+## 6. Publish the documentation/catalog
 
-- Compare a native rule/If decision with a Laya classification adapter on a labeled, redacted fixture. Check confusion, confidence calibration, abstention, cold start, and battery as well as latency; do not expose this as a universal router before task-specific evaluation.
-- Measure one small browser GGUF before trying Gemma 4 E4B; test iOS Safari tab survival, first download, cache, peak memory, prompt and decode time, WebGPU versus WASM, and multi-thread availability on the actual Pages origin.
-- Run an agent action loop only after SO Echo produces an explicit correlated result. Add read-only capabilities first, then scoped writes with permission and a reversible outcome.
+Use GitHub Pages for the documentation and explicit launch links. Begin with this Markdown knowledge base; add an interactive catalog once actual packages exist. See [Pages preparation](pages.md).
+
+## Later architecture tracks
+
+- Canonical Shortcut graph/IR and structural optimizer passes.
+- Vetted compilation/signing and optional macOS build backend.
+- Browser result callbacks and durable local web state.
+- Native Foundation Models/Core AI provider bridge.
+- Agent action loop with correlated receipts, read-only tools first and scoped/reversible writes later.
+- Cross-device control plane only where local-first execution cannot satisfy the requirement.
+
+Every later track should inherit the same evidence labels and source/date discipline established during phase 0.
