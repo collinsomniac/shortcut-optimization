@@ -2,6 +2,8 @@
 
 The [ecosystem comparison](ecosystem.md) favors reusing authoring/validation tooling. The [next experiments](next-experiments.md) prioritize preservation and install receipts, using synthetic specimens rather than a personal collection.
 
+The [research landscape](research-landscape.md) now adds model and subscription work. These are optional tracks after the basic handoff; their benchmarks must use the same fixture and target device before choosing a runtime.
+
 ## 1. Establish the real handoff
 
 Release SO Echo from an Apple-device export. Verify installation, text fidelity, ChatGPT/Safari launch, user cancellation, and explicit return to chat. Pass ASCII, emoji, multiline text, ampersands, literal percent signs, and JSON. Record failures by client/build.
@@ -29,3 +31,9 @@ Populate the agent catalog only with real installation links and evidence. Add f
 Use GitHub Pages for the documentation and explicit launch links. Begin with this Markdown collection; add an interactive catalog once actual packages exist. See [Pages preparation](pages.md).
 
 Future: vetted compilation/signing, installer-assisted organization, browser result callbacks, and a browser database. These need experiments before architecture commitments.
+
+## Parallel research gates
+
+- Compare a native rule/If decision with a Laya classification adapter on a labeled, redacted fixture. Check confusion, confidence calibration, abstention, cold start, and battery as well as latency; do not expose this as a universal router before task-specific evaluation.
+- Measure one small browser GGUF before trying Gemma 4 E4B; test iOS Safari tab survival, first download, cache, peak memory, prompt and decode time, WebGPU versus WASM, and multi-thread availability on the actual Pages origin.
+- Run an agent action loop only after SO Echo produces an explicit correlated result. Add read-only capabilities first, then scoped writes with permission and a reversible outcome.

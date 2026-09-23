@@ -2,6 +2,8 @@
 
 Research pass: 2026-09-23. This compares documented designs and first-person reports; none of these toolchains was installed or device-tested here.
 
+For additional phone agent examples, dynamic automation claims, and model/runtime leads see [research landscape](research-landscape.md). The existence of TinyAgent and ShortcutStudio narrows the project's distinct value to trustworthy distribution, explicit contracts and reproducible correctness, rather than novelty of an agent or AI builder.
+
 | Project | Useful precedent | Boundary for our project |
 |---|---|---|
 | [Shortcuts Playground](https://github.com/viticci/shortcuts-playground-plugin) | Claude/Codex generation, validation, remixing, action catalogs | Its documented signing path requires macOS; learn from validators without making desktop access a user requirement |

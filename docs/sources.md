@@ -18,3 +18,5 @@ Reviewed 2026-09-23. Links are living documents; preserve dated evidence for rel
 S5's chapter text includes an iOS 26 reference despite its WWDC26 context. Record this source inconsistency; confirm actual OS/build support on-device rather than treating the session date as a minimum-version guarantee.
 
 Community questions are separately linked in [community.md](community.md). No community workaround is promoted to verified capability in this initial collection.
+
+The second research pass is indexed by topic in [inference routes](inference-routes.md), [compute inventory](compute-inventory.md), [agent harness](agent-harness.md), and [research landscape](research-landscape.md). Each page links its primary model card, official plan/Apple document or named first-person experiment adjacent to the relevant claim. Account limits and rolling forum views were checked 2026-09-23 and require rechecking before any release decision.

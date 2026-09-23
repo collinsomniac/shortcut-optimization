@@ -15,6 +15,10 @@ Phone-first research and reusable building blocks for AI, Apple Shortcuts, and l
 | Compare existing compilers, collections, and agents | [Ecosystem](docs/ecosystem.md) |
 | Inspect a supplied workflow without rebuilding it | [Intake design](docs/intake-and-roundtrip.md) |
 | Keep reusable state on my phone | [Local storage](docs/local-storage.md) |
+| Compare local models, Laya, and browser inference | [Inference routes](docs/inference-routes.md) |
+| Use subscriptions and free tiers deliberately | [Compute inventory](docs/compute-inventory.md) |
+| Give an agent useful, bounded phone capabilities | [Agent harness](docs/agent-harness.md) |
+| Turn community ideas into testable packages | [Research landscape](docs/research-landscape.md) |
 | Connect an agent to this collection | [Agent entry point](agents/README.md) |
 | Contribute a finding | [Evidence rules](docs/evidence.md) and [test plan](experiments/README.md) |
 
