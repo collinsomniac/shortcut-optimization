@@ -8,7 +8,7 @@ Read this page before treating a conversation summary as project state. Use [res
 
 The repository began as a phone-first collection of reusable Shortcuts and trustworthy handoff patterns. The research now supports a broader thesis: Apple Shortcuts can act as a typed workflow and execution layer inside a hybrid agent harness, while deterministic actions, app intents, specialized decision models, generative models, browser/shell tools, and cloud services are selected only where each adds value.
 
-A useful north-star is not unrestricted UI control. It is a versioned capability system in which a planner can discover narrow tools, pass typed state, receive explicit results, and escalate from cheap deterministic computation to probabilistic or remote computation only when necessary. See [Capability stack](capability-stack.md).
+A useful north-star is not unrestricted UI control. It is a versioned capability system in which a planner can discover narrow tools, pass typed state, receive explicit results, and escalate from cheap deterministic computation to probabilistic or remote computation only when necessary. Frontier escalation should itself be optional and learnable rather than a mandatory inference stage. See [Capability stack](capability-stack.md), [System-One decision models](system-one-decision-models.md), and [CourierGrid benchmark](game-policy-benchmark.md).
 
 ## Research map
 
@@ -49,6 +49,8 @@ During the current research phase, optimize for breadth plus traceability: disco
 - How much of shortcut creation, refinement, organization and export can be composed from Shortcuts itself on released iOS 27, versus hidden/prototype actions or macOS-only tooling?
 - Can Jev/Laya-style typed decision models become reusable learned branch nodes, and when should GLiClass/SetFit-style zero-shot or distilled classifiers be preferred?
 - Can a frontier model act mainly as schema teacher, choice-elevation engine and active-learning labeler while a small classifier handles the hot loop?
+- Can the local policy learn `frontier_assist` as a cost-sensitive defer action from counterfactual outcomes instead of relying on a permanent cascade or hard confidence threshold?
+- Can a background App Intent make a warm typed classifier feel like a native sub-second Shortcuts primitive?
 - Which local model runtime boundary is best for each workload: browser ONNX/WebGPU, wllama, a native Core AI model, or a remote provider?
 - Which workflows become substantially more capable when persistent Storage, notification/screenshot triggers, onscreen input and model sessions are combined?
 - What representation would let an optimizer reason about latency, energy, quota, privacy, determinism, permissions and expected error without knowing every app implementation?
