@@ -17,6 +17,7 @@ A useful north-star is not unrestricted UI control. It is a versioned capability
 | Workflow language | typed dataflow, branching, loops, filtering, prompts | Shortcuts variables, List, If, Repeat, Find/Filter | documented |
 | App capability layer | app-defined actions, entities, queries and system integrations | App Intents, Shortcuts actions, Siri/Spotlight entry points | documented; compatibility varies by app |
 | Context and transport | move state into/out of workflows | Share Sheet, onscreen input, URL schemes, x-callback-url, Get Contents of URL, JSON | documented; client round trips untested here |
+| Extension providers | typed third-party actions, code runners, remote execution | Actions, Scriptable, a-Shell, Pyto, Toolbox Pro, Pushcut | provider-documented; project recipes not reproduced |
 | Web and shell extension | arbitrary-but-bounded programmable work | Run JavaScript on Webpage, a-Shell commands/WASM/files | documented; project recipes not reproduced |
 | Persistent state | context across invocations | Shortcuts Storage/global values, files, Data Jar candidates | documented/reported depending on backend |
 | Fast learned decisions | bounded classification and scoring | Laya and task-specific checkpoints | model-documented; no phone result |
@@ -32,7 +33,7 @@ Primary platform references include Apple's [Shortcuts User Guide](https://suppo
 2. **Treat model routing as part of the program.** Rules, Laya, Apple on-device models, local generative models and cloud models can be interchangeable implementations behind typed contracts rather than independent demos. See [Model routing](model-routing.md).
 3. **Treat a Shortcut as a program, not a screenshot.** A useful optimizer eventually needs a graph/IR view of actions, typed edges, side effects, permissions and costs. See [Shortcut as program](shortcut-as-program.md).
 4. **Separate planner, decision, executor and transport.** A conversation agent can plan without pretending it directly controls iOS; Shortcuts/App Intents remain execution authorities, while explicit receipts close the loop.
-5. **Compose capabilities into skills.** The most valuable workflows are likely to combine context collection, state, bounded decisions, app/API actions, verification and recovery rather than expose hundreds of raw actions directly to a model. See [Use-case atlas](use-cases.md).
+5. **Compose capabilities into skills.** The most valuable workflows are likely to combine context collection, state, bounded decisions, app/API actions, verification and recovery rather than expose hundreds of raw actions directly to a model. See [Use-case atlas](use-cases.md) and [Extension ecosystem](extension-ecosystem.md).
 
 These are hypotheses and design directions, not device-verified performance claims.
 
@@ -51,5 +52,6 @@ During the current research phase, optimize for breadth plus traceability: disco
 - Which workflows become substantially more capable when persistent Storage, notification/screenshot triggers, onscreen input and model sessions are combined?
 - What representation would let an optimizer reason about latency, energy, quota, privacy, determinism, permissions and expected error without knowing every app implementation?
 - Which existing community tools already solve compilation, signing, catalogs, updates or action metadata well enough that this project should integrate instead of rebuild?
+- Can machine-readable third-party action catalogs be normalized into a portable capability ontology that future agents can retrieve from safely?
 
 Testing is deliberately deferred, but every research note should make eventual falsification easier.
