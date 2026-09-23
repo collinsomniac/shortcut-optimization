@@ -1,0 +1,9 @@
+{
+  "protocol": "shortcut-optimization/0.1",
+  "id": "example-001",
+  "ok": true,
+  "result": {
+    "text": "Hello & goodbye 👋\n100%"
+  },
+  "error": null
+}

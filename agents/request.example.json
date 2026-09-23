@@ -1,0 +1,8 @@
+{
+  "protocol": "shortcut-optimization/0.1",
+  "id": "example-001",
+  "operation": "echo",
+  "arguments": {
+    "text": "Hello & goodbye 👋\n100%"
+  }
+}
