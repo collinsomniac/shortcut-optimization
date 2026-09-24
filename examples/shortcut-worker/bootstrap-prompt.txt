@@ -1,15 +1,56 @@
 Create a shortcut named "shortcuts.control" that acts as a non-interactive JSON RPC controller for the Shortcuts library.
 
-Accept Shortcut Input as either a Dictionary or JSON text. Support these operations using native Shortcuts actions:
+INPUT AND OUTPUT
+Accept Shortcut Input as either a Dictionary or JSON text. If it is JSON text, parse it into a Dictionary. Read the key "op". Never show menus, alerts, Quick Look, Show Result, Ask for Input, or other interactive prompts during normal execution.
 
-- list: Get My Shortcuts and return a structured list of shortcut names without running them.
-- run: find the exact shortcut named by "name", run it with "shortcut_input", and return its output. Never run shortcuts.control recursively.
-- open: open the exact named shortcut and return status "launched".
-- generate: use Generate Shortcut with "description"; optionally Rename Shortcut to "name"; optionally create/move it into "folder"; optionally Create iCloud Link when create_link=true; only run it when run_after_generate=true. Return the generated shortcut metadata/link/output.
-- rename: exact-name lookup then Rename Shortcut to new_name.
-- move: exact-name lookup, create folder if needed, then Move Shortcut.
-- delete: require confirm=true, otherwise return confirmation_required; then Delete Shortcuts.
-- create_link: exact-name lookup then Create iCloud Link for Shortcut.
-- capabilities: return controller_version "0.1" and which management actions used by this controller are available.
+Every branch must return one final Dictionary with at least:
+- ok: Boolean
+- status: text
+- op: the requested operation
+Include useful result data or an error dictionary. Do not silently claim an action succeeded if it did not.
 
-Use Search In Shortcuts or Get My Shortcuts for exact-name lookup as appropriate. Prefer native Shortcuts actions. Do not show alerts or ask questions in normal RPC execution. Every branch must finish with a Dictionary containing ok, status, op, and useful error details when unsuccessful. Keep destructive behavior behind confirm=true.
+OPTIONAL CALLBACK
+If input contains a non-empty "callback_url", after building the final result Dictionary, use Get Contents of URL to POST JSON to that exact URL:
+{"state":"success","result":<the final result Dictionary>}
+If the operation failed, use state "error" and include the error information. Then still return the final result Dictionary normally.
+
+OPERATIONS
+
+1. register
+Find the exact shortcut named "shortcuts.control". Ensure a Shortcuts folder named "Tools" exists, creating it if necessary. Move shortcuts.control into Tools. Return ok true and status "registered". Never rename it.
+
+2. capabilities
+Return controller_version "0.2", implemented operations, and booleans indicating that this controller uses Get My Shortcuts, Run Shortcut, Open Shortcut, Generate Shortcut, Rename Shortcut, Move Shortcut, Delete Shortcuts, Create Folder, and Create iCloud Link for Shortcut. Include current OS version if a native device-details action can provide it without interaction.
+
+3. list
+Use Get My Shortcuts. Return a JSON-compatible list of installed shortcut names. If folder or stable identifier details are natively available without interaction, include them; otherwise omit those fields rather than inventing them. Do not run any shortcut.
+
+4. run
+Require "name". Find exactly that shortcut. Refuse to run shortcuts.control recursively. Run it with optional "shortcut_input". Return status "executed" and its output. If there is no exact match, return not_found.
+
+5. open
+Require "name". Find exactly that shortcut and Open Shortcut. Return status "launched". If there is no exact match, return not_found.
+
+6. generate
+Require "description". Use the native Generate Shortcut action with that description. If "name" is non-empty, Rename Shortcut to that exact name. If "folder" is non-empty, ensure that folder exists and Move Shortcut into it. If "create_link" is true, Create iCloud Link for Shortcut and include the URL. Only run the generated shortcut if "run_after_generate" is true, using optional "shortcut_input". Return status "installed" or "executed" and metadata about the generated shortcut.
+
+7. rename
+Require "name" and "new_name". Exact-name lookup then Rename Shortcut. Return status "updated". Refuse to rename shortcuts.control unless "allow_controller_mutation" is true.
+
+8. move
+Require "name" and "folder". Exact-name lookup, create the folder if needed, then Move Shortcut. Return status "updated".
+
+9. delete
+Require "name". If "confirm" is not true, do not delete and return ok false with status "confirmation_required". With confirm true, exact-name lookup and Delete Shortcuts. Refuse to delete shortcuts.control unless "allow_controller_mutation" is true. Return status "deleted".
+
+10. create_link
+Require "name". Exact-name lookup then Create iCloud Link for Shortcut. Return status "shared" and the link.
+
+11. get
+Require "name". Exact-name lookup and return whatever safe native Shortcut metadata is directly available without running it. Do not claim to return the internal action graph if native Shortcuts does not expose it.
+
+12. edit
+Return ok false, status "unsupported", and explain that arbitrary structural graph editing is not exposed by this controller yet; it requires the compiler or Apple builder fallback.
+
+LOOKUP AND SAFETY
+Use Search In Shortcuts or Get My Shortcuts for exact-name lookup as appropriate. Prefer native Shortcuts actions. Never choose a fuzzy match when an operation can mutate, run, or share a shortcut. Destructive behavior stays behind confirm=true. Keep output JSON-compatible so another Shortcut or remote harness can consume it.
