@@ -57,7 +57,7 @@ Reviewed 2026-09-22/23. This ledger complements the smaller [core source list](.
 | [Adaptive inference / early exits](https://arxiv.org/abs/2106.05022) | research survey | broader adaptive-compute context for input-dependent inference cost |
 | [Laya model card](https://huggingface.co/convaiinnovations/laya) | upstream/model | architecture, typed decisions, latency and benchmark caveats |
 | [Laya typed-decisions checkpoint](https://huggingface.co/convaiinnovations/laya-typed-decisions) | upstream/model | fine-tuned benchmark and calibration data |
-| [Laya training README](https://github.com/NandhaKishorM/laya/blob/main/README.md) | project/community | training recipe and specialization guidance |
+| [Official Laya TypeScript/browser runtime](https://github.com/NandhaKishorM/laya/blob/main/laya-ts/README.md) | upstream/model runtime | split ONNX encoder/head, browser WebGPU to WASM fallback, export parity checks and event hooks; phone fit remains untested |\n| [Laya training README](https://github.com/NandhaKishorM/laya/blob/main/README.md) | project/community | training recipe and specialization guidance |
 | [laya-onnx](https://huggingface.co/Mattepiu/laya-onnx) | independent | ONNX conversion lead |
 | [receptron/laya](https://github.com/receptron/laya) | independent | TypeScript/ONNX Runtime implementation lead |
 | [mizchi/laya-multilingual-onnx](https://huggingface.co/mizchi/laya-multilingual-onnx) | independent | browser WebGPU parity report/demo lead |

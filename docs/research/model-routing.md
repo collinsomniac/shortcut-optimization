@@ -16,7 +16,7 @@ The critical qualification is specialization. On Laya's own typed-decisions benc
 
 Therefore the current hypothesis is not one universal zero-shot Laya router. It is a shared runtime plus task/domain specialists: notification route, intent route, file/category route, safety/approval gate, error recovery route, or model-route selector. Every specialist would need its own labeled corpus, calibration and abstention policy.
 
-## Browser/ONNX leads for Laya
+## Browser/ONNX leads for Laya\n\nAs of 2026-09-24, the upstream [laya-ts browser package](https://github.com/NandhaKishorM/laya/blob/main/laya-ts/README.md) documents a split `encoder.onnx` + `head.onnx` export, browser WebGPU with WASM fallback, PyTorch-to-ONNX parity checking, and prediction hooks. This is a stronger integration lead than relying solely on independent exports. Browser support is upstream documented; artifact residency, iPhone latency and particular model fidelity are not reproduced in this repository. The [Latent Scope example](../../examples/latent-scope/) keeps token and typed-decision displays separate.\n
 
 Laya is not a GGUF/llama.cpp model, so wllama is not its runtime. Independent ports show that ONNX is a plausible web path worth later validation. [Mattepiu/laya-onnx](https://huggingface.co/Mattepiu/laya-onnx) publishes an ONNX conversion; [receptron/laya](https://github.com/receptron/laya) implements a TypeScript/ONNX Runtime path; and [mizchi/laya-multilingual-onnx](https://huggingface.co/mizchi/laya-multilingual-onnx) reports browser WebGPU parity tests for selected answers. These are independent projects, not upstream guarantees.
 

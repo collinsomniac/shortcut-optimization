@@ -15,7 +15,7 @@ Phone-first research and reusable building blocks for AI, Apple Shortcuts, local
 | Compare third-party action/code/remote-execution providers | [Extension ecosystem](docs/research/extension-ecosystem.md) |
 | Understand workflow representation and optimization | [Shortcut as program](docs/research/shortcut-as-program.md) |
 | Compare Jev/Laya-style decision models, training, teacher pairing and iOS/ChatGPT surfaces | [System-One decision models](docs/research/system-one-decision-models.md) |
-| Study learned optional escalation with a browser game | [CourierGrid benchmark](docs/research/game-policy-benchmark.md) and [browser example](examples/courier-grid/) |
+| Inspect a browser-local model flow instrument | [Latent Scope](examples/latent-scope/) · [visual/adapter design](examples/latent-scope/docs/visual-and-adapter-design.md) |\n| Study learned optional escalation with a browser game | [CourierGrid benchmark](docs/research/game-policy-benchmark.md) and [browser example](examples/courier-grid/) |
 | Invoke fast local classifiers from Shortcuts | [Sub-second Shortcuts inference](docs/research/shortcuts-fast-inference.md) |
 | Build a chat-controllable Shortcut library worker | [Shortcut Worker control plane](docs/research/shortcut-worker-control-plane.md) and [protocol example](examples/shortcut-worker/) |
 | Understand/reorganize the existing Supabase harness | [Supabase compartmentalization](docs/research/supabase-compartmentalization.md) |
