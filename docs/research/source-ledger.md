@@ -134,3 +134,12 @@ The qualitative community sample lives in [community](../community.md) and [rese
 ## Maintenance rule
 
 For volatile plan limits, beta/prototype actions, model artifacts and OS-specific behavior, re-check the original source before an engineering decision. If a link changes meaning, preserve the old dated claim in history and add the new state rather than rewriting the past as though it was always true.
+## Latent Scope activation atlas — 2026-09-24
+
+| Primary source | Evidence and scope |
+| --- | --- |
+| [Pinned ONNX Llama3.2 1B export](https://huggingface.co/onnx-community/Llama-3.2-1B-Instruct-ONNX/tree/14007543b6dc92de88daf96a9aa85d2f95ace6ef) | Artifact inspected; q4f16 graph, external weights, model configuration and license. Project instruments an existing residual output; does not train or reinterpret individual weights. |
+| [Transformers.js WebGPU guide](https://huggingface.co/docs/transformers.js/v3.8.1/guides/webgpu) and [v3.8.1 source](https://github.com/huggingface/transformers.js/tree/3.8.1/src) | Documented WebGPU model runtime. Installed source inspected for custom-cache lookup, forward outputs, streamer ordering and GPU KV locations. Project's CPU JavaScript integration reproduced; phone WebGPU unverified. |
+| [ORT WebGPU documentation](https://onnxruntime.ai/docs/tutorials/web/ep-webgpu.html) | Documented GPU execution and buffer placement. Installed runtime source inspected for SkipLayerNormalization residual sum output. No claim of GPU numerical parity or zero-copy visualization. |
+
+Project result and negative findings: [activation atlas implementation](../../examples/latent-scope/docs/activation-atlas-implementation.md). Frozen reference PCA gives repeatable coordinates but weak coverage of later decoding states; these labels are descriptive prompt similarities, not discovered interpretable features.

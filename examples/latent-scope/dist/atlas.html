@@ -1,0 +1,29 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#09111d"><title>Latent Scope · Activation Atlas</title><link rel="stylesheet" href="./atlas.css"></head>
+<body><div class="shell">
+<header><a href="./index.html">◈ LATENT SCOPE</a><span>ACTIVATION ATLAS</span><button id="aboutOpen" aria-label="About the measurements">?</button></header>
+<main>
+ <section class="map-panel" aria-label="Activation atlas">
+  <div class="map-top"><div><strong>Where the response travels</strong><small>Llama 3.2 · 1B · residual after block 8</small></div><span id="sourceBadge">NO RUN</span></div>
+  <div class="map" id="map"><div class="map-caption">Fixed reference coordinates · drag to orbit · pinch to zoom</div><button id="resetView">Reset view</button></div>
+  <div class="run-row"><label for="runSelect">TRACE</label><select id="runSelect" aria-label="Select trace"><option>No runs yet</option></select><label><input id="compare" type="checkbox" checked> Overlay</label><button id="follow">Follow</button></div>
+  <div class="scrubber"><button id="play" disabled aria-label="Play or pause selected trace">▶</button><input id="scrub" type="range" min="0" max="0" value="0" disabled aria-label="Inspect token step"><output id="step">0 / 0</output></div>
+  <div class="token-readout"><span id="phase">WAITING</span><strong id="selectedToken">Select a trace or load the model</strong><span id="pointCount">0 points</span></div>
+ </section>
+ <aside class="inspector" aria-label="Measured token details">
+  <div class="section-title similarity-title"><strong>Reference similarity</strong><small>Cosine −1 to +1 · 2,048D</small></div>
+  <div id="similarities" class="similarities"></div>
+  <div class="metrics"><div><small>3D retains</small><strong id="retained">—</strong></div><div><small>First output</small><strong id="firstOutput">—</strong></div><div><small>Decode</small><strong id="rate">—</strong></div></div>
+  <div class="section-title choices-title"><strong>Next-token choices</strong><small>Full-vocabulary softmax</small></div><div id="candidates" class="candidates"></div>
+  <p id="interpretation" class="interpretation">Landmarks are labeled reference prompts. Lines show token order. Similarity does not establish causal influence.</p>
+ </aside>
+ <section class="chat" aria-label="Prompt and response">
+  <div class="section-title"><strong>Prompt → response</strong><button id="chatToggle" aria-expanded="true">Hide text</button></div>
+  <div class="chat-content"><div class="actions"><button data-replay="ocr">Replay OCR</button><button data-replay="recipe">Replay recipe</button><button id="load">Load live model</button><button id="unload" hidden>Release model</button></div>
+  <p id="status" role="status">Explore measured recordings, or load ~1.09 GB for live capture.</p>
+  <div class="transcript"><p id="shownPrompt"></p><p id="reply"></p></div>
+  <form id="form"><textarea id="prompt" aria-label="New prompt" rows="2" placeholder="Ask about code, cooking, a story…" disabled></textarea><div class="compose-actions"><button id="save" type="button" disabled>Save trace</button><label class="import" tabindex="0">Import trace<input id="import" type="file" accept="application/json" hidden></label><button id="stop" type="button" hidden>Stop</button><button id="send" type="submit" disabled>Generate ↗</button></div></form></div>
+ </section>
+</main><footer><span id="atlasVersion">Loading coordinate space…</span><span>Built with Llama · experimental</span></footer>
+</div>
+<dialog id="about"><button id="aboutClose">Close</button><h2>What this map measures</h2><p>Built with Llama. <a href="./atlas/LICENSE.txt">Llama 3.2 license</a> · <a href="./atlas/USE_POLICY.md">Acceptable use policy</a></p><p>Every point is a real 2,048-value residual activation at the last context position, after transformer block 8 (zero-based). It precedes the token shown in the inspector. The first point is captured at the end of prefill; earlier prompt positions are not recorded.</p><p>Eight landmarks are averages of activations from 48 fixed reference prompts. PCA supplies three saved axes. The map never refits or rescales between runs. Similarities use the original 2,048 dimensions, not screen distance. Low “3D retains” means most variation is outside this view. Similarity bars span −1 to +1; they are not probabilities.</p><p>These are descriptive reference matches, not discovered SAE features, named neurons, a chain of thought, or causal explanations. Labels were assigned to reference examples by the developer. A point can fall outside every reference category.</p><p id="validation"></p><p>The live model runs in a worker in your browser using a pinned ONNX export. Greedy decoding, 512 prompt tokens, 128 output tokens. Each prompt starts a fresh context. Model files download from Hugging Face; your prompt and measurements stay in the browser. Saved traces contain your prompt and response. WebGPU and shader-f16 are required for live mode. Live iPhone performance has not been verified. Recordings were produced on a CPU and are labeled separately. Imported traces are not authenticated.</p><p>At most three runs are retained. Lines mean temporal succession, not causal connections. <a href="https://github.com/collinsomniac/shortcut-optimization/tree/main/examples/latent-scope">Source and research</a></p></dialog>
+<script type="module" src="./atlas.js"></script></body></html>

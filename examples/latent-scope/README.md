@@ -2,6 +2,10 @@
 
 A static, client-side instrument for a 1B parameter Llama model. WebLLM performs prefill and generation in WebGPU; a WebGL2 canvas renders a small rolling texture of next-token probabilities. The diagram maps the prompt, model architecture, returned candidate distribution, and decoded reply onto one screen. Green stages display input or runtime-returned measurements. Blue stages are **architecture only**; they do not claim to expose weights or internal activations.
 
+## New: activation atlas
+
+Open `atlas.html` for the experimental streaming 3D map of actual middle-layer activations. Start with the two recorded CPU traces, or load the separate ONNX/WebGPU model. Coordinates are frozen across runs; labels are reference-prompt categories, not causal features. See [implementation, measurements and limitations](docs/activation-atlas-implementation.md). Live iPhone validation remains pending.
+
 ## Run locally
 
 ```sh

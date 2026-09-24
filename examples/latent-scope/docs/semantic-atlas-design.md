@@ -2,6 +2,8 @@
 
 Research and design note, 24 September 2026. This extends [the interpretability roadmap](interpretability-roadmap.md). The current Latent Scope build observes WebLLM output tokens and up to five rival probabilities; it does **not** receive hidden states. Everything below that depends on hidden states is a proposed experiment, not a claim about the running dashboard.
 
+Implementation update: the separate `atlas.html` experiment now captures a named residual state. See [implementation and validation](activation-atlas-implementation.md). The original WebLLM dashboard still exposes probabilities only. Proposed SAE/probe/causal functionality below remains future work.
+
 ## The key distinction
 
 An output embedding of generated text can describe what was *said*. A final-position residual activation at a named layer, collected while predicting the next token, can encode information that is not yet said. An SAE feature is a learned coordinate of that activation, not one weight or one neuron. A feature firing correlates with a representation; a demonstrated contribution to a target choice additionally needs attribution and a controlled intervention. A chain-of-thought string is output text and need not disclose this computation.
