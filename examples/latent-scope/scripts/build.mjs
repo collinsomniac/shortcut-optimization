@@ -1,5 +1,12 @@
 import {build} from 'esbuild';
-import {mkdir,copyFile} from 'node:fs/promises';
-await build({entryPoints:['src/app.js','src/atlas.js','src/atlas-worker.js'],bundle:true,format:'esm',platform:'browser',target:'es2022',outdir:'dist',minify:true});
+import {mkdir,copyFile,readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+const hash=createHash('sha256');
+for(const file of ['src/atlas.js','src/atlas-view.js','src/atlas-math.js','src/atlas-worker.js','dist/atlas.css'])hash.update(await readFile(file));
+const version=hash.digest('hex').slice(0,12);
+await build({entryPoints:['src/app.js','src/atlas.js','src/atlas-worker.js'],bundle:true,format:'esm',platform:'browser',target:'es2022',outdir:'dist',minify:true,define:{__ATLAS_BUILD__:JSON.stringify(version)}});
+let html=await readFile('dist/atlas.html','utf8');
+html=html.replace(/\.\/atlas\.(js|css)(?:\?v=[a-z0-9]+)?/g,(_,ext)=>`./atlas.${ext}?v=${version}`);
+await writeFile('dist/atlas.html',html);
 await mkdir('dist/vendor',{recursive:true});
 for(const name of ['ort-wasm-simd-threaded.jsep.mjs','ort-wasm-simd-threaded.jsep.wasm'])await copyFile('node_modules/onnxruntime-web/dist/'+name,'dist/vendor/'+name);

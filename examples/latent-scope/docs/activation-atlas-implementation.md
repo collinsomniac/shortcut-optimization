@@ -56,3 +56,9 @@ The Linux wrapper denies socket syscalls before importing the inference runtime 
 ## Sources and attribution
 
 See the [source ledger](../../../docs/research/source-ledger.md), section “Latent Scope activation atlas”. Model materials retain [Llama3.2 license](../dist/atlas/LICENSE.txt), use policy and notice; application code follows the repository license. Built with Llama.
+
+### Published browser check
+
+GitHub Pages Actions installation,9 tests, build and deployment succeeded. Cloud Chrome reproduced OCR/recipe playback, first/middle/end scrubbing, trace switching, hide/show, and export/reimport of a48-event trace. Export's browser automation event timed out, but the downloaded JSON was present and independently validated, then successfully reimported. Live-load capability detection reports missing shader-f16 and restores the load control in this browser. WebGL is disabled here; the perspective Canvas2D fallback rendered the real coordinates. GPU rendering and actual iPhone inference are not validated by these checks.
+
+A390×660 iframe viewport had equal client/scroll dimensions (390×660), with no page overflow. This is responsive-layout simulation, not Safari/device emulation. `atlas-layout-check.html` provides430×850,390×660 and760×390 cases. Visible landmark overlap prompted deterministic screen-space label separation and a closer default camera, with no change to data coordinates. A cached old bundle delayed that fix during verification; the build now versions JS/CSS/worker URLs and revalidates graph/atlas fetches.

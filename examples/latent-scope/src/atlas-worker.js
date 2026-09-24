@@ -9,8 +9,8 @@ async function load(){
  try{
   if(!navigator.gpu)throw Error('Live capture requires WebGPU. Recorded traces are available.');
   const adapter=await navigator.gpu.requestAdapter();if(!adapter?.features.has('shader-f16'))throw Error('Live capture requires WebGPU shader-f16. Recorded traces are available.');
-  atlas=await(await fetch(new URL('./atlas/reference-atlas.json',import.meta.url))).json();project=makeProjector(atlas);
-  const graph=await(await fetch(new URL('./atlas/model_q4f16.onnx',import.meta.url))).arrayBuffer();
+  atlas=await(await fetch(new URL('./atlas/reference-atlas.json',import.meta.url),{cache:'no-cache'})).json();project=makeProjector(atlas);
+  const graph=await(await fetch(new URL('./atlas/model_q4f16.onnx',import.meta.url),{cache:'no-cache'})).arrayBuffer();
   const hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',graph)),x=>x.toString(16).padStart(2,'0')).join('');
   if(hash!==atlas.graphSha256)throw Error('Model graph and atlas mismatch. Refresh this page.');
   const graphURL=`https://huggingface.co/${MODEL}/resolve/${REVISION}/onnx/model_q4f16.onnx`;
