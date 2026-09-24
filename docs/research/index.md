@@ -23,7 +23,8 @@ A useful north-star is not unrestricted UI control. It is a versioned capability
 | Fast learned decisions | bounded classification, scoring, zero-shot labels and calibration | Jev, Laya, GLiClass, SetFit-style specialists | model/provider-documented; no project phone result |
 | Generative inference | interpretation, synthesis, planning | Use Model, Gemma, wllama, remote providers | documented/model-documented; no project benchmark |
 | Native AI integration | bring custom/local/remote models into Apple model sessions | Foundation Models LanguageModel/Executor, Dynamic Profiles, Core AI | documented for app developers; no project app |
-| External control plane | durable coordination, builds, training, optional inference | GitHub, Supabase, Colab, OpenRouter | plan-documented; account/device measurements separate |
+| Shortcut management/control | inventory, generation, versioning, execution, receipts | native Shortcuts management actions, Describe a Shortcut, worker/compiler adapters | public management documented; arbitrary graph editing remains constrained |
+| External control plane | durable coordination, builds, training, optional inference | GitHub, Supabase, Colab, OpenRouter | plan-documented; live harness topology inspected separately |
 
 Primary platform references include Apple's [Shortcuts User Guide](https://support.apple.com/guide/shortcuts/welcome/ios), [WWDC26 Shortcuts session](https://developer.apple.com/videos/play/wwdc2026/310/), [Foundation Models provider session](https://developer.apple.com/videos/play/wwdc2026/339/), [agentic Foundation Models session](https://developer.apple.com/videos/play/wwdc2026/242/), and [Core AI overview](https://developer.apple.com/videos/play/wwdc2026/324/). The broader source inventory is in [source ledger](source-ledger.md).
 
@@ -34,6 +35,7 @@ Primary platform references include Apple's [Shortcuts User Guide](https://suppo
 3. **Treat a Shortcut as a program, not a screenshot.** A useful optimizer eventually needs a graph/IR view of actions, typed edges, side effects, permissions and costs. See [Shortcut as program](shortcut-as-program.md).
 4. **Separate planner, decision, executor and transport.** A conversation agent can plan without pretending it directly controls iOS; Shortcuts/App Intents remain execution authorities, while explicit receipts close the loop.
 5. **Compose capabilities into skills.** The most valuable workflows are likely to combine context collection, state, bounded decisions, app/API actions, verification and recovery rather than expose hundreds of raw actions directly to a model. See [Use-case atlas](use-cases.md) and [Extension ecosystem](extension-ecosystem.md).
+6. **Treat Shortcuts as versioned executable artifacts.** Inventory, native management, exported snapshots, generation strategies, tests and receipts should sit behind a stable semantic tool surface rather than expose UI coordinates or raw Supabase tables. See [Shortcut Worker control plane](shortcut-worker-control-plane.md) and [Supabase compartmentalization](supabase-compartmentalization.md).
 
 These are hypotheses and design directions, not device-verified performance claims.
 
@@ -56,5 +58,7 @@ During the current research phase, optimize for breadth plus traceability: disco
 - What representation would let an optimizer reason about latency, energy, quota, privacy, determinism, permissions and expected error without knowing every app implementation?
 - Which existing community tools already solve compilation, signing, catalogs, updates or action metadata well enough that this project should integrate instead of rebuild?
 - Can machine-readable third-party action catalogs be normalized into a portable capability ontology that future agents can retrieve from safely?
+- Can one bootstrap Shortcut expose native library inventory/run/manage operations strongly enough that a fresh chat can treat the device as a versioned Shortcut workspace?
+- Which structural-edit route becomes dependable first: public native generation, Describe-a-Shortcut UI automation, a companion app, or an artifact compiler/signing pipeline?
 
 Testing is deliberately deferred, but every research note should make eventual falsification easier.
