@@ -1,56 +1,73 @@
 {
-  "protocol": "shortcut-worker/0.1",
+  "protocol": "shortcut-worker/0.2",
+  "transport": {
+    "job_facade": "public.submit_shortcut_job(operation, params, ttl)",
+    "worker": "iphone-main",
+    "dispatch_method": "shortcuts.control",
+    "note": "Agents should use the shortcuts.* semantic surface; the shared RPC queue is transport, not the user-facing API."
+  },
   "methods": {
+    "shortcuts.register": {
+      "operation": "register",
+      "effect": "reversible_write",
+      "worker": "iphone-main",
+      "native_status": "bootstrap_only"
+    },
     "shortcuts.capabilities": {
+      "operation": "capabilities",
       "effect": "read",
       "worker": "iphone-main"
     },
     "shortcuts.inventory.list": {
+      "operation": "list",
       "effect": "read",
       "worker": "iphone-main"
     },
-    "shortcuts.inventory.export": {
-      "effect": "reversible_write",
-      "worker": "iphone-main"
-    },
     "shortcuts.get": {
+      "operation": "get",
       "effect": "read",
       "worker": "iphone-main|compiler"
     },
     "shortcuts.run": {
+      "operation": "run",
       "effect": "runtime",
       "worker": "iphone-main"
     },
     "shortcuts.open": {
+      "operation": "open",
       "effect": "ui_handoff",
       "worker": "iphone-main"
     },
     "shortcuts.generate": {
+      "operation": "generate",
       "effect": "reversible_write",
       "worker": "iphone-main|compiler"
     },
     "shortcuts.edit": {
+      "operation": "edit",
       "effect": "reversible_write",
-      "worker": "iphone-main|compiler"
+      "worker": "iphone-main|compiler",
+      "native_status": "unsupported_until_builder_or_compiler_adapter"
     },
     "shortcuts.rename": {
+      "operation": "rename",
       "effect": "reversible_write",
       "worker": "iphone-main"
     },
     "shortcuts.move": {
+      "operation": "move",
       "effect": "reversible_write",
       "worker": "iphone-main"
     },
     "shortcuts.delete": {
+      "operation": "delete",
       "effect": "destructive",
-      "worker": "iphone-main"
+      "worker": "iphone-main",
+      "requires": "confirm=true"
     },
     "shortcuts.create_link": {
+      "operation": "create_link",
       "effect": "external_share",
-      "worker": "iphone-main"
-    },
-    "shortcuts.validate": {
-      "effect": "read_or_benign_run",
       "worker": "iphone-main"
     },
     "workspace.list": {
@@ -70,9 +87,14 @@
     "proposed",
     "drafted",
     "installed",
+    "registered",
     "launched",
     "executed",
     "verified",
+    "updated",
+    "shared",
+    "deleted",
+    "confirmation_required",
     "conflict",
     "unsupported",
     "failed",
