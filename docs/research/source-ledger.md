@@ -93,6 +93,7 @@ Reviewed 2026-09-22/23. This ledger complements the smaller [core source list](.
 | [AI Actions](https://sindresorhus.com/ai-actions) | developer | model-provider Shortcuts actions and Keychain-backed user API credentials |
 | [a-Shell](https://github.com/holzschu/a-shell#shortcuts) | maintainer | Shortcuts Execute Command/Put File/Get File and mobile shell |
 | [a-Shell commands](https://github.com/holzschu/a-Shell-commands) | maintainer | reusable WASM command ecosystem |
+| [Shortcuts Playground](https://github.com/viticci/shortcuts-playground-plugin) | maintainer/community | current iOS/macOS 27 ToolKit v78 action catalogs, parameter/enum metadata, validator, golden examples and compiler patterns |
 | [shortcuts-generator skill](https://github.com/cranecj/shortcuts-generator/blob/main/SKILL.md) | community | programmatic plist generation + Apple signing precedent |
 | [shortcut-lib format notes](https://github.com/findlaywebb/shortcut-lib/blob/main/docs/format.md) | community | reverse-engineered serialized structure |
 | [apple-shortcuts](https://github.com/julian-englert/apple-shortcuts) | community/macOS | reverse-engineered macOS Shortcuts SQLite/action extraction and plist build/sign/import research; requires private DB access/Apple CLI and is not an iPhone API |
