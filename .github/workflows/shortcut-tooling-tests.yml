@@ -1,0 +1,35 @@
+name: Shortcut tooling tests
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tooling/build_generate_shortcut_bootstrap.py'
+      - 'tooling/test_build_generate_shortcut_bootstrap.py'
+      - 'examples/shortcut-worker/bootstrap-prompt.txt'
+      - '.github/workflows/shortcut-tooling-tests.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Unit tests
+        run: python -m unittest tooling/test_build_generate_shortcut_bootstrap.py
+      - name: Build live donor bootstrap
+        run: |
+          python tooling/build_generate_shortcut_bootstrap.py \
+            --prompt-file examples/shortcut-worker/bootstrap-prompt.txt \
+            --output /tmp/shortcuts-control-bootstrap.shortcut
+          python - <<'PY'
+          import plistlib
+          p=plistlib.load(open('/tmp/shortcuts-control-bootstrap.shortcut','rb'))
+          a=p['WFWorkflowActions']
+          assert len(a)==1
+          assert a[0]['WFWorkflowActionIdentifier']=='com.apple.shortcuts.GenerateShortcutAction'
+          assert 'shortcuts.control' in a[0]['WFWorkflowActionParameters']['prompt']
+          print('bootstrap verified', len(open('/tmp/shortcuts-control-bootstrap.shortcut','rb').read()))
+          PY
