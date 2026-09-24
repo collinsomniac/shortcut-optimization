@@ -1,0 +1,1 @@
+{"name":"latent-scope","version":"0.1.0","private":true,"type":"module","scripts":{"build":"esbuild src/app.js --bundle --format=esm --target=es2022 --outfile=dist/app.js"},"dependencies":{"@mlc-ai/web-llm":"0.2.85"},"devDependencies":{"esbuild":"^0.25.0"}}

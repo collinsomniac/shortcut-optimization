@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#081018"><title>Latent Scope | Model flow</title><link rel="stylesheet" href="./style.css"></head>
+<body><div class="app">
+<header class="top"><div class="brand"><span class="mark">◈</span><strong>LATENT SCOPE</strong><span class="top-sub">LIVE MODEL FLOW</span></div><span id="gpuState" class="status">Checking GPU</span></header>
+<main class="workspace" id="workspace">
+<section class="scope" aria-label="Model flow and token choices">
+<div class="scope-head"><span>LLAMA 3.2 · 1B · LOCAL</span><strong id="liveLabel">NO SIGNAL</strong></div>
+<div class="flow" aria-label="Architecture schematic and observed input-output boundaries">
+ <div class="flow-node observed"><small>01 · INPUT</small><strong>Prompt</strong><span id="inputPreview">Waiting for input</span></div>
+ <div class="flow-node observed"><small>02 · TIMED</small><strong>Prefill</strong><span id="prefillValue">Not started</span></div>
+ <div class="flow-node schematic"><small>03 · SCHEMATIC</small><strong>Embeddings</strong><span>Token positions</span></div>
+ <div class="flow-node schematic"><small>04 · SCHEMATIC</small><strong>Attention</strong><span>Q · K · V</span></div>
+ <div class="flow-node schematic"><small>05 · SCHEMATIC</small><strong>Layers / MLP</strong><span>Internal state</span></div>
+ <div class="flow-node observed"><small>06 · OBSERVED</small><strong>Candidate scores</strong><span>Top 5 + remainder</span></div>
+ <div class="flow-node observed"><small>07 · OBSERVED</small><strong>Decoded text</strong><span id="outputPreview">Waiting for output</span></div>
+</div>
+<div class="measurement-key"><span><i class="measured-dot"></i>Observed at API boundary</span><span><i class="schematic-dot"></i>Model structure only</span></div>
+<div class="stage"><canvas id="gl" aria-label="Last 64 generated tokens: chosen probability and alternative candidates"></canvas><div class="stagecorner"><span>DECODING · 64 STEPS</span><span id="frameLabel">0 TOKENS</span></div><div class="stagelegend" id="stageLegend">Columns are output tokens. Rows are sampled token and distinct alternatives.</div></div>
+<div class="step-controls" id="stepControls" hidden><label id="stepLabel" for="stepSlider">TOKEN</label><input id="stepSlider" type="range" min="0" max="0" value="0" aria-label="Inspect a generated token"><button id="followBtn" type="button" hidden>Live ↗</button></div>
+<div class="choice-head"><strong>WHAT COULD COME NEXT</strong><span>Selected step · one-token candidates</span></div>
+<div class="candidate-inspector" id="candidateInspector" aria-label="Selected token choices"><div class="empty-choices">Send a prompt to see the sampled token and its alternatives.</div></div>
+<div class="readouts"><div><label>SELECTED</label><strong id="tokenValue">—</strong></div><div><label>PROBABILITY</label><strong id="probValue">—</strong></div><div><label>TOP-5 ENTROPY*</label><strong id="entropyValue">—</strong></div><div><label>DECODE RATE</label><strong id="rateValue">—</strong></div></div>
+</section>
+<section class="console" id="console" aria-label="Chat with local model"><div class="consolehead"><h2>Conversation</h2><button id="chatToggle" type="button" aria-expanded="true" aria-controls="chatBody">Focus diagram ↑</button></div><div class="chatBody" id="chatBody">
+<div class="loadpanel" id="loadPanel"><p>Load the 1B model in this browser. Inference and chat stay on your device.</p><button id="loadBtn" type="button">Load model ↗</button><div class="progress" id="progress" hidden><div id="progressBar"></div></div><small id="loadStatus">Ready to initialize</small></div>
+<div class="testprompts"><button type="button" data-prompt="Complete this sentence with one short sentence: The sky is">Predictable</button><button type="button" data-prompt="Write a creative opening line about a door in the ocean.">Creative</button><button type="button" data-prompt="Answer briefly: should a robot save its battery or help a stranger?">Tradeoff</button><button type="button" id="downloadTrace" disabled title="Save latest run including chat text">Save trace ↓</button></div>
+<div class="messages" id="messages" role="log" aria-live="polite"></div>
+<form id="chatForm" class="composer"><textarea id="prompt" rows="2" placeholder="Ask anything…" aria-label="Your message" disabled></textarea><div class="composefoot"><span id="composeHint">Load model to chat</span><div><button type="button" id="stopBtn" hidden>Stop</button><button type="submit" id="sendBtn" disabled>Send ↗</button></div></div></form>
+</div></section></main>
+<details class="about" id="about"><summary>What these measurements mean</summary><p>The input and prefill timer describe the prompt processing boundary: time to first returned token also includes scheduling and sampling. The colored model stages are an architecture diagram; this browser runtime does not provide their hidden activations or weight values. The table and matrix use sampled token log probabilities returned by WebLLM. Alternatives are single tokens, not entire possible replies. *Entropy is normalized among the returned top candidates, not the full vocabulary.</p></details>
+</div><script type="module" src="./app.js"></script></body></html>
