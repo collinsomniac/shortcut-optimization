@@ -33,8 +33,9 @@ Keep planner, decision, executor, transport/state and verification separable. Tr
 - wllama: browser llama.cpp/WebGPU/WASM path for GGUF generative models; mobile memory and lifetime are unresolved.
 - Third-party capability providers: Actions publishes 180+ actions plus AI-readable parameter/return metadata; Scriptable, a-Shell, Pyto, Toolbox Pro and Pushcut cover JS/shell/Python/action-library/remote-execution niches. See [extension ecosystem](../docs/research/extension-ecosystem.md).
 - a-Shell: documented Execute Command/Put File/Get File Shortcuts actions plus WASM/CLI ecosystem.
+- Native Shortcut library management: Apple documents Create/Delete/Open Folder, Create Folder/Create iCloud Link/Add to Home Screen, and Move/Rename actions across recent releases; Describe a Shortcut can create/refine workflows, but arbitrary public action-graph mutation remains constrained. See [Shortcut Worker control plane](../docs/research/shortcut-worker-control-plane.md).
 - Mac `shortcuts` CLI and community compilers: useful optional artifact/signing/inspection backends; private plist structure is version-sensitive.
-- GitHub/Supabase/Colab/OpenRouter: useful build, control-plane, training and escalation surfaces, not interchangeable compute.
+- GitHub/Supabase/Colab/OpenRouter: useful build, control-plane, training and escalation surfaces, not interchangeable compute. The live `iphone-harness` control plane has now been inspected and its additive compartmentalization path is documented in [Supabase compartmentalization](../docs/research/supabase-compartmentalization.md).
 
 ## Research protocol
 
@@ -56,6 +57,6 @@ Do not claim silent Shortcut installation, unrestricted phone control, stable ac
 
 Two questions organize the eventual engineering work: (1) can an optimizer reduce model/network/interaction cost in agent-generated Shortcuts without changing intended behavior, and (2) can specialized non-generative decision models replace a useful fraction of generative inference calls while preserving decision quality?
 
-Concrete architecture specimens now include [Adaptive Capture Router](../examples/adaptive-capture-router/) for workflow autonomy and [CourierGrid](../examples/courier-grid/) for repeated sequential decisions and learned optional frontier assistance. For iOS deployment boundaries, see [Sub-second decision inference from Shortcuts](../docs/research/shortcuts-fast-inference.md).
+Concrete architecture specimens now include [Adaptive Capture Router](../examples/adaptive-capture-router/) for workflow autonomy, [CourierGrid](../examples/courier-grid/) for repeated sequential decisions and learned optional frontier assistance, and [Shortcut Worker](../examples/shortcut-worker/) for a fresh-chat semantic control surface. For iOS deployment boundaries, see [Sub-second decision inference from Shortcuts](../docs/research/shortcuts-fast-inference.md).
 
 Until the project enters the experiment phase, the job is to make those questions—and alternative architectures that might beat them—better informed.
