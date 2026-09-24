@@ -34,6 +34,7 @@ Keep planner, decision, executor, transport/state and verification separable. Tr
 - Third-party capability providers: Actions publishes 180+ actions plus AI-readable parameter/return metadata; Scriptable, a-Shell, Pyto, Toolbox Pro and Pushcut cover JS/shell/Python/action-library/remote-execution niches. See [extension ecosystem](../docs/research/extension-ecosystem.md).
 - a-Shell: documented Execute Command/Put File/Get File Shortcuts actions plus WASM/CLI ecosystem.
 - Native Shortcut library management: Apple documents Create/Delete/Open Folder, Create Folder/Create iCloud Link/Add to Home Screen, and Move/Rename actions across recent releases; Describe a Shortcut can create/refine workflows, but arbitrary public action-graph mutation remains constrained. See [Shortcut Worker control plane](../docs/research/shortcut-worker-control-plane.md).
+- Shortcuts Playground: use its current iOS 27 ToolKit/parameter catalogs and validator as an upstream compiler/schema source; do not confuse static action coverage with the live phone's installed capability surface.
 - Mac `shortcuts` CLI and community compilers: useful optional artifact/signing/inspection backends; private plist structure is version-sensitive.
 - GitHub/Supabase/Colab/OpenRouter: useful build, control-plane, training and escalation surfaces, not interchangeable compute. The live `iphone-harness` control plane has now been inspected and its additive compartmentalization path is documented in [Supabase compartmentalization](../docs/research/supabase-compartmentalization.md).
 
