@@ -19,6 +19,11 @@ Reviewed 2026-09-22/23. This ledger complements the smaller [core source list](.
 | [App Intents Testing](https://developer.apple.com/documentation/AppIntentsTesting) | primary | Out-of-process intent/entity/query testing surface |
 | [AppIntent supportedModes](https://developer.apple.com/documentation/appintents/appintent/supportedmodes) | primary | explicit background/immediate/dynamic/deferred execution modes for App Intents |
 | [Run JavaScript on Webpage](https://support.apple.com/guide/shortcuts/intro-to-the-run-javascript-on-webpage-action-apd218e2187d/ios) | primary | active-Safari requirement, async completion, JSON return types and time-limit boundary |
+| [Shortcuts URL scheme: open/create/run](https://support.apple.com/guide/shortcuts/open-create-and-run-a-shortcut-apda283236d7/ios) | primary | open app/editor, create blank Shortcut, open/run saved Shortcut by name |
+| [Run Shortcut from URL](https://support.apple.com/guide/shortcuts/run-a-shortcut-from-a-url-apd624386f42/ios) | primary | invoke an already-installed Shortcut with text/clipboard input |
+| [Apple Shortcuts release notes](https://support.apple.com/121131) | primary | recent native management actions including Create Folder/iCloud Link/Home Screen and Move/Rename |
+| [Older Shortcuts release notes](https://support.apple.com/101583) | primary | Create Shortcut, Delete Shortcuts, Open Folder and related management actions |
+| [Create a custom shortcut / Describe a Shortcut](https://support.apple.com/guide/shortcuts/create-a-custom-shortcut-apd84c576f8c/ios) | primary | natural-language creation and modification through Apple's builder UI |
 | [Shortcuts command-line tool](https://support.apple.com/guide/shortcuts-mac/run-shortcuts-from-the-command-line-apd455c82f02/mac) | primary | macOS list/view/run/sign artifact backend |
 | [Safari 26 WebGPU](https://webkit.org/blog/17333/webkit-features-in-safari-26-0/) | primary/WebKit | WebGPU on iOS Safari; explicitly names ONNX Runtime and Transformers.js support |
 | [Safari Web Extensions](https://developer.apple.com/documentation/safariservices/safari-web-extensions) | primary | iOS Safari extension packaging, page integration and browser-extension surface |
@@ -90,6 +95,7 @@ Reviewed 2026-09-22/23. This ledger complements the smaller [core source list](.
 | [a-Shell commands](https://github.com/holzschu/a-Shell-commands) | maintainer | reusable WASM command ecosystem |
 | [shortcuts-generator skill](https://github.com/cranecj/shortcuts-generator/blob/main/SKILL.md) | community | programmatic plist generation + Apple signing precedent |
 | [shortcut-lib format notes](https://github.com/findlaywebb/shortcut-lib/blob/main/docs/format.md) | community | reverse-engineered serialized structure |
+| [apple-shortcuts](https://github.com/julian-englert/apple-shortcuts) | community/macOS | reverse-engineered macOS Shortcuts SQLite/action extraction and plist build/sign/import research; requires private DB access/Apple CLI and is not an iPhone API |
 | [Hidden Generate Shortcut report](https://www.reddit.com/r/shortcuts/comments/1vgk21f/new_shortcut_action_generate_shortcut_from/) | reported/community | prototype self-generation/management lead; not a released API guarantee |
 
 See [extension ecosystem](extension-ecosystem.md) for a comparative synthesis of action providers/code runners and [ecosystem](../ecosystem.md) for Cherri, Shortcuts Playground, Jelly/Open Jellycuts, RoutineHub updater, ScPL and catalog precedents.
@@ -102,7 +108,9 @@ See [extension ecosystem](extension-ecosystem.md) for a comparative synthesis of
 | [Google AI plan benefits](https://support.google.com/googleone/answer/14534406?hl=en) | primary | current AI Pro entitlements such as 200 CCUs and developer benefits |
 | [GitHub included usage](https://docs.github.com/en/billing/reference/product-usage-included) | primary | Free Actions/Codespaces quotas |
 | [GitHub-hosted runners](https://docs.github.com/en/actions/reference/runners/github-hosted-runners) | primary | public/private standard runner resources |
-| [Supabase billing](https://supabase.com/docs/guides/platform/billing-on-supabase) | primary | Free database/storage/egress/realtime/function quotas |
+| [Supabase billing](https://supabase.com/docs/guides/platform/billing-on-supabase) | primary | Free quotas and current two-active-project Free-plan limit |
+| [Supabase custom schemas](https://supabase.com/docs/guides/api/using-custom-schemas) | primary | internal schema compartmentalization and deliberate exposed-schema configuration |
+| [Supabase API security](https://supabase.com/docs/guides/api/securing-your-api) | primary | dedicated API schema, explicit grants, RLS, default privilege guidance |
 | [Supabase Edge Function limits](https://supabase.com/docs/guides/functions/limits) | primary | CPU/memory/wall-clock boundaries |
 | [OpenRouter pricing](https://openrouter.ai/pricing) | primary/provider | current free-model/request surface |
 | [OpenAI: ChatGPT vs API billing](https://help.openai.com/en/articles/9039756-billing-settings-in-chatgpt-vs-platform) | primary/provider | ChatGPT subscription and API are separate billing systems |
