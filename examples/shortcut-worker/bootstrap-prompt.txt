@@ -1,0 +1,15 @@
+Create a shortcut named "shortcuts.control" that acts as a non-interactive JSON RPC controller for the Shortcuts library.
+
+Accept Shortcut Input as either a Dictionary or JSON text. Support these operations using native Shortcuts actions:
+
+- list: Get My Shortcuts and return a structured list of shortcut names without running them.
+- run: find the exact shortcut named by "name", run it with "shortcut_input", and return its output. Never run shortcuts.control recursively.
+- open: open the exact named shortcut and return status "launched".
+- generate: use Generate Shortcut with "description"; optionally Rename Shortcut to "name"; optionally create/move it into "folder"; optionally Create iCloud Link when create_link=true; only run it when run_after_generate=true. Return the generated shortcut metadata/link/output.
+- rename: exact-name lookup then Rename Shortcut to new_name.
+- move: exact-name lookup, create folder if needed, then Move Shortcut.
+- delete: require confirm=true, otherwise return confirmation_required; then Delete Shortcuts.
+- create_link: exact-name lookup then Create iCloud Link for Shortcut.
+- capabilities: return controller_version "0.1" and which management actions used by this controller are available.
+
+Use Search In Shortcuts or Get My Shortcuts for exact-name lookup as appropriate. Prefer native Shortcuts actions. Do not show alerts or ask questions in normal RPC execution. Every branch must finish with a Dictionary containing ok, status, op, and useful error details when unsuccessful. Keep destructive behavior behind confirm=true.
