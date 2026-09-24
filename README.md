@@ -17,6 +17,8 @@ Phone-first research and reusable building blocks for AI, Apple Shortcuts, local
 | Compare Jev/Laya-style decision models, training, teacher pairing and iOS/ChatGPT surfaces | [System-One decision models](docs/research/system-one-decision-models.md) |
 | Study learned optional escalation with a browser game | [CourierGrid benchmark](docs/research/game-policy-benchmark.md) and [browser example](examples/courier-grid/) |
 | Invoke fast local classifiers from Shortcuts | [Sub-second Shortcuts inference](docs/research/shortcuts-fast-inference.md) |
+| Build a chat-controllable Shortcut library worker | [Shortcut Worker control plane](docs/research/shortcut-worker-control-plane.md) and [protocol example](examples/shortcut-worker/) |
+| Understand/reorganize the existing Supabase harness | [Supabase compartmentalization](docs/research/supabase-compartmentalization.md) |
 | Compare rules, Laya, local LLMs and cloud models | [Model routing](docs/research/model-routing.md) and [inference routes](docs/inference-routes.md) |
 | Trace research claims back to sources | [Research source ledger](docs/research/source-ledger.md) |
 | Trigger a shortcut from chat or the browser | [Links and handoffs](docs/links-and-handoffs.md) |
