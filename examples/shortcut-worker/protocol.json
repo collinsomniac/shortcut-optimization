@@ -1,0 +1,81 @@
+{
+  "protocol": "shortcut-worker/0.1",
+  "methods": {
+    "shortcuts.capabilities": {
+      "effect": "read",
+      "worker": "iphone-main"
+    },
+    "shortcuts.inventory.list": {
+      "effect": "read",
+      "worker": "iphone-main"
+    },
+    "shortcuts.inventory.export": {
+      "effect": "reversible_write",
+      "worker": "iphone-main"
+    },
+    "shortcuts.get": {
+      "effect": "read",
+      "worker": "iphone-main|compiler"
+    },
+    "shortcuts.run": {
+      "effect": "runtime",
+      "worker": "iphone-main"
+    },
+    "shortcuts.open": {
+      "effect": "ui_handoff",
+      "worker": "iphone-main"
+    },
+    "shortcuts.generate": {
+      "effect": "reversible_write",
+      "worker": "iphone-main|compiler"
+    },
+    "shortcuts.edit": {
+      "effect": "reversible_write",
+      "worker": "iphone-main|compiler"
+    },
+    "shortcuts.rename": {
+      "effect": "reversible_write",
+      "worker": "iphone-main"
+    },
+    "shortcuts.move": {
+      "effect": "reversible_write",
+      "worker": "iphone-main"
+    },
+    "shortcuts.delete": {
+      "effect": "destructive",
+      "worker": "iphone-main"
+    },
+    "shortcuts.create_link": {
+      "effect": "external_share",
+      "worker": "iphone-main"
+    },
+    "shortcuts.validate": {
+      "effect": "read_or_benign_run",
+      "worker": "iphone-main"
+    },
+    "workspace.list": {
+      "effect": "read",
+      "worker": "iphone-main|desktop-main"
+    },
+    "workspace.read": {
+      "effect": "read",
+      "worker": "iphone-main|desktop-main"
+    },
+    "workspace.write": {
+      "effect": "reversible_write",
+      "worker": "iphone-main|desktop-main"
+    }
+  },
+  "result_statuses": [
+    "proposed",
+    "drafted",
+    "installed",
+    "launched",
+    "executed",
+    "verified",
+    "conflict",
+    "unsupported",
+    "failed",
+    "cancelled"
+  ]
+}
