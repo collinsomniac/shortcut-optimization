@@ -67,6 +67,18 @@ Bootstrap one worker manually. If the device exposes a callable Generate Shortcu
 
 This is the ideal iOS-native path if the action is actually available on the target release. Feature-detect it; never make the harness depend on a hidden feature flag.
 
+### Schema/validation layer — Shortcuts Playground
+
+[Federico Viticci's Shortcuts Playground](https://github.com/viticci/shortcuts-playground-plugin) now ships static iOS/macOS 27 ToolKit v78 catalogs, first-party parameter keys, AppIntent identifiers, enum metadata, golden workflow examples, and a Python validator. It can therefore be used on the Windows desktop as a **design and validation knowledge source** even though its final Apple signing step is macOS-only.
+
+Use it to answer questions such as:
+- which iOS 27 action/AppIntent identifiers are known;
+- which top-level parameter keys are valid;
+- how control flow/variables serialize;
+- whether a generated compiler draft is structurally plausible.
+
+Do not let its static catalog override the target phone. The live iPhone inventory/action surface remains authoritative for installed third-party apps and actual runtime support.
+
 ### Strategy C — artifact compiler
 
 Export Shortcut objects to signed .shortcut files, decompile/inspect on a desktop/server, transform or build a new plist graph, then sign/import.
@@ -254,3 +266,8 @@ A chat cannot, by itself:
 A URL like `shortcuts://create-shortcut` opens the builder; it does not inject an arbitrary workflow description. A run URL only works for a shortcut that already exists in the collection.
 
 That gap is exactly what Shortcut Worker should close.
+
+
+## Implementation snapshot
+
+The first live control-plane pieces are deployed. See [Shortcut Worker implementation status](../implementation/shortcut-worker-status.md) for the current Supabase schema, callback receipt lane, native generator donor verification, GitHub signer probe, and the one-time phone bootstrap boundary.
