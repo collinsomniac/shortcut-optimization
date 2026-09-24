@@ -1,0 +1,5 @@
+node_modules/
+dist/app.js
+dist/atlas.js
+dist/atlas-worker.js
+dist/vendor/
