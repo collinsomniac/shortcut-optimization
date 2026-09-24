@@ -1,3 +1,7 @@
+# Recovery completed — 24 September 2026
+
+The source, generated graph/atlas, recordings, projection fixture and UI were recovered/rebuilt and saved on the development branch. See [current implementation and validation](../docs/activation-atlas-implementation.md). The historical interruption notes below are retained for provenance; their missing-file checklist is superseded.
+
 # Activation atlas development checkpoint — 2026-09-24
 
 This is an incomplete development branch, not a deployed or device-validated feature. The workspace disconnected during browser QA. Do not merge without completing the steps below.
