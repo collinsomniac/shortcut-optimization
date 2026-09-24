@@ -1,5 +1,7 @@
 # From decoding display to a feature atlas
 
+For the streaming semantic-map design, 2026 natural-language-activation research, model hooks and validation criteria, see [Semantic atlas design](semantic-atlas-design.md).
+
 Research snapshot: 22 September 2026. This document distinguishes what Latent Scope already measures from hypotheses about the model's internal computations. The current running model is WebLLM's quantized `Llama-3.2-1B-Instruct-q4f16_1-MLC` in an iPhone browser; the shader sees streamed token log probabilities, **not** weights, attention, neurons, or residual activations. “Save trace” now exports one run's conversation, sampled token, returned top-five log probabilities, and elapsed times as JSON on the device. It makes no network request. The file includes private chat text. Browser downloads and run-time responsiveness on the owner's phone still need confirmation.
 
 Progress: a token scrubber now pins any of the 64 latest decoding steps for exact candidate inspection. An [offline Qwen forward-hook probe](../research/README.md) captures a chosen block's final-position residual stream and optionally matching sparse features. That probe is prepared but has **not** been run against model weights in this environment; its JSON cannot be mixed with live Llama measurements.
