@@ -1,0 +1,68 @@
+name: Shortcut signer probe
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: macos-latest
+    steps:
+      - name: Show environment
+        run: |
+          sw_vers
+          which shortcuts || true
+          shortcuts --help || true
+
+      - name: Build minimal unsigned shortcut
+        run: |
+          python3 - <<'PY'
+          import plistlib
+          wf = {
+              "WFWorkflowClientVersion": "3300",
+              "WFWorkflowClientRelease": "1.0",
+              "WFWorkflowMinimumClientVersion": 900,
+              "WFWorkflowMinimumClientVersionString": "900",
+              "WFWorkflowIcon": {"WFWorkflowIconGlyphNumber": 59511, "WFWorkflowIconStartColor": 4282601983},
+              "WFWorkflowInputContentItemClasses": ["WFStringContentItem"],
+              "WFWorkflowOutputContentItemClasses": ["WFStringContentItem"],
+              "WFWorkflowTypes": [],
+              "WFWorkflowActions": [
+                  {
+                      "WFWorkflowActionIdentifier": "is.workflow.actions.text",
+                      "WFWorkflowActionParameters": {
+                          "WFTextActionText": "Shortcut signer probe"
+                      },
+                  }
+              ],
+          }
+          with open("probe.shortcut", "wb") as f:
+              plistlib.dump(wf, f, fmt=plistlib.FMT_BINARY)
+          PY
+          ls -l probe.shortcut
+
+      - name: Attempt Apple signing
+        id: sign
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          shortcuts sign --mode anyone --input probe.shortcut --output probe-signed.shortcut 2>&1 | tee signing.log
+          test -s probe-signed.shortcut
+
+      - name: Summarize
+        run: |
+          echo "sign_outcome=${{ steps.sign.outcome }}"
+          cat signing.log || true
+          ls -la probe*.shortcut || true
+          if [ -f probe-signed.shortcut ]; then
+            shasum -a 256 probe-signed.shortcut
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: shortcut-signer-probe
+          path: |
+            probe.shortcut
+            probe-signed.shortcut
+            signing.log
+          if-no-files-found: ignore
