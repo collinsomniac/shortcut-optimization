@@ -35,6 +35,7 @@ jobs:
       - run: |
           mkdir -p _site/latent-scope
           cp -a examples/latent-scope/dist/. _site/latent-scope/
+          printf '%s\n' '<meta http-equiv="refresh" content="0; url=latent-scope/"><a href="latent-scope/">Open Latent Scope</a>' > _site/index.html
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
