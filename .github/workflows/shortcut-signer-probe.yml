@@ -2,6 +2,9 @@ name: Shortcut signer probe
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/shortcut-signer-probe.yml'
 
 jobs:
   probe:
