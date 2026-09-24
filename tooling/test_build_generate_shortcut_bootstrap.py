@@ -1,7 +1,7 @@
 import plistlib
 import unittest
 
-from build_generate_shortcut_bootstrap import GENERATE_ACTION_ID, rewrite_prompt
+from tooling.build_generate_shortcut_bootstrap import GENERATE_ACTION_ID, rewrite_prompt
 
 
 class BootstrapTests(unittest.TestCase):
