@@ -13,6 +13,8 @@ Use this file when continuing development in a fresh conversation.
 
 Do not reconstruct state from old chat messages unless a repo/live-system discrepancy requires it.
 
+Track the concrete implementation checklist in [GitHub issue #4](https://github.com/collinsomniac/shortcut-optimization/issues/4). The current hardcoded registry snapshot is [`harness/registry.json`](../harness/registry.json).
+
 ## Live resources
 
 GitHub repository:
