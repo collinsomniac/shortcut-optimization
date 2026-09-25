@@ -66,6 +66,9 @@ jobs:
               out["files"].append(entry)
           print(json.dumps(out,indent=2))
           PY
+      - name: Validate grounded a-Shell export action
+        run: |
+          python tooling/validate_grounded_ashell_putfile.py build/library-manager/harness.shortcuts.library.plist
       - name: Validate against pinned iOS 27 catalog
         run: |
           python tooling/validate_shortcuts_playground_runtime.py \
