@@ -1,5 +1,41 @@
 # Shortcut Worker implementation status
 
+## Export-enabled controller v0.2 — 2026-09-25 UTC
+
+The current install candidate supersedes the earlier v0.1 signed controller.
+
+New operation: `export_to_worker`.
+
+Implementation:
+- resolve the exact Shortcut object using Get My Shortcuts + Name;
+- pass that native object to `AsheKube.app.a-Shell.PutFileIntent`;
+- `overwrite=true`, `ShowWhenRun=false`;
+- a-Shell's own intent handler copies the resulting INFile into
+  `group.AsheKube.a-Shell`, the same App Group used by the existing shell worker.
+
+Grounding:
+- a-Shell's current `Intents.intentdefinition` defines PutFile with File input
+  accepting public.item/public.content/public.data and background execution;
+- `PutFileIntentHandler.swift` copies the file into the App Group;
+- an independently exported Shortcut sample uses
+  `AsheKube.app.a-Shell.PutFileIntent` with the same parameter shape.
+
+The pinned Shortcuts Playground catalog is first-party and therefore reports
+this as an unknown third-party identifier. CI does **not** broadly suppress that
+finding. A dedicated validator permits exactly one reviewed PutFile action and
+checks its exact parameter contract before the first-party runtime/schema gate.
+
+Latest green build: `36096803489`.
+
+Signed v0.2:
+- 29,779 bytes;
+- AEA1;
+- SHA-256 `2d1968b1bcb432d1dfa8d31bdea19ca00c129b9ee7f0984a6b7645b90589e1ab`.
+
+Device import and export behavior remain unverified. If `export_to_worker`
+materializes `<name>.shortcut` in the a-Shell container, the harness gains a
+fully agent-accessible native export path without manual Share/File upload.
+
 ## Direct compiled library controller — 2026-09-25 UTC
 
 The current preferred route no longer depends on Apple Intelligence generation
