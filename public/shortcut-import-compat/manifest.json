@@ -1,0 +1,107 @@
+{
+  "schema_version": "2",
+  "fixtures": [
+    {
+      "slug": "cherri-basic-comments",
+      "filename": "cherri-basic-comments.shortcut",
+      "bytes": 23413,
+      "sha256": "7a787b608cf9576e5e12d09e38d72d6656cb87cb657115c691822623b9e5223f",
+      "name": "SO Compat 2B - Cherri Basic Comments",
+      "mode": "comments",
+      "action_count": 37,
+      "validator_exit": 1
+    },
+    {
+      "slug": "cherri-basic",
+      "filename": "cherri-basic.shortcut",
+      "bytes": 21923,
+      "sha256": "b366b07def83f979c59eaff6557d16279f135c2d037ea74bfd5ab26c4eb9b5d8",
+      "name": "SO Compat 2 - Cherri Basic",
+      "mode": "compact",
+      "action_count": 1,
+      "validator_exit": 1
+    },
+    {
+      "slug": "cherri-controlflow",
+      "filename": "cherri-controlflow.shortcut",
+      "bytes": 22476,
+      "sha256": "b597f4b94162f7435a3c7383933feac995be60cdb6c1ca412edaa1dae3867ec9",
+      "name": "SO Compat 5 - Cherri Control Flow",
+      "mode": "compact",
+      "action_count": 9,
+      "validator_exit": 1
+    },
+    {
+      "slug": "cherri-create",
+      "filename": "cherri-create.shortcut",
+      "bytes": 22206,
+      "sha256": "973591a54315af7dc188a73ef43b78854bf537b8b10b28423ca2e43dcf089ffb",
+      "name": "SO Compat 4 - Cherri Create",
+      "mode": "compact",
+      "action_count": 3,
+      "validator_exit": 1
+    },
+    {
+      "slug": "cherri-inventory",
+      "filename": "cherri-inventory.shortcut",
+      "bytes": 22083,
+      "sha256": "2466e4cc24e79520806013668d55e87685d3537426c93ffd31be14a8318a69a4",
+      "name": "SO Compat 3 - Cherri Inventory",
+      "mode": "compact",
+      "action_count": 2,
+      "validator_exit": 1
+    },
+    {
+      "slug": "known-good-copy-actions",
+      "filename": "known-good-copy-actions.shortcut",
+      "bytes": 22337,
+      "sha256": "384763f4cd4e2a5012950820a5c803dfac352f9f40f585a5a8f6ce202c8f5088"
+    },
+    {
+      "slug": "manager-v03-comments",
+      "filename": "manager-v03-comments.shortcut",
+      "bytes": 29816,
+      "sha256": "bfc322558683abb3b221b8fe70bf14add998839b4dd0e4b49efa2de033690446",
+      "name": "harness.shortcuts.library",
+      "mode": "comments",
+      "action_count": 176,
+      "validator_exit": 0
+    },
+    {
+      "slug": "manager-v03-compact",
+      "filename": "manager-v03-compact.shortcut",
+      "bytes": 28149,
+      "sha256": "78c8815f632b8990bb1a203437a779acb8220b9192cb72d1cb8d033da1836c62",
+      "name": "harness.shortcuts.library",
+      "mode": "compact",
+      "action_count": 134,
+      "validator_exit": 0
+    },
+    {
+      "slug": "manual-hubsign-probe",
+      "filename": "manual-hubsign-probe.shortcut",
+      "bytes": 22152,
+      "sha256": "733eea54bc8bbbda4d48ccd3177d0007243fadba770c304f660b859ad2fd9b43"
+    },
+    {
+      "slug": "stager-v01-comments",
+      "filename": "stager-v01-comments.shortcut",
+      "bytes": 26951,
+      "sha256": "f58ff69c8bac525a95c7b5fff15a6ae159c319780c04c86182c05126c9a04b28",
+      "name": "harness.shortcuts.stage",
+      "mode": "comments",
+      "action_count": 115,
+      "validator_exit": 0
+    },
+    {
+      "slug": "stager-v01-compact",
+      "filename": "stager-v01-compact.shortcut",
+      "bytes": 23502,
+      "sha256": "4ddbc82d63f6ba27eb7c401c4c6e6b2bf77af8a31b25d207eb4698c7c6ce2574",
+      "name": "harness.shortcuts.stage",
+      "mode": "compact",
+      "action_count": 24,
+      "validator_exit": 1
+    }
+  ]
+}
