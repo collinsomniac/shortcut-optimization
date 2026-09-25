@@ -71,6 +71,31 @@ jobs:
           python tooling/validate_shortcuts_playground_runtime.py \
             .vendor/shortcuts-playground/codex/skills/shortcuts-playground/scripts/validate_shortcut.py \
             build/library-manager/harness.shortcuts.library.plist
+      - name: Sign validated generic controller with HubSign
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          p=pathlib.Path("build/library-manager/harness.shortcuts.library.plist")
+          pathlib.Path("build/library-manager/hubsign-request.json").write_text(
+              json.dumps({"shortcutName":"harness.shortcuts.library","shortcut":p.read_text()})
+          )
+          PY
+          curl --fail --silent --show-error --location \
+            -H 'Content-Type: application/json' \
+            -H 'User-Agent: Cherri/shortcut-optimization' \
+            --data-binary @build/library-manager/hubsign-request.json \
+            https://hubsign.routinehub.services/sign \
+            --output build/library-manager/harness.shortcuts.library.shortcut
+          python - <<'PY'
+          import hashlib, pathlib, sys
+          p=pathlib.Path("build/library-manager/harness.shortcuts.library.shortcut")
+          b=p.read_bytes()
+          if b[:4] != b"AEA1":
+              raise SystemExit(f"unexpected signed magic: {b[:16]!r}")
+          print("signed_bytes",len(b))
+          print("signed_sha256",hashlib.sha256(b).hexdigest())
+          PY
+          rm build/library-manager/hubsign-request.json
       - name: Upload compiler outputs
         uses: actions/upload-artifact@v4
         with:
