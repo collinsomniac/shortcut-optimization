@@ -52,9 +52,8 @@ jobs:
             slug="$2"
             name="$3"
             mode="${4:-compact}"
-            srcdir="$(dirname "$src")"
-            generated="$srcdir/$name.plist"
-            rm -f "$generated"
+            marker="$(mktemp)"
+            touch "$marker"
 
             extra=()
             if [ "$mode" = "comments" ]; then
@@ -63,10 +62,22 @@ jobs:
 
             (
               cd .vendor/cherri
-              go run . "$GITHUB_WORKSPACE/$src" --skip-sign --no-ansi "${extra[@]}" \
+              go run . "$GITHUB_WORKSPACE/$src" --debug --skip-sign --no-ansi "${extra[@]}" \
                 --output "$GITHUB_WORKSPACE/build/import-compat/$slug.shortcut"
             )
 
+            mapfile -t emitted < <(
+              find "$GITHUB_WORKSPACE" -type f -name '*.plist' -newer "$marker" \
+                ! -path '*/.vendor/shortcuts-playground/*' -print
+            )
+            rm -f "$marker"
+            if [ "${#emitted[@]}" -ne 1 ]; then
+              printf 'Expected exactly one emitted plist for %s, found %s\n' "$slug" "${#emitted[@]}"
+              printf '  %s\n' "${emitted[@]:-<none>}"
+              exit 1
+            fi
+            generated="${emitted[0]}"
+            echo "generated_plist=$generated"
             test -s "$generated"
             python tooling/normalize_shortcuts_appintents.py "$generated" "build/import-compat/$slug.plist"
             python tooling/validate_shortcuts_playground_runtime.py \
