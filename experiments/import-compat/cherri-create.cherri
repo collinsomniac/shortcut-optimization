@@ -1,6 +1,6 @@
 #define name SO Compat 4 - Cherri Create
 #define color blue
-#define glyph plus
+#define glyph apple
 #define inputs text
 #define outputs text
 #define version 27
