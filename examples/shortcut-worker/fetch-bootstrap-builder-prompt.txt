@@ -1,0 +1,28 @@
+Create a Shortcut named "harness.shortcuts.fetch".
+
+Purpose:
+This is a small deterministic bootstrap transport for signed Apple Shortcut files. It must not use Apple Intelligence after creation, third-party apps, shell commands, or UI-coordinate automation.
+
+Input:
+- Receive Text as Shortcut Input.
+- The text is JSON:
+  - "url": required HTTPS URL of a file to download.
+  - "filename": optional filename. If absent, use "harness-staged.shortcut".
+
+Behavior:
+1. Parse Shortcut Input as a Dictionary.
+2. Read "url" and "filename".
+3. If "url" is empty, Stop and Output:
+   {"ok":false,"error":"missing_url"}
+4. Get Contents of URL using GET for the supplied URL.
+5. Save the downloaded result as a file in the Shortcuts folder in Files/iCloud Drive, using the requested filename, without asking where to save, and allowing overwrite.
+6. Open that saved file using the normal file-opening action so iOS can choose the appropriate owning app/import UI.
+7. Stop and Output:
+   {"ok":true,"status":"opened_file","filename":"<the filename>"}
+
+Important:
+- Do not decode, transform, unzip, or reinterpret the downloaded bytes.
+- Do not use a web view.
+- Do not use Share Sheet prompts unless Open File absolutely requires it.
+- Do not create a Shortcut with Create Shortcut; this Shortcut only transports and opens a file.
+- Keep the action graph minimal.
