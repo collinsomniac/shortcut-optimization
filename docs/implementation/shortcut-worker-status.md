@@ -104,9 +104,15 @@ The first two CI attempts failed at **compile time**, before signing or iOS:
 1. wrong Cherri helper name (`getContentsOfURL`);
 2. by-reference helper syntax for Save File.
 
-The source has been revised to explicit native/raw action links and is currently
-being rebuilt. Do not claim stager device compatibility until CI passes and a
-device fixture succeeds.
+The source was revised to explicit native/raw action links. CI run
+`36200750546` now passes pinned iOS 27 runtime/schema validation and HubSign.
+
+Signed v0.1 stager:
+- 26,934 bytes;
+- AEA1;
+- SHA-256 `e21b977817577bf03d9b3b3364f53568e8994dfeaa04d9018b0f6e325bc395b0`.
+
+**Device staging/import behavior is not yet verified.**
 
 ## Create Shortcut boundary
 
