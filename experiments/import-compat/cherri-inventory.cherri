@@ -1,6 +1,6 @@
 #define name SO Compat 3 - Cherri Inventory
 #define color blue
-#define glyph list
+#define glyph apple
 #define inputs text
 #define outputs text
 #define version 27
