@@ -1,5 +1,38 @@
 # Next-chat handoff
 
+## Preferred continuation — direct compiled persistent controller
+
+Do **not** resume the action-pasteboard or imported Generate Shortcut routes as
+the primary plan. Both have device evidence against them.
+
+Current install candidate:
+- `harness.shortcuts.library`
+- source: `examples/shortcut-worker/harness.shortcuts.library.cherri`
+- build workflow: `.github/workflows/compile-shortcut-library-manager.yml`
+- green run: `36095962428`
+- signed SHA-256: `641e75e4c3202cc2b6092bc909305c04dbc23ceec091be13d2aa02443d23704b`
+
+The build is deterministic in source/tool versions but uses runtime-random
+control-flow UUIDs because Cherri's derive-UUID mode produced invalid duplicate
+GroupingIdentifiers. Exact signed byte identity therefore need not reproduce
+across builds; source + normalized semantic graph + validation are the important
+reproducibility anchors.
+
+After the user imports the signed controller, validate in this order:
+1. invoke `capabilities` by run-shortcut URL with JSON text input;
+2. invoke `list` and inspect output;
+3. create a disposable uniquely named test Shortcut;
+4. run/open it;
+5. rename it;
+6. create an iCloud link only if the user accepts the external share;
+7. call delete with confirm != true and verify refusal;
+8. delete the disposable fixture with explicit user confirmation;
+9. only after the above route the semantic Supabase facade through the installed
+   controller.
+
+Then expand the native plane with Move and attributes using real exported action
+donors or otherwise empirically grounded entity serialization.
+
 ## Action-pasteboard route — 2026-09-25 UTC (current preferred next experiment)
 
 The native export/parser/editor milestone is complete enough that whole-file signing is no longer the only way forward. A generic five-action helper, `SO Copy Actions`, can convert a JSON payload of base64-encoded action plists into the native `com.apple.shortcuts.action` clipboard representation using Sindre Sorhus's Actions app.
