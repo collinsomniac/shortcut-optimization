@@ -1,0 +1,130 @@
+name: Build Shortcut import compatibility matrix
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'experiments/import-compat/**'
+      - 'examples/shortcut-worker/harness.shortcuts.library.cherri'
+      - 'examples/shortcut-worker/harness.shortcuts.stage.cherri'
+      - '.github/workflows/build-shortcut-import-compat.yml'
+      - 'tooling/normalize_shortcuts_appintents.py'
+      - 'tooling/validate_shortcuts_playground_runtime.py'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout shortcut-optimization
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Checkout pinned Cherri
+        uses: actions/checkout@v4
+        with:
+          repository: electrikmilk/cherri
+          ref: d96eee9c7768649d441df0166b68a7e3c742690c
+          path: .vendor/cherri
+      - name: Checkout pinned Shortcuts Playground validator
+        uses: actions/checkout@v4
+        with:
+          repository: viticci/shortcuts-playground-plugin
+          ref: 2de03bffe4ce8802e06d184931d9e4ec366a2ef2
+          path: .vendor/shortcuts-playground
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.x'
+
+      - name: Compile, normalize, validate and sign matrix
+        run: |
+          set -euo pipefail
+          mkdir -p build/import-compat public/shortcut-import-compat
+
+          compile_one() {
+            src="$1"
+            slug="$2"
+            name="$3"
+            rm -f "${src%.cherri}.plist"
+            (
+              cd .vendor/cherri
+              go run . "$GITHUB_WORKSPACE/$src" --debug --skip-sign --comments --no-ansi \
+                --output "$GITHUB_WORKSPACE/build/import-compat/$slug.shortcut"
+            )
+            generated="${src%.cherri}.plist"
+            test -s "$generated"
+            python tooling/normalize_shortcuts_appintents.py "$generated" "build/import-compat/$slug.plist"
+            python tooling/validate_shortcuts_playground_runtime.py \
+              .vendor/shortcuts-playground/codex/skills/shortcuts-playground/scripts/validate_shortcut.py \
+              "build/import-compat/$slug.plist"
+            python - "$slug" "$name" <<'PY'
+import json, pathlib, sys
+slug,name=sys.argv[1:3]
+p=pathlib.Path("build/import-compat")/(slug+".plist")
+(pathlib.Path("build/import-compat")/(slug+".hubsign.json")).write_text(
+    json.dumps({"shortcutName":name,"shortcut":p.read_text()})
+)
+PY
+            curl --fail --silent --show-error --location \
+              -H 'Content-Type: application/json' \
+              -H 'User-Agent: Cherri/shortcut-optimization-import-compat' \
+              --data-binary "@build/import-compat/$slug.hubsign.json" \
+              https://hubsign.routinehub.services/sign \
+              --output "public/shortcut-import-compat/$slug.shortcut"
+            rm "build/import-compat/$slug.hubsign.json"
+          }
+
+          compile_one experiments/import-compat/cherri-basic.cherri cherri-basic "SO Compat 2 - Cherri Basic"
+          compile_one experiments/import-compat/cherri-inventory.cherri cherri-inventory "SO Compat 3 - Cherri Inventory"
+          compile_one experiments/import-compat/cherri-create.cherri cherri-create "SO Compat 4 - Cherri Create"
+          compile_one experiments/import-compat/cherri-controlflow.cherri cherri-controlflow "SO Compat 5 - Cherri Control Flow"
+          compile_one examples/shortcut-worker/harness.shortcuts.library.cherri manager-v03 "harness.shortcuts.library"
+          compile_one examples/shortcut-worker/harness.shortcuts.stage.cherri stager-v01 "harness.shortcuts.stage"
+
+          # Preserve the exact previously successful delivery/signing control.
+          curl --fail --silent --show-error --location \
+            'https://zpdtlzpvshlpyqbfbzye.supabase.co/functions/v1/shortcut-public-artifact?name=copy-actions' \
+            --output public/shortcut-import-compat/known-good-copy-actions.shortcut
+          curl --fail --silent --show-error --location \
+            'https://zpdtlzpvshlpyqbfbzye.supabase.co/functions/v1/shortcut-public-artifact?name=hubsign-probe' \
+            --output public/shortcut-import-compat/manual-hubsign-probe.shortcut
+
+          python - <<'PY'
+import hashlib,json,pathlib,sys
+root=pathlib.Path("public/shortcut-import-compat")
+rows=[]
+for p in sorted(root.glob("*.shortcut")):
+    b=p.read_bytes()
+    if b[:4] != b"AEA1":
+        raise SystemExit(f"{p}: not AEA1 ({b[:16]!r})")
+    rows.append({
+        "slug":p.stem,
+        "filename":p.name,
+        "bytes":len(b),
+        "sha256":hashlib.sha256(b).hexdigest(),
+    })
+(root/"manifest.json").write_text(json.dumps({"schema_version":"1","fixtures":rows},indent=2)+"\n")
+print(json.dumps(rows,indent=2))
+PY
+
+      - name: Commit signed public compatibility fixtures
+        run: |
+          git config user.name "shortcut-optimization-ci"
+          git config user.email "shortcut-optimization-ci@users.noreply.github.com"
+          git add public/shortcut-import-compat
+          if git diff --cached --quiet; then
+            echo "No fixture changes"
+            exit 0
+          fi
+          git commit -m "test: publish signed Shortcut import compatibility matrix [skip ci]"
+          git push origin HEAD:main
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shortcut-import-compat
+          path: |
+            public/shortcut-import-compat/**
+            build/import-compat/**
+          if-no-files-found: error
