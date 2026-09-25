@@ -1,6 +1,6 @@
 # Current harness architecture
 
-Snapshot: 2026-09-24. This is the canonical system overview for agents continuing the project.
+Snapshot: 2026-09-25. This is the canonical system overview for agents continuing the project.
 
 ## Mission
 
@@ -152,7 +152,8 @@ Active at last inspection:
 - `harness-worker` — existing worker transport/auth path;
 - `shortcut-callback` — one-time callback receipt ingestion;
 - `shortcut-artifact` — short-lived signed artifact serving/cache;
-- `shortcut-bootstrap` — serves the current non-sensitive Shortcut Worker bootstrap artifact.
+- `shortcut-bootstrap` — serves the current non-sensitive Shortcut Worker bootstrap artifact;
+- `shortcut-public-artifact` — serves only two embedded, whitelisted non-sensitive signed fixtures (`SO HubSign Probe`, `SO Copy Actions`); it is not a general artifact reader.
 
 Some functions intentionally run with `verify_jwt=false` because they implement custom token/nonce authentication. Do not generalize that pattern to new public functions without explicit authentication design.
 
@@ -235,11 +236,29 @@ The next compiler milestone is not just generating whole workflows; it is **roun
 
 This is the route that can eventually edit harness workflows such as `harness.info` without relying on natural-language builder behavior.
 
-### 3. Builder/UI fallback
+### 3. Native action-pasteboard editor
+
+A newly recovered route can avoid re-signing the whole target workflow:
+
+```text
+compiler action array
+  → base64 action plists
+  → SO Copy Actions
+  → Actions: Set Uniform Type Identifier
+  → com.apple.shortcuts.action
+  → native clipboard
+  → paste into blank/duplicate Shortcut
+```
+
+This is based on the measured/open-source `Copy-ActionFromClaude` pattern from `mehrlander/shortcut-tools`. The exact helper descriptor and local packer are committed in this repository. It supports an entire ordered action chain, including UUID-based variable references.
+
+The current platform boundary is the final **Paste** into the Shortcuts editor. Treat this as the preferred device-local edit/install experiment because it keeps private target workflow contents away from third-party signers. See [iOS action-pasteboard experiment](../../experiments/ios-action-pasteboard/README.md).
+
+### 4. Builder/UI fallback
 
 Useful when an action cannot be represented reliably through known artifact formats/catalogs. Keep behind a narrow tool and verify screenshots/state rather than exposing arbitrary coordinates as the normal API.
 
-### 4. Third-party/open-source compatibility layer
+### 5. Third-party/open-source compatibility layer
 
 High-priority resources include:
 - Shortcuts Playground static iOS 27 action/AppIntent catalogs and validator;
