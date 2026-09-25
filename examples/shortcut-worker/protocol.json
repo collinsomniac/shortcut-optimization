@@ -1,90 +1,187 @@
 {
-  "protocol": "shortcut-worker/0.2",
+  "protocol": "shortcut-worker/0.3-draft",
+  "persistence_model": {
+    "canonical_folder": "harness.shortcuts",
+    "generated_folder": "Agent Generated",
+    "identity": "project-side shortcut_ref + native name + latest artifact/content hash",
+    "idempotency": "ensure operations reuse an existing matching installed object instead of regenerating it",
+    "mutation_conflict_policy": "expected_version/hash required when available"
+  },
   "transport": {
     "job_facade": "public.submit_shortcut_job(operation, params, ttl)",
     "worker": "iphone-main",
     "dispatch_method": "shortcuts.control",
-    "note": "Agents should use the shortcuts.* semantic surface; the shared RPC queue is transport, not the user-facing API."
+    "current_live_note": "The semantic protocol is ahead of the live phone dispatcher. Do not claim a method is routable until device verification succeeds."
   },
   "methods": {
-    "shortcuts.register": {
-      "operation": "register",
-      "effect": "reversible_write",
-      "worker": "iphone-main",
-      "native_status": "bootstrap_only"
-    },
     "shortcuts.capabilities": {
-      "operation": "capabilities",
       "effect": "read",
-      "worker": "iphone-main"
+      "backend": [
+        "native_catalog",
+        "worker"
+      ],
+      "lifecycle": "persistent"
     },
     "shortcuts.inventory.list": {
-      "operation": "list",
       "effect": "read",
-      "worker": "iphone-main"
+      "backend": [
+        "Get My Shortcuts"
+      ],
+      "lifecycle": "persistent"
     },
-    "shortcuts.get": {
-      "operation": "get",
-      "effect": "read",
-      "worker": "iphone-main|compiler"
+    "shortcuts.ensure": {
+      "effect": "reversible_write",
+      "backend": [
+        "inventory",
+        "create",
+        "generate",
+        "edit"
+      ],
+      "semantics": "Create once or reconcile to requested spec; reuse when already current."
     },
-    "shortcuts.run": {
-      "operation": "run",
-      "effect": "runtime",
-      "worker": "iphone-main"
-    },
-    "shortcuts.open": {
-      "operation": "open",
-      "effect": "ui_handoff",
-      "worker": "iphone-main"
+    "shortcuts.create": {
+      "effect": "reversible_write",
+      "backend": [
+        "Create Shortcut"
+      ],
+      "lifecycle": "persistent"
     },
     "shortcuts.generate": {
-      "operation": "generate",
       "effect": "reversible_write",
-      "worker": "iphone-main|compiler"
+      "backend": [
+        "GenerateShortcutAction",
+        "Describe a Shortcut",
+        "compiler"
+      ],
+      "lifecycle": "persistent"
+    },
+    "shortcuts.get": {
+      "effect": "read",
+      "backend": [
+        "inventory",
+        "artifact compiler"
+      ]
+    },
+    "shortcuts.snapshot": {
+      "effect": "read",
+      "backend": [
+        "export",
+        "artifact store"
+      ],
+      "result": "versioned artifact hash"
+    },
+    "shortcuts.diff": {
+      "effect": "read",
+      "backend": [
+        "compiler"
+      ]
     },
     "shortcuts.edit": {
-      "operation": "edit",
       "effect": "reversible_write",
-      "worker": "iphone-main|compiler",
-      "native_status": "unsupported_until_builder_or_compiler_adapter"
+      "backend": [
+        "artifact patch",
+        "action pasteboard",
+        "native builder fallback"
+      ]
+    },
+    "shortcuts.duplicate": {
+      "effect": "reversible_write",
+      "backend": [
+        "artifact_clone",
+        "action_pasteboard_clone",
+        "UI fallback"
+      ],
+      "native_dedicated_action": false
+    },
+    "shortcuts.run": {
+      "effect": "runtime",
+      "backend": [
+        "Run Shortcut",
+        "Pushcut"
+      ],
+      "verify_receipt": true
+    },
+    "shortcuts.open": {
+      "effect": "ui_handoff",
+      "backend": [
+        "Open Shortcut"
+      ]
     },
     "shortcuts.rename": {
-      "operation": "rename",
       "effect": "reversible_write",
-      "worker": "iphone-main"
+      "backend": [
+        "Rename Shortcut"
+      ]
     },
     "shortcuts.move": {
-      "operation": "move",
       "effect": "reversible_write",
-      "worker": "iphone-main"
+      "backend": [
+        "Move Shortcut"
+      ]
+    },
+    "shortcuts.folder.create": {
+      "effect": "reversible_write",
+      "backend": [
+        "Create Folder"
+      ]
+    },
+    "shortcuts.folder.open": {
+      "effect": "ui_handoff",
+      "backend": [
+        "Open Folder"
+      ]
+    },
+    "shortcuts.attributes.get": {
+      "effect": "read",
+      "backend": [
+        "Get Shortcut Attributes"
+      ]
+    },
+    "shortcuts.attributes.set": {
+      "effect": "reversible_write",
+      "backend": [
+        "Set Shortcut Attributes"
+      ]
+    },
+    "shortcuts.icon.set": {
+      "effect": "reversible_write",
+      "backend": [
+        "Change Shortcut Icon"
+      ]
+    },
+    "shortcuts.share.create_link": {
+      "effect": "external_share",
+      "backend": [
+        "Create iCloud Link for Shortcut"
+      ]
+    },
+    "shortcuts.export": {
+      "effect": "read",
+      "backend": [
+        "native export",
+        "artifact compiler"
+      ],
+      "status": "backend_under_validation"
+    },
+    "shortcuts.install": {
+      "effect": "reversible_write",
+      "backend": [
+        "trusted signed import",
+        "action pasteboard"
+      ],
+      "status": "backend_under_validation"
     },
     "shortcuts.delete": {
-      "operation": "delete",
       "effect": "destructive",
-      "worker": "iphone-main",
+      "backend": [
+        "Delete Shortcuts"
+      ],
       "requires": "confirm=true"
-    },
-    "shortcuts.create_link": {
-      "operation": "create_link",
-      "effect": "external_share",
-      "worker": "iphone-main"
-    },
-    "workspace.list": {
-      "effect": "read",
-      "worker": "iphone-main|desktop-main"
-    },
-    "workspace.read": {
-      "effect": "read",
-      "worker": "iphone-main|desktop-main"
-    },
-    "workspace.write": {
-      "effect": "reversible_write",
-      "worker": "iphone-main|desktop-main"
     }
   },
   "result_statuses": [
     "proposed",
+    "reused",
     "drafted",
     "installed",
     "registered",
