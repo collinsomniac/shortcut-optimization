@@ -1,12 +1,39 @@
 # Shortcut Worker implementation status
 
+## Action-pasteboard milestone — 2026-09-25 UTC
+
+A second installation/editing route now exists that can avoid re-signing private workflows:
+
+```text
+decoded / patched workflow
+  → serialize each WFWorkflowActions item as its own plist
+  → base64 action array
+  → SO Copy Actions
+  → Actions / Set Uniform Type Identifier
+  → com.apple.shortcuts.action clipboard items
+  → paste into a blank/duplicate Shortcut
+```
+
+The exact five-action receiver graph was recovered from `mehrlander/shortcut-tools` and recorded in [copy-actions-helper.json](../../examples/shortcut-worker/copy-actions-helper.json). The repository now has [pack_shortcut_actions.py](../../tooling/pack_shortcut_actions.py), which verifies that the transported action plists reconstruct the original action array exactly.
+
+A generic `SO Copy Actions` helper containing **no private harness data** was signed through the existing HubSign bridge:
+- 22,337 bytes;
+- AEA1 container;
+- SHA-256 `384763f4cd4e2a5012950820a5c803dfac352f9f40f585a5a8f6ce202c8f5088`.
+
+A separate trivial HubSign probe was also signed (22,152 bytes; SHA-256 `733eea54bc8bbbda4d48ccd3177d0007243fadba770c304f660b859ad2fd9b43`). Signing is therefore reproduced for **generic/non-sensitive** workflows; iOS import/execution is not yet claimed.
+
+The stable `shortcut-public-artifact` Edge Function serves only these two embedded generic fixtures. It cannot enumerate or expose arbitrary/private rows from `shortcuts.artifacts`.
+
+The first device fixture is committed at [experiments/ios-action-pasteboard/fixture](../../experiments/ios-action-pasteboard/fixture/): two cards, Text → Show Result, with an explicit producer-output UUID binding. If that paste succeeds, the next step is to pack the already-patched private 11-action `harness.info` locally and paste it into a separately named duplicate. This keeps private harness bytes away from the external signer.
+
 ## Native export milestone — 2026-09-25 UTC (supersedes earlier export blocker)
 
 The supplied `harness.info` export was decoded locally on Linux with AEA signature/integrity verification, canonicalized, and structurally patched. All 11 actions and existing tokenized Dictionary fields were preserved; one inert `_roundtrip_fixture` text field was added. 19 tests pass. Playground diagnostics are identical before/after (four pre-existing checks, not a full validation pass). **Unsigned patch only; signing/import/device fixture execution remain blocked.**
 
 Artifact evidence refines the old “hardcoded manifest” description: the export uses Get My Shortcuts in four fixed harness folders, then formats their members. The folder scope/schema are fixed, the members are dynamically discovered, and the whole library is not scanned. Dispatcher allowlist behavior and installed/exported byte identity remain unknown. Do not assume adding an output field registers a callable tool.
 
-Next: establish a trusted signer and import a separately named duplicate, then verify `_roundtrip_fixture = harness.info.patch.v1` on-device. Full native artifacts remain private. [Exact experiment, hashes, boundaries and reproduction](../../experiments/native-harness-roundtrip/README.md).
+Next: prefer the device-local action-pasteboard route: install the generic `SO Copy Actions` bridge, reproduce the two-action fixture, then paste the already-patched private 11-action graph into a separately named duplicate and verify `_roundtrip_fixture = harness.info.patch.v1`. A user-controlled signer remains desirable for whole-file round trips, but it is no longer the only path. [Exact experiment, hashes, boundaries and reproduction](../../experiments/native-harness-roundtrip/README.md).
 
 ## Latest experiment — 2026-09-25 UTC
 
@@ -28,7 +55,7 @@ This page records what is verified, what is implemented server-side, and what re
 - `desktop-main` remains a separate executor on the same control plane.
 - One active Supabase project is visible: `iphone-harness` (`zpdtlzpvshlpyqbfbzye`, us-west-1).
 - Shortcut-specific state exists under the internal `shortcuts` schema.
-- Active Edge Functions: `harness-worker`, `shortcut-callback`, `shortcut-artifact`, `shortcut-bootstrap`.
+- Active Edge Functions: `harness-worker`, `shortcut-callback`, `shortcut-artifact`, `shortcut-bootstrap`, `shortcut-public-artifact`.
 - Direct phone → `shortcut-callback` POST/nonce receipt transport has been reproduced.
 
 ## Important correction: harness.info is not discovery
