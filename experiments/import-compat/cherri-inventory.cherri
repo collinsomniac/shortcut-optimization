@@ -1,0 +1,13 @@
+#define name SO Compat 3 - Cherri Inventory
+#define color blue
+#define glyph list
+#define inputs text
+#define outputs text
+#define version 27
+
+#include 'actions/shortcuts'
+
+const shortcuts = getShortcuts()
+rawAction("is.workflow.actions.output", {
+    "WFOutput": "${shortcuts}"
+})
