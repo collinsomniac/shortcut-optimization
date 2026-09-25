@@ -114,3 +114,18 @@ running without physical desktop presence.
 5. Once stager passes, install it and stage a harmless signed Shortcut.
 6. Repair `desktop.exec` leasing; verify VS Code detection/launch.
 7. Update canonical docs/issue after each empirical result.
+
+
+## Latest device-facing test state — 2026-09-25 UTC
+
+- ChatGPT-hosted v0.3/v0.1 attachment downloads failed before Shortcuts import.
+  Do not treat this as a Cherri/device rejection.
+- A stable Supabase compatibility endpoint is deployed and CI-verified for all
+  11 signed fixtures in `public/shortcut-import-compat/manifest.json`.
+- Test fixtures in order and stop at the first meaningful import failure.
+- Cherri compact builds are dramatically smaller than old `--comments` builds:
+  basic 1/37 actions, manager 134/176, stager 24/115.
+- User has an Apple-generated `harness.shortcuts.run`; verify it against
+  installed `probe.echo` with input `RUNNER_PROBE_001`.
+- A native `harness.shortcuts.fetch` builder prompt exists as fallback if
+  direct HTTPS attachment delivery behaves inconsistently.
