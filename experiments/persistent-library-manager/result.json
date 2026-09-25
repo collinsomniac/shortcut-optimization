@@ -1,0 +1,48 @@
+{
+  "status": "signed_install_candidate_ready",
+  "updated_at": "2026-09-25T04:50:00Z",
+  "source": "examples/shortcut-worker/harness.shortcuts.library.cherri",
+  "compiler": {
+    "name": "Cherri",
+    "pinned_commit": "d96eee9c7768649d441df0166b68a7e3c742690c",
+    "workflow_run": 36095962428
+  },
+  "normalized_unsigned": {
+    "bytes": 74999,
+    "sha256": "cde0206df2153c4ba91021a19fd70ecbb7e1c410e5838ed01bbd535cca0342b0",
+    "action_count": 171,
+    "normalized_appintents": 5,
+    "runtime_schema_validation": "pass",
+    "retained_style_findings": 20,
+    "style_note": "Shortcuts Playground provenance/comment conventions only; no runtime/schema findings remain."
+  },
+  "signed": {
+    "signer": "routinehub_hubsign",
+    "bytes": 29461,
+    "magic": "AEA1",
+    "sha256": "641e75e4c3202cc2b6092bc909305c04dbc23ceec091be13d2aa02443d23704b",
+    "device_import_verified": false
+  },
+  "operations": [
+    "capabilities",
+    "list",
+    "create",
+    "run",
+    "open",
+    "create_folder",
+    "rename",
+    "create_link",
+    "delete"
+  ],
+  "deferred": [
+    "move",
+    "get_attributes",
+    "set_attributes",
+    "edit",
+    "duplicate"
+  ],
+  "failed_routes": {
+    "action_pasteboard": "demoted_after_no_paste_menu_even_after_direct_text_input_retry",
+    "imported_generate_shortcut": "ios_rejected_feature_as_unsupported"
+  }
+}
