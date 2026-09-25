@@ -132,7 +132,7 @@ drivers:
   safari.open.url
 ~~~
 
-A major next step is to replace or augment this hardcoded registry with a source-controlled/dynamic capability manifest so agents can extend the harness without manually rewriting `harness.info`.
+A source-controlled snapshot now exists at [`harness/registry.json`](../../harness/registry.json), with [`harness/registry.schema.json`](../../harness/registry.schema.json). It does **not** drive the live dispatcher yet. A major next step is to make this or a successor manifest authoritative so agents can extend the harness without manually rewriting `harness.info`.
 
 ### desktop-main
 
@@ -366,3 +366,8 @@ A fresh agent should be able to:
 7. make a second edit based on the result;
 8. clean up its own test artifacts;
 9. accomplish this through `shortcuts.*` tools without needing to understand raw Supabase RPC internals.
+
+
+## Tracking
+
+The primary implementation backlog is [GitHub issue #4: Programmatic Shortcut registry and self-editing round trip](https://github.com/collinsomniac/shortcut-optimization/issues/4).
