@@ -226,3 +226,49 @@ enable RLS without first preserving the service-role/worker paths.
    installed manager.
 8. Separately repair `desktop.exec` leasing and verify
    `desktop.app.ensure(vscode)`.
+
+
+## Import compatibility matrix — 2026-09-25 UTC
+
+The ChatGPT attachment links for the v0.3 manager and v0.1 stager failed in
+the generic iOS file viewer with "The file download failed." That happened
+before Shortcuts received either artifact and therefore is classified as a
+**transport failure**, not an import-compatibility result.
+
+A controlled matrix is now published under
+`public/shortcut-import-compat/` and served through the public, test-only
+`shortcut-import-compat` Supabase Edge Function. CI run `36202803514`
+verified every served fixture end-to-end against the committed AEA1 magic,
+byte count, SHA-256 and `application/x-apple-shortcut` content type.
+
+Construction/action ladder:
+- exact previously successful SO-Copy-Actions control;
+- manual plist + HubSign probe;
+- compact one-action Cherri;
+- same Cherri source with `--comments`;
+- Get My Shortcuts;
+- Create Shortcut AppIntent;
+- Cherri control flow;
+- full manager compact/comments;
+- stager compact/comments.
+
+Build-size finding:
+- Cherri basic: 1 compact action vs 37 with `--comments`;
+- manager: 134 vs 176;
+- stager: 24 vs 115.
+
+Do not use `--comments` in production merely for compiler documentation.
+Whether the flag affects device importability is now an explicit device test.
+
+## Apple-generated parameterized runner
+
+The user successfully created `harness.shortcuts.run` with Describe a Shortcut.
+Screenshots show the intended graph but do not prove magic-variable UUID binding
+or that the collapsed Run Shortcut action receives the requested `input`.
+
+The most recent successful phone manifest still contains `probe.echo`.
+First live fixture:
+
+`{"name":"probe.echo","input":"RUNNER_PROBE_001"}`
+
+Pass only if the exact echo value is returned.
