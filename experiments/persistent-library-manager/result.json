@@ -1,26 +1,24 @@
 {
-  "status": "signed_install_candidate_ready",
-  "updated_at": "2026-09-25T04:50:00Z",
+  "status": "signed_v0_2_install_candidate_ready",
+  "updated_at": "2026-09-25T05:02:00Z",
   "source": "examples/shortcut-worker/harness.shortcuts.library.cherri",
   "compiler": {
     "name": "Cherri",
     "pinned_commit": "d96eee9c7768649d441df0166b68a7e3c742690c",
-    "workflow_run": 36095962428
+    "workflow_run": 36096803489
   },
   "normalized_unsigned": {
-    "bytes": 74999,
-    "sha256": "cde0206df2153c4ba91021a19fd70ecbb7e1c410e5838ed01bbd535cca0342b0",
-    "action_count": 171,
+    "action_count": 177,
     "normalized_appintents": 5,
     "runtime_schema_validation": "pass",
-    "retained_style_findings": 20,
-    "style_note": "Shortcuts Playground provenance/comment conventions only; no runtime/schema findings remain."
+    "grounded_third_party_validation": "pass: AsheKube.app.a-Shell.PutFileIntent count=1",
+    "note": "Pinned first-party catalog reports the reviewed a-Shell action as unknown third-party; exact identifier/parameter schema is separately validated against a-Shell source/export evidence."
   },
   "signed": {
     "signer": "routinehub_hubsign",
-    "bytes": 29461,
+    "bytes": 29779,
     "magic": "AEA1",
-    "sha256": "641e75e4c3202cc2b6092bc909305c04dbc23ceec091be13d2aa02443d23704b",
+    "sha256": "2d1968b1bcb432d1dfa8d31bdea19ca00c129b9ee7f0984a6b7645b90589e1ab",
     "device_import_verified": false
   },
   "operations": [
@@ -32,17 +30,20 @@
     "create_folder",
     "rename",
     "create_link",
-    "delete"
+    "delete",
+    "export_to_worker"
   ],
   "deferred": [
     "move",
     "get_attributes",
     "set_attributes",
     "edit",
-    "duplicate"
+    "duplicate",
+    "install_without_user_import_confirmation"
   ],
   "failed_routes": {
     "action_pasteboard": "demoted_after_no_paste_menu_even_after_direct_text_input_retry",
     "imported_generate_shortcut": "ios_rejected_feature_as_unsupported"
-  }
+  },
+  "supersedes_signed_sha256": "641e75e4c3202cc2b6092bc909305c04dbc23ceec091be13d2aa02443d23704b"
 }
