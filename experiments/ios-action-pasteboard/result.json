@@ -1,0 +1,44 @@
+{
+  "status": "helper_signed_fixture_ready",
+  "updated_at": "2026-09-25T03:38:00Z",
+  "device_verified": false,
+  "helper": {
+    "name": "SO Copy Actions",
+    "signed": true,
+    "signer": "routinehub_hubsign",
+    "bytes": 22337,
+    "sha256": "384763f4cd4e2a5012950820a5c803dfac352f9f40f585a5a8f6ce202c8f5088",
+    "contains_private_harness_data": false
+  },
+  "trivial_signing_probe": {
+    "name": "SO HubSign Probe",
+    "signed": true,
+    "signer": "routinehub_hubsign",
+    "bytes": 22152,
+    "sha256": "733eea54bc8bbbda4d48ccd3177d0007243fadba770c304f660b859ad2fd9b43",
+    "contains_private_harness_data": false
+  },
+  "first_device_fixture": {
+    "action_count": 2,
+    "intent": "Text -> Show Result with UUID-bound ActionOutput",
+    "committed": true,
+    "device_verified": false
+  },
+  "private_harness_payload": {
+    "committed": false,
+    "uploaded_to_external_signer": false,
+    "action_count": 11,
+    "source_workflow_sha256": "6778a75e81845548c14e287bf9093a8fc7afe2573ebe228c06d1a1a4fd137964",
+    "packed_payload_bytes": 19551,
+    "packed_payload_sha256": "181750662f8aef82ed901f4b65601b4880804e94d0623bfebe97c0691f16a8f2",
+    "local_roundtrip_verified": true
+  },
+  "ci": {
+    "workflow": "Shortcut tooling tests",
+    "run_id": 36091095278,
+    "head_sha": "d1b9368dba2db99b7f52ee5351b2ec541bc91503",
+    "conclusion": "success",
+    "tests_run": 22,
+    "skipped": 1
+  }
+}
