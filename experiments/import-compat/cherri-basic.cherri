@@ -1,8 +1,6 @@
 #define name SO Compat 2 - Cherri Basic
 #define color blue
 #define glyph apple
-#define inputs text
-#define outputs text
 #define version 27
 
 show("SO Compat 2 - Cherri Basic")
