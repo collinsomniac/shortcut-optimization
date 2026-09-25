@@ -7,8 +7,9 @@
 
 #include 'actions/shortcuts'
 
-comment('harness.shortcuts.library v0.1 — persistent native Shortcut library management.')
-comment('Input is a JSON dictionary with op plus operation parameters. Destructive delete requires confirm=true.')
+comment('harness.shortcuts.library v0.3 — pure Apple-native persistent Shortcut library management.')
+comment('Input is a JSON dictionary with op plus operation parameters. No shell, network, model, or UI automation actions are used.')
+comment('Destructive delete requires confirm=true. Content editing/install remains a separate artifact/compiler plane.')
 
 const request = getDictionary(ShortcutInput)
 @op = "{request['op']}"
@@ -20,10 +21,10 @@ const request = getDictionary(ShortcutInput)
 
 comment('Return the static capability contract.')
 if @op == "capabilities" {
-    output('{"ok":true,"op":"capabilities","controller_version":"0.1","operations":["capabilities","list","create","run","open","create_folder","rename","delete","create_link","export_to_worker"]}')
+    output('{"ok":true,"op":"capabilities","controller_version":"0.3","operations":["capabilities","list","create","run","open","create_folder","rename","delete","create_link"]}')
 }
 
-comment('List the native Shortcut objects. The caller may normalize their attributes.')
+comment('List native Shortcut objects. The external control plane may normalize attributes.')
 if @op == "list" {
     const allShortcuts = getShortcuts()
     rawAction("is.workflow.actions.output", {
@@ -31,7 +32,7 @@ if @op == "list" {
     })
 }
 
-comment('Create a persistent empty Shortcut object. Content installation is handled by the artifact plane.')
+comment('Create a persistent empty Shortcut object. Content installation belongs to the artifact plane.')
 if @op == "create" {
     if !@name {
         output('{"ok":false,"op":"create","error":"missing_name"}')
@@ -43,7 +44,7 @@ if @op == "create" {
     output('{"ok":true,"op":"create","status":"created"}')
 }
 
-comment('Run an already installed Shortcut by exact name using the stable legacy run action.')
+comment('Run an already installed Shortcut by exact name using the stable Run Shortcut action.')
 if @op == "run" {
     if !@name {
         output('{"ok":false,"op":"run","error":"missing_name"}')
@@ -79,8 +80,8 @@ if @op == "create_folder" {
     output('{"ok":true,"op":"create_folder","status":"created"}')
 }
 
-comment('For entity-bearing operations, scan the library and act on the first exact-name match. Agent-managed names are required to be unique.')
-if @op == "rename" || @op == "create_link" || @op == "delete" || @op == "export_to_worker" {
+comment('For entity-bearing operations, scan the library and act on the first exact-name match. Agent-managed names should be unique.')
+if @op == "rename" || @op == "create_link" || @op == "delete" {
     if !@name {
         output('{"ok":false,"error":"missing_name"}')
     }
@@ -93,7 +94,6 @@ if @op == "rename" || @op == "create_link" || @op == "delete" || @op == "export_
         const candidateName = getShortcutDetail(@candidate, "Name")
         @candidateNameText = "{candidateName}"
 
-        comment('Exact name match only; output ends the Shortcut after a successful operation.')
         if @candidateNameText == "{@name}" {
             if @op == "rename" {
                 if !@newName {
@@ -114,15 +114,6 @@ if @op == "rename" || @op == "create_link" || @op == "delete" || @op == "export_
                 })
             }
 
-            if @op == "export_to_worker" {
-                rawAction("AsheKube.app.a-Shell.PutFileIntent", {
-                    "file": "${@candidate}",
-                    "overwrite": true,
-                    "ShowWhenRun": false
-                })
-                output('{"ok":true,"op":"export_to_worker","status":"export_requested"}')
-            }
-
             if @op == "delete" {
                 rawAction("com.apple.shortcuts.DeleteWorkflowAction", {
                     "entities": "${@candidate}"
@@ -134,5 +125,9 @@ if @op == "rename" || @op == "create_link" || @op == "delete" || @op == "export_
     output('{"ok":false,"error":"not_found"}')
 }
 
-comment('Reject operations not implemented by this native management controller.')
+comment('Reject content-plane or unknown operations instead of approximating with UI automation.')
+if @op == "edit" || @op == "duplicate" || @op == "install" || @op == "export" {
+    output('{"ok":false,"error":"unsupported_content_operation","message":"Use the desktop artifact/compiler backend."}')
+}
+
 output('{"ok":false,"error":"unsupported_operation"}')
