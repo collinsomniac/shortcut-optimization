@@ -8,9 +8,9 @@ Build a source-backed knowledge base around Apple Shortcuts as a phone-first aut
 
 ## Current phase
 
-**Research and synthesis, not device benchmarking.** Collect broad capability surfaces, practical/community examples, implementation constraints, interoperability patterns and open questions. Preserve enough detail that later experiments can be designed without redoing the literature review.
+**Research and implementation.** Continue broad source-backed ecosystem work, but the repository now also tracks a live Supabase control plane, iPhone/desktop workers, Shortcut-management storage/facades, callback/artifact Edge Functions and compiler probes. Start engineering continuation from [next-chat handoff](next-chat-handoff.md) and [current harness architecture](../docs/architecture/current-harness.md).
 
-Do not convert untested compositions into supported-capability claims. No local model result, iOS 27 self-modification route, browser callback, third-party action edit or native provider bridge is reproduced by this repo unless an experiment explicitly says so.
+Do not convert untested compositions into supported-capability claims. A URL launch, generated artifact, or hardcoded registry entry is not sufficient evidence of execution; preserve the repository's evidence labels and verify device behavior.
 
 ## Architectural north-star
 
