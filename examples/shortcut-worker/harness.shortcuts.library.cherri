@@ -5,7 +5,6 @@
 #define outputs text
 #define version 27
 
-#include 'actions/basic'
 #include 'actions/shortcuts'
 
 const request = getDictionary(ShortcutInput)
