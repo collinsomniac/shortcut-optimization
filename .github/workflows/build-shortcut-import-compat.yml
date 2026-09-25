@@ -90,7 +90,7 @@ jobs:
             cat "build/import-compat/$slug.validation.txt"
             echo "validator_exit=$validation_exit"
 
-            python -c 'import json,pathlib,plistlib,sys; slug,name,mode,validation_exit=sys.argv[1:5]; p=pathlib.Path("build/import-compat")/(slug+".plist"); obj=plistlib.loads(p.read_bytes()); meta={"shortcutName":name,"shortcut":p.read_text()}; (pathlib.Path("build/import-compat")/(slug+".meta.json")).write_text(json.dumps({"name":name,"mode":mode,"action_count":len(obj.get("WFWorkflowActions",[])),"validator_exit":int(validation_exit)},indent=2)+"\\n"); (pathlib.Path("build/import-compat")/(slug+".hubsign.json")).write_text(json.dumps(meta))' "$slug" "$name" "$mode" "$validation_exit"
+            python -c 'import json,pathlib,plistlib,sys; slug,name,mode,validation_exit=sys.argv[1:5]; p=pathlib.Path("build/import-compat")/(slug+".plist"); obj=plistlib.loads(p.read_bytes()); meta={"shortcutName":name,"shortcut":p.read_text()}; (pathlib.Path("build/import-compat")/(slug+".meta.json")).write_text(json.dumps({"name":name,"mode":mode,"action_count":len(obj.get("WFWorkflowActions",[])),"validator_exit":int(validation_exit)},indent=2)); (pathlib.Path("build/import-compat")/(slug+".hubsign.json")).write_text(json.dumps(meta))' "$slug" "$name" "$mode" "$validation_exit"
 
             curl --fail --silent --show-error --location \
               -H 'Content-Type: application/json' \
@@ -145,7 +145,7 @@ jobs:
                   **meta,
               })
           (public / "manifest.json").write_text(
-              json.dumps({"schema_version":"2","fixtures":rows}, indent=2) + "\\n"
+              json.dumps({"schema_version":"2","fixtures":rows}, indent=2)
           )
           print(json.dumps(rows, indent=2))
           PY
