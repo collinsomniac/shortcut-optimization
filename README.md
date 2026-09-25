@@ -2,12 +2,14 @@
 
 Phone-first research and reusable building blocks for AI, Apple Shortcuts, local iOS workflows, and a future capability-oriented agent harness.
 
-**Status:** active research foundation. The current phase prioritizes literature/ecosystem research, capability mapping, examples, architecture hypotheses, and durable documentation. Device benchmarking and installable releases come later. Documentation reviewed 2026-09-23.
+**Status:** active research + harness implementation. The repository now documents and partially implements a live Supabase control plane, iPhone/desktop workers, Shortcut-management protocol, callback/artifact services, and compiler probes while continuing source-backed ecosystem research. Documentation reviewed 2026-09-24.
 
 ## Start with a goal
 
 | I want to… | Start here |
 |---|---|
+| Continue active harness engineering in a new chat | [Next-chat handoff](agents/next-chat-handoff.md) · [copy-paste prompt](agents/next-chat-prompt.md) |
+| Understand the live system architecture | [Current harness architecture](docs/architecture/current-harness.md) |
 | Understand the project and current research state | [Research home base](docs/research/index.md) |
 | Continue research consistently across agents | [Research methodology](docs/research/methodology.md) and [capability template](docs/research/capability-record-template.md) |
 | Understand how the technologies could compose into a harness | [Capability stack](docs/research/capability-stack.md) |
@@ -55,9 +57,9 @@ A proposed later handoff remains **agent selects capability → user/device auth
 
 Evidence labels: **documented**, **artifact-inspected**, **reproduced**, **reported**, **hypothesis**, **unknown**. “Documented” is not “tested on this phone.” See [evidence rules](docs/evidence.md).
 
-## Current phase: research accumulation
+## Current phase: research + implementation
 
-Before beginning the device-test roadmap, expand the source-backed map of what Shortcuts, App Intents, Apple Intelligence/Foundation Models/Core AI, local model runtimes, browser/shell tools and external control-plane services can do separately and in combination. Prefer primary documentation, retain useful community reports as reported evidence, and turn promising combinations into falsifiable architecture hypotheses.
+Continue expanding the source-backed capability map while converting the most valuable paths into reproducible harness experiments. The current engineering focus is native Shortcut inventory, a source-controlled/dynamic registry, artifact round-trip editing, verified execution receipts, and a contained `shortcuts.*` semantic tool surface. Prefer primary documentation, retain useful community reports as reported evidence, and turn promising combinations into falsifiable architecture hypotheses.
 
 The later first execution milestone remains **SO Echo**, a diagnostic shortcut that accepts text and returns it unchanged. That milestone is intentionally deferred while the project builds its research base. See [roadmap](docs/roadmap.md).
 
