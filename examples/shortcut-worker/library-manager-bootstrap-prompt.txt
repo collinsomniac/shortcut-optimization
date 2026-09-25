@@ -1,0 +1,74 @@
+Create a shortcut named "harness.shortcuts.library".
+
+Purpose: persistent agent-facing management of the Apple Shortcuts library using first-party Shortcuts actions. This shortcut must be reusable and deterministic. Do not ask the user questions, do not show alerts or notifications, and do not use Apple Intelligence after creation.
+
+Input contract:
+- Accept Shortcut Input.
+- If input is JSON text, parse it as a Dictionary. If it is already a Dictionary, use it directly.
+- Read string field "op".
+- Optional operation parameters are top-level fields described below.
+- Return a Dictionary for every operation with at least: ok (Boolean), op (Text), controller_version ("0.3").
+- On errors, return ok=false with error and message. Never silently pick among ambiguous matches.
+
+Exact identity rule:
+- When an operation targets a shortcut by "name", use Get My Shortcuts and Get Shortcut Attributes to find exact name equality.
+- If zero exact matches exist, return error "not_found".
+- If more than one exact match exists, return error "ambiguous_name".
+- Do not use partial matching for destructive or mutating operations.
+
+Supported operations:
+
+1. "capabilities"
+Return supported operations and controller_version.
+
+2. "list"
+Use Get My Shortcuts. For each Shortcut, get available Shortcut Attributes such as Name and other safe metadata. Return items as a list. Do not run or open anything.
+
+3. "create"
+Require "name". Use Create Shortcut. If "folder" is supplied and can be applied using first-party Shortcuts actions, move the new Shortcut there. Return the created Shortcut's name and available attributes.
+
+4. "run"
+Require "name". Optional "input". Resolve the exact Shortcut object, then Run Shortcut using "input" when provided. Return its output under "result".
+
+5. "open"
+Require "name". Resolve exact Shortcut and Open Shortcut. Return ok=true after launching.
+
+6. "rename"
+Require "name" and "new_name". Resolve exact Shortcut then Rename Shortcut. Return old_name and new_name.
+
+7. "move"
+Require "name" and "folder". Resolve exact Shortcut then Move Shortcut to that folder. Do not create a missing folder implicitly; return a structured error if the destination cannot be resolved.
+
+8. "create_folder"
+Require "folder". Use Create Folder. Return the created folder.
+
+9. "open_folder"
+Require "folder". Use Open Folder.
+
+10. "create_link"
+Require "name". Resolve exact Shortcut then Create iCloud Link for Shortcut. Return the URL under "url".
+
+11. "get_attributes"
+Require "name". Resolve exact Shortcut and use Get Shortcut Attributes. Return all safe attributes that action can provide.
+
+12. "delete"
+Require "name" and Boolean "confirm". If confirm is not true, return ok=false error="confirmation_required" and do nothing. If true, resolve exact Shortcut and Delete Shortcuts, then return deleted name.
+
+13. "duplicate"
+Do not attempt UI automation or unsafe approximation. Return ok=false error="unsupported_content_operation" message="Use the artifact clone backend."
+
+14. "edit"
+Do not attempt to modify another shortcut's action graph. Return ok=false error="unsupported_content_operation" message="Use the artifact editor backend."
+
+15. Unknown op
+Return ok=false error="unsupported_operation".
+
+Implementation guidance:
+- Prefer the native Shortcuts actions visible on this device: Get My Shortcuts, Create Shortcut, Run Shortcut, Open Shortcut, Rename Shortcut, Move Shortcut, Delete Shortcuts, Create Folder, Open Folder, Create iCloud Link for Shortcut, Get Shortcut Attributes.
+- Keep this Shortcut focused on library management only.
+- No network calls.
+- No external APIs.
+- No clipboard tricks.
+- No recursive self-modification.
+- No user prompts.
+- Final output must always be the structured Dictionary result.
