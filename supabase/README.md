@@ -13,6 +13,6 @@ The existing desktop/iPhone agents continue using the original RPC interfaces un
 
 ## Security boundary
 
-The `shortcuts` schema is not intended for direct browser/Data API use. Grants to `anon` and `authenticated` are revoked. The live tables were created without RLS because they are internal/unexposed and accessed through service-role functions; Supabase's generic table inspector still flags RLS-disabled tables, so enabling RLS as defense-in-depth remains an explicit hardening decision rather than something silently applied.
+The `shortcuts` schema is not intended for direct browser/Data API use. A live privilege inspection on 2026-09-24 confirmed that `anon` and `authenticated` have no SELECT/INSERT/UPDATE/DELETE privileges on the inspected Shortcut tables; `service_role` has intended access. Inspected Shortcut public RPC functions are also service-role-only. Five internal tables still have RLS disabled, so Supabase flags them as a defense-in-depth concern. Review exposed-schema configuration and service-role behavior before enabling RLS; do not describe the current state as public access unless grants change.
 
 Never put worker tokens, service-role keys, callback tokens, or private Shortcut data in this repository.
