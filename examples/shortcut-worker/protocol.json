@@ -1,5 +1,5 @@
 {
-  "protocol": "shortcut-worker/0.3-draft",
+  "protocol": "shortcut-worker/0.4-draft",
   "persistence_model": {
     "canonical_folder": "harness.shortcuts",
     "generated_folder": "Agent Generated",
@@ -11,7 +11,7 @@
     "job_facade": "public.submit_shortcut_job(operation, params, ttl)",
     "worker": "iphone-main",
     "dispatch_method": "shortcuts.control",
-    "current_live_note": "The semantic protocol is ahead of the live phone dispatcher. Do not claim a method is routable until device verification succeeds."
+    "current_live_note": "Semantic protocol is ahead of the live phone dispatcher. Core target is a pure-native persistent manager plus separate artifact stager/compiler. Do not claim a method is routable until device verification succeeds."
   },
   "methods": {
     "shortcuts.capabilities": {
@@ -44,16 +44,17 @@
       "backend": [
         "Create Shortcut"
       ],
-      "lifecycle": "persistent"
+      "lifecycle": "persistent",
+      "note": "Create Shortcut creates a persistent empty/native Shortcut shell by name; it is not a general arbitrary action-graph installer."
     },
     "shortcuts.generate": {
       "effect": "reversible_write",
       "backend": [
-        "GenerateShortcutAction",
-        "Describe a Shortcut",
-        "compiler"
+        "desktop_cherri_compiler",
+        "native Describe a Shortcut fallback"
       ],
-      "lifecycle": "persistent"
+      "lifecycle": "persistent",
+      "note": "Imported GenerateShortcutAction bootstrap was rejected by the target iPhone as unsupported; do not use as primary path."
     },
     "shortcuts.get": {
       "effect": "read",
@@ -79,10 +80,11 @@
     "shortcuts.edit": {
       "effect": "reversible_write",
       "backend": [
-        "artifact patch",
-        "action pasteboard",
-        "native builder fallback"
-      ]
+        "desktop artifact patch/compiler",
+        "native builder fallback",
+        "action pasteboard experimental"
+      ],
+      "note": "Action-pasteboard route is deprioritized because it remains editor/UI-bound and was not reproduced on the target device."
     },
     "shortcuts.duplicate": {
       "effect": "reversible_write",
@@ -166,10 +168,12 @@
     "shortcuts.install": {
       "effect": "reversible_write",
       "backend": [
-        "trusted signed import",
-        "action pasteboard"
+        "signed artifact",
+        "harness.shortcuts.stage",
+        "Apple native import confirmation"
       ],
-      "status": "backend_under_validation"
+      "status": "stager_under_validation",
+      "note": "Public iOS import remains user-confirmed; do not claim silent install into the Shortcuts database."
     },
     "shortcuts.delete": {
       "effect": "destructive",
@@ -181,11 +185,28 @@
     "shortcuts.export_to_worker": {
       "effect": "read",
       "backend": [
-        "Get My Shortcuts",
-        "a-Shell Put File"
+        "optional a-Shell Put File adapter"
       ],
-      "semantics": "Resolve exact installed Shortcut and copy its native file representation into the a-Shell worker sandbox for inspection/versioning.",
-      "status": "compiled_not_device_verified"
+      "semantics": "Optional adapter for copying an explicitly selected native Shortcut object into a-Shell's App Group for inspection/versioning.",
+      "status": "optional_not_core_not_device_verified",
+      "note": "Removed from pure-native harness.shortcuts.library v0.3. Heavy artifact work belongs on desktop-main."
+    },
+    "shortcuts.dispatch": {
+      "effect": "runtime",
+      "backend": [
+        "harness.shortcuts.run",
+        "harness.shortcuts.library"
+      ],
+      "semantics": "Parameterized execution of an already-installed Shortcut by exact name with optional input; no generation/signing per run.",
+      "status": "runner_prompt_ready_not_device_verified"
+    },
+    "shortcuts.stage": {
+      "effect": "ui_handoff",
+      "backend": [
+        "harness.shortcuts.stage"
+      ],
+      "semantics": "Download a signed .shortcut artifact on-device, save it into the Shortcuts/Files container, and open it for Apple's native Add Shortcut confirmation.",
+      "status": "compiler_build_under_validation"
     }
   },
   "result_statuses": [
