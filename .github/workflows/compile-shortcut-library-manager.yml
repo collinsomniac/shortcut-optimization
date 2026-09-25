@@ -33,6 +33,9 @@ jobs:
             --derive-uuids \
             --no-ansi \
             --output "$GITHUB_WORKSPACE/build/library-manager/harness.shortcuts.library.shortcut"
+          GENERATED="$GITHUB_WORKSPACE/examples/shortcut-worker/harness.shortcuts.library.plist"
+          test -s "$GENERATED"
+          cp "$GENERATED" "$GITHUB_WORKSPACE/build/library-manager/harness.shortcuts.library.plist"
           find "$GITHUB_WORKSPACE" -maxdepth 4 -type f \( -name '*.plist' -o -name '*processed*.cherri' -o -name 'harness.shortcuts.library.shortcut' \) -print
       - name: Inspect generated artifact
         run: |
@@ -61,5 +64,6 @@ jobs:
           name: persistent-library-manager-unsigned
           path: |
             build/library-manager/**
+            examples/shortcut-worker/harness.shortcuts.library.plist
             examples/shortcut-worker/*_processed.cherri
           if-no-files-found: warn
