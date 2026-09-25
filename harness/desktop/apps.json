@@ -1,0 +1,23 @@
+{
+  "schema_version": "0.1",
+  "status": "desired_not_live_verified",
+  "worker": "desktop-main",
+  "apps": {
+    "vscode": {
+      "semantic_method": "desktop.app.ensure",
+      "process_names": [
+        "Code"
+      ],
+      "command_candidates": [
+        "code"
+      ],
+      "windows_path_candidates": [
+        "%LOCALAPPDATA%\\Programs\\Microsoft VS Code\\Code.exe",
+        "%ProgramFiles%\\Microsoft VS Code\\Code.exe",
+        "%ProgramFiles(x86)%\\Microsoft VS Code\\Code.exe"
+      ],
+      "postcondition": "At least one Code process exists after ensure.",
+      "note": "Do not claim this is operational until desktop.exec leasing is verified."
+    }
+  }
+}
