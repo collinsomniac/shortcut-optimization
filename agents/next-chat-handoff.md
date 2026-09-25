@@ -1,12 +1,42 @@
 # Next-chat handoff
 
+## Action-pasteboard route — 2026-09-25 UTC (current preferred next experiment)
+
+The native export/parser/editor milestone is complete enough that whole-file signing is no longer the only way forward. A generic five-action helper, `SO Copy Actions`, can convert a JSON payload of base64-encoded action plists into the native `com.apple.shortcuts.action` clipboard representation using Sindre Sorhus's Actions app.
+
+Verified in code / infrastructure:
+- exact Actions AppIntent descriptor recovered;
+- helper graph recorded in repo;
+- generic helper signed through HubSign, no private harness bytes included;
+- stable whitelisted public fixture endpoint deployed;
+- desktop fetch reproduced exact 22,337-byte AEA1 helper SHA;
+- local packer preserves action order, UUIDs and cross-action references;
+- two-action Text → Show Result device fixture committed.
+
+Not yet verified:
+- iOS accepts/imports the helper;
+- helper creates a pasteable native action clipboard on this phone;
+- pasted actions round-trip through export exactly;
+- private patched `harness.info` duplicate executes with the added fixture.
+
+Preferred sequence now:
+1. install `SO Copy Actions`;
+2. run the two-action fixture and paste it into a blank Shortcut;
+3. execute/export/compare;
+4. pack the private 11-action patched `harness.info` locally;
+5. paste into a separately named duplicate;
+6. export/decode/canonical-compare;
+7. execute and verify `_roundtrip_fixture = harness.info.patch.v1`.
+
+See [iOS action-pasteboard experiment](../experiments/ios-action-pasteboard/README.md) and [HubSign generic probe](../experiments/hubsign-import-probe/README.md).
+
 ## Native export milestone — 2026-09-25 UTC (supersedes earlier export blocker)
 
 The supplied `harness.info` export was decoded locally on Linux with AEA signature/integrity verification, canonicalized, and structurally patched. All 11 actions and existing tokenized Dictionary fields were preserved; one inert `_roundtrip_fixture` text field was added. 19 tests pass. Playground diagnostics are identical before/after (four pre-existing checks, not a full validation pass). **Unsigned patch only; signing/import/device fixture execution remain blocked.**
 
 Artifact evidence refines the old “hardcoded manifest” description: the export uses Get My Shortcuts in four fixed harness folders, then formats their members. The folder scope/schema are fixed, the members are dynamically discovered, and the whole library is not scanned. Dispatcher allowlist behavior and installed/exported byte identity remain unknown. Do not assume adding an output field registers a callable tool.
 
-Next: establish a trusted signer and import a separately named duplicate, then verify `_roundtrip_fixture = harness.info.patch.v1` on-device. Full native artifacts remain private. [Exact experiment, hashes, boundaries and reproduction](../experiments/native-harness-roundtrip/README.md).
+Whole-file trusted signing remains useful, but the current preferred route is action-level pasteboard reconstruction so the private patched harness need not leave the user's environment. [Exact experiment, hashes, boundaries and reproduction](../experiments/native-harness-roundtrip/README.md).
 
 ## Latest experiment — 2026-09-25 UTC
 
