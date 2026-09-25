@@ -68,10 +68,9 @@ jobs:
           PY
       - name: Validate against pinned iOS 27 catalog
         run: |
-          python .vendor/shortcuts-playground/codex/skills/shortcuts-playground/scripts/validate_shortcut.py \
-            build/library-manager/harness.shortcuts.library.plist \
-            --target-macos 27 \
-            --target-platform ios
+          python tooling/validate_shortcuts_playground_runtime.py \
+            .vendor/shortcuts-playground/codex/skills/shortcuts-playground/scripts/validate_shortcut.py \
+            build/library-manager/harness.shortcuts.library.plist
       - name: Upload compiler outputs
         uses: actions/upload-artifact@v4
         with:
