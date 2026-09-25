@@ -133,3 +133,22 @@ workflow structure. Sending the entire patched artifact to an external signer is
 unnecessary if the editor can accept the action array locally.
 
 HubSign remains useful for bootstrapping generic helpers and public fixtures.
+
+
+## Continuation result — 2026-09-25 UTC
+
+The full Shortcut tooling CI was broadened and passed on run `36091095278`:
+- 22 tests run;
+- 1 optional cryptographic integration skipped;
+- bootstrap donor build verified.
+
+The already-patched private `harness.info` was also packed locally into the helper format:
+- source workflow SHA-256: `6778a75e81845548c14e287bf9093a8fc7afe2573ebe228c06d1a1a4fd137964`;
+- 11 actions;
+- private payload size: 19,551 bytes;
+- payload SHA-256: `181750662f8aef82ed901f4b65601b4880804e94d0623bfebe97c0691f16a8f2`;
+- decoding every base64 action reproduces the private patched `WFWorkflowActions` array exactly.
+
+The private payload was **not committed and not sent to HubSign**.
+
+Current device boundary: install the generic helper, reproduce the committed two-action fixture, then proceed to the private 11-action duplicate only if the native paste succeeds.
