@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/collinsomniac/shortcut-optimization/harness/registry.schema.json",
+  "title": "Harness capability registry",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "groups"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "observed_at": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "groups": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "method",
+            "native_shortcut",
+            "effect",
+            "enabled"
+          ],
+          "properties": {
+            "method": {
+              "type": "string",
+              "minLength": 1
+            },
+            "native_shortcut": {
+              "type": "string",
+              "minLength": 1
+            },
+            "effect": {
+              "type": "string",
+              "minLength": 1
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "dispatch_verified": {
+              "type": "boolean"
+            },
+            "domain": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "planned": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}
