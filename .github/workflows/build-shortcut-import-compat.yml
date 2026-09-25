@@ -59,14 +59,7 @@ jobs:
             python tooling/validate_shortcuts_playground_runtime.py \
               .vendor/shortcuts-playground/codex/skills/shortcuts-playground/scripts/validate_shortcut.py \
               "build/import-compat/$slug.plist"
-            python - "$slug" "$name" <<'PY'
-import json, pathlib, sys
-slug,name=sys.argv[1:3]
-p=pathlib.Path("build/import-compat")/(slug+".plist")
-(pathlib.Path("build/import-compat")/(slug+".hubsign.json")).write_text(
-    json.dumps({"shortcutName":name,"shortcut":p.read_text()})
-)
-PY
+            python -c 'import json,pathlib,sys; slug,name=sys.argv[1:3]; p=pathlib.Path("build/import-compat")/(slug+".plist"); (pathlib.Path("build/import-compat")/(slug+".hubsign.json")).write_text(json.dumps({"shortcutName":name,"shortcut":p.read_text()}))' "$slug" "$name"
             curl --fail --silent --show-error --location \
               -H 'Content-Type: application/json' \
               -H 'User-Agent: Cherri/shortcut-optimization-import-compat' \
@@ -91,23 +84,7 @@ PY
             'https://zpdtlzpvshlpyqbfbzye.supabase.co/functions/v1/shortcut-public-artifact?name=hubsign-probe' \
             --output public/shortcut-import-compat/manual-hubsign-probe.shortcut
 
-          python - <<'PY'
-import hashlib,json,pathlib,sys
-root=pathlib.Path("public/shortcut-import-compat")
-rows=[]
-for p in sorted(root.glob("*.shortcut")):
-    b=p.read_bytes()
-    if b[:4] != b"AEA1":
-        raise SystemExit(f"{p}: not AEA1 ({b[:16]!r})")
-    rows.append({
-        "slug":p.stem,
-        "filename":p.name,
-        "bytes":len(b),
-        "sha256":hashlib.sha256(b).hexdigest(),
-    })
-(root/"manifest.json").write_text(json.dumps({"schema_version":"1","fixtures":rows},indent=2)+"\n")
-print(json.dumps(rows,indent=2))
-PY
+          python -c 'import hashlib,json,pathlib; root=pathlib.Path("public/shortcut-import-compat"); rows=[{"slug":p.stem,"filename":p.name,"bytes":len(b:=p.read_bytes()),"sha256":hashlib.sha256(b).hexdigest()} for p in sorted(root.glob("*.shortcut")) if (b:=p.read_bytes())[:4]==b"AEA1"]; expected=len(list(root.glob("*.shortcut"))); assert len(rows)==expected,(len(rows),expected); (root/"manifest.json").write_text(json.dumps({"schema_version":"1","fixtures":rows},indent=2)+"\\n"); print(json.dumps(rows,indent=2))'
 
       - name: Commit signed public compatibility fixtures
         run: |
