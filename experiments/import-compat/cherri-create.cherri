@@ -1,0 +1,12 @@
+#define name SO Compat 4 - Cherri Create
+#define color blue
+#define glyph plus
+#define inputs text
+#define outputs text
+#define version 27
+
+#include 'actions/shortcuts'
+
+comment('Import compatibility fixture. If run, creates one empty disposable Shortcut named SO Compat Disposable.')
+makeShortcut("SO Compat Disposable", false)
+show("SO Compat Create action executed")
