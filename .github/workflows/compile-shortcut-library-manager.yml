@@ -19,6 +19,12 @@ jobs:
           repository: electrikmilk/cherri
           ref: d96eee9c7768649d441df0166b68a7e3c742690c
           path: .vendor/cherri
+      - name: Checkout pinned Shortcuts Playground validator
+        uses: actions/checkout@v4
+        with:
+          repository: viticci/shortcuts-playground-plugin
+          ref: 2de03bffe4ce8802e06d184931d9e4ec366a2ef2
+          path: .vendor/shortcuts-playground
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
@@ -58,6 +64,12 @@ jobs:
               out["files"].append(entry)
           print(json.dumps(out,indent=2))
           PY
+      - name: Validate against pinned iOS 27 catalog
+        run: |
+          python .vendor/shortcuts-playground/codex/skills/shortcuts-playground/scripts/validate_shortcut.py \
+            build/library-manager/harness.shortcuts.library.plist \
+            --target-macos 27 \
+            --target-platform ios
       - name: Upload compiler outputs
         uses: actions/upload-artifact@v4
         with:
