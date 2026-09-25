@@ -1,0 +1,26 @@
+{
+  "label": "SO Pasteboard Probe v1 — Text → Show Result",
+  "actions": [
+    {
+      "id": "is.workflow.actions.gettext",
+      "p": {
+        "UUID": "C0FFEE00-0001-4A00-9000-000000000001",
+        "WFTextActionText": "SO Pasteboard Probe v1"
+      }
+    },
+    {
+      "id": "is.workflow.actions.showresult",
+      "p": {
+        "UUID": "C0FFEE00-0002-4A00-9000-000000000002",
+        "Text": {
+          "Value": {
+            "OutputName": "Text",
+            "OutputUUID": "C0FFEE00-0001-4A00-9000-000000000001",
+            "Type": "ActionOutput"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        }
+      }
+    }
+  ]
+}
