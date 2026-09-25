@@ -35,9 +35,10 @@ The repository contains:
 
 Start future work from:
 1. [this architecture](current-harness.md);
-2. [Shortcut Worker implementation status](../implementation/shortcut-worker-status.md);
-3. [next-agent handoff](../../agents/next-chat-handoff.md);
-4. [Shortcut Worker protocol](../../examples/shortcut-worker/protocol.json).
+2. [execution boundaries](execution-boundaries.md);
+3. [Shortcut Worker implementation status](../implementation/shortcut-worker-status.md);
+4. [next-agent handoff](../../agents/next-chat-handoff.md);
+5. [Shortcut Worker protocol](../../examples/shortcut-worker/protocol.json).
 
 ## Supabase control plane
 
@@ -213,7 +214,7 @@ with AppIntent identifier:
 
 `GenerateShortcutAction`.
 
-Use this route when it works because it understands the target phone’s native/app actions.
+Use Describe a Shortcut only as a fallback when its UI/native understanding is uniquely valuable. The imported GenerateShortcutAction bootstrap was rejected on the target phone and is not a primary automation path.
 
 ### 2. Deterministic artifact compiler
 
@@ -236,7 +237,7 @@ The next compiler milestone is not just generating whole workflows; it is **roun
 
 This is the route that can eventually edit harness workflows such as `harness.info` without relying on natural-language builder behavior.
 
-### 3. Native action-pasteboard editor
+### 3. Native action-pasteboard editor — experimental / demoted
 
 A newly recovered route can avoid re-signing the whole target workflow:
 
@@ -252,7 +253,7 @@ compiler action array
 
 This is based on the measured/open-source `Copy-ActionFromClaude` pattern from `mehrlander/shortcut-tools`. The exact helper descriptor and local packer are committed in this repository. It supports an entire ordered action chain, including UUID-based variable references.
 
-The current platform boundary is the final **Paste** into the Shortcuts editor. Treat this as the preferred device-local edit/install experiment because it keeps private target workflow contents away from third-party signers. See [iOS action-pasteboard experiment](../../experiments/ios-action-pasteboard/README.md).
+The current platform boundary is the final **Paste** into the Shortcuts editor. This route was not reproduced on the target iOS 27 editor and remains UI-bound. Keep it as research only; do not use it as the primary install/edit backend. See [iOS action-pasteboard experiment](../../experiments/ios-action-pasteboard/README.md).
 
 ### 4. Builder/UI fallback
 
@@ -398,3 +399,19 @@ A local guarded literal editor and typed canonical plist representation now exis
 ## Native export update — 2026-09-25 UTC
 
 The actual supplied harness export now has a reproduced local AEA decode/canonicalize/Dictionary-field patch path. All original wiring is preserved. Signing/import/device fixture execution is still unverified. See [native round trip](../../experiments/native-harness-roundtrip/README.md). The parser supports profile-0 archives, not arbitrary signed/encrypted containers.
+
+
+## 2026-09-25 execution-boundary update
+
+The core Shortcut manager is now pure Apple-native. Heavy compilation, parsing,
+diffing and Git belong on `desktop-main`; a-Shell is an optional narrow
+adapter only.
+
+Current signed device candidates:
+- `harness.shortcuts.library` v0.3 — SHA-256
+  `6c544ab7c186e9fead24bcdac30cf107f79c48ffba4550b6016c99c03cae57a6`;
+- `harness.shortcuts.stage` v0.1 — SHA-256
+  `e21b977817577bf03d9b3b3364f53568e8994dfeaa04d9018b0f6e325bc395b0`.
+
+See [execution boundaries](execution-boundaries.md) for the canonical placement
+policy.
