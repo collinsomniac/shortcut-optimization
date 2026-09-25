@@ -47,14 +47,18 @@ jobs:
             src="$1"
             slug="$2"
             name="$3"
-            rm -f "${src%.cherri}.plist"
+            srcdir="$(dirname "$src")"
+            before="$(mktemp)"
+            find "$srcdir" -maxdepth 1 -type f -name '*.plist' -printf '%T@ %p\n' | sort > "$before" || true
             (
               cd .vendor/cherri
               go run . "$GITHUB_WORKSPACE/$src" --debug --skip-sign --comments --no-ansi \
                 --output "$GITHUB_WORKSPACE/build/import-compat/$slug.shortcut"
             )
-            generated="${src%.cherri}.plist"
+            generated="$(find "$srcdir" -maxdepth 1 -type f -name '*.plist' -printf '%T@ %p\n' | sort -nr | head -n1 | cut -d' ' -f2-)"
+            test -n "$generated"
             test -s "$generated"
+            rm -f "$before"
             python tooling/normalize_shortcuts_appintents.py "$generated" "build/import-compat/$slug.plist"
             python tooling/validate_shortcuts_playground_runtime.py \
               .vendor/shortcuts-playground/codex/skills/shortcuts-playground/scripts/validate_shortcut.py \
