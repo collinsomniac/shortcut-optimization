@@ -1,0 +1,65 @@
+name: Compile persistent Shortcut library manager
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'examples/shortcut-worker/harness.shortcuts.library.cherri'
+      - '.github/workflows/compile-shortcut-library-manager.yml'
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout shortcut-optimization
+        uses: actions/checkout@v4
+      - name: Checkout pinned Cherri
+        uses: actions/checkout@v4
+        with:
+          repository: electrikmilk/cherri
+          ref: d96eee9c7768649d441df0166b68a7e3c742690c
+          path: .vendor/cherri
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.x'
+      - name: Compile unsigned deterministic controller
+        working-directory: .vendor/cherri
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/build/library-manager"
+          go run . "$GITHUB_WORKSPACE/examples/shortcut-worker/harness.shortcuts.library.cherri" \
+            --debug \
+            --skip-sign \
+            --derive-uuids \
+            --no-ansi \
+            --output "$GITHUB_WORKSPACE/build/library-manager/harness.shortcuts.library.shortcut"
+          find "$GITHUB_WORKSPACE" -maxdepth 4 -type f \( -name '*.plist' -o -name '*processed*.cherri' -o -name 'harness.shortcuts.library.shortcut' \) -print
+      - name: Inspect generated artifact
+        run: |
+          python - <<'PY'
+          import hashlib, pathlib, plistlib, json
+          root=pathlib.Path("build/library-manager")
+          files=list(root.glob("*"))
+          out={"files":[]}
+          for p in files:
+              b=p.read_bytes()
+              entry={"name":p.name,"bytes":len(b),"sha256":hashlib.sha256(b).hexdigest()}
+              try:
+                  obj=plistlib.loads(b)
+                  entry["plist"]=True
+                  entry["action_count"]=len(obj.get("WFWorkflowActions",[]))
+                  entry["ids"]=[a.get("WFWorkflowActionIdentifier") for a in obj.get("WFWorkflowActions",[])]
+              except Exception as e:
+                  entry["plist"]=False
+                  entry["parse_error"]=str(e)
+              out["files"].append(entry)
+          print(json.dumps(out,indent=2))
+          PY
+      - name: Upload compiler outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: persistent-library-manager-unsigned
+          path: |
+            build/library-manager/**
+            examples/shortcut-worker/*_processed.cherri
+          if-no-files-found: warn
