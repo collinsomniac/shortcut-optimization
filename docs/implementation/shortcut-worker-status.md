@@ -1,5 +1,27 @@
 # Shortcut Worker implementation status
 
+## Persistent management pivot — 2026-09-25 UTC
+
+The management architecture is now explicitly split:
+
+- **persistent native library plane** — inventory/create/run/open/rename/move/folders/attributes/share/delete;
+- **artifact/content plane** — snapshot/export/diff/edit/duplicate/install;
+- **optional pasteboard transport** — local action-graph insertion experiment.
+
+A v0.3-draft semantic protocol and [native capability catalog](../../harness/shortcuts/native-capabilities.json) are committed. The high-level operation `shortcuts.ensure(spec)` is intended to reuse an installed current Shortcut rather than regenerate it.
+
+Apple's current first-party iOS 27 catalog exposes Create/Delete/Get/Set Attributes/Move/Open/Rename/Run/Create Folder/Create iCloud Link/Change Icon and related management intents. Apple's release notes independently document Create/Delete/Open Folder since iOS 16, Create Folder/Create iCloud Link since iOS 18.0, and Move/Rename since iOS 18.1.
+
+No dedicated first-party Duplicate Shortcut AppIntent was found in the inspected iOS 27 catalog. Semantic duplication therefore belongs to the content plane: artifact clone first, action-pasteboard clone if verified, UI Duplicate only as fallback.
+
+A generic one-time `SO Library Manager Bootstrap` has been signed and staged. It is intended to create a persistent `harness.shortcuts.library` manager using Apple's own Generate Shortcut action:
+- 23,247 bytes;
+- AEA1;
+- SHA-256 `ba26c9241d4a7e88c6bdadf310ed5a99dbecebf269b764a48c76c0ca5aaddb57`;
+- contains no private harness data.
+
+The stable public fixture key is `library-manager-bootstrap`. Device generation/behavior is not yet verified.
+
 ## Action-pasteboard milestone — 2026-09-25 UTC
 
 A second installation/editing route now exists that can avoid re-signing private workflows:
