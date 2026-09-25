@@ -1,0 +1,78 @@
+name: Compile Shortcut stager
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'examples/shortcut-worker/harness.shortcuts.stage.cherri'
+      - '.github/workflows/compile-shortcut-stager.yml'
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout shortcut-optimization
+        uses: actions/checkout@v4
+      - name: Checkout pinned Cherri
+        uses: actions/checkout@v4
+        with:
+          repository: electrikmilk/cherri
+          ref: d96eee9c7768649d441df0166b68a7e3c742690c
+          path: .vendor/cherri
+      - name: Checkout pinned Shortcuts Playground validator
+        uses: actions/checkout@v4
+        with:
+          repository: viticci/shortcuts-playground-plugin
+          ref: 2de03bffe4ce8802e06d184931d9e4ec366a2ef2
+          path: .vendor/shortcuts-playground
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.x'
+      - name: Compile unsigned stager
+        working-directory: .vendor/cherri
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/build/stager"
+          go run . "$GITHUB_WORKSPACE/examples/shortcut-worker/harness.shortcuts.stage.cherri" \
+            --debug --skip-sign --comments --no-ansi \
+            --output "$GITHUB_WORKSPACE/build/stager/harness.shortcuts.stage.shortcut"
+          GENERATED="$GITHUB_WORKSPACE/examples/shortcut-worker/harness.shortcuts.stage.plist"
+          test -s "$GENERATED"
+          python "$GITHUB_WORKSPACE/tooling/normalize_shortcuts_appintents.py" \
+            "$GENERATED" "$GITHUB_WORKSPACE/build/stager/harness.shortcuts.stage.plist"
+      - name: Validate against pinned iOS 27 catalog
+        run: |
+          python tooling/validate_shortcuts_playground_runtime.py \
+            .vendor/shortcuts-playground/codex/skills/shortcuts-playground/scripts/validate_shortcut.py \
+            build/stager/harness.shortcuts.stage.plist
+      - name: Sign generic stager with HubSign
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          p=pathlib.Path("build/stager/harness.shortcuts.stage.plist")
+          pathlib.Path("build/stager/hubsign-request.json").write_text(
+              json.dumps({"shortcutName":"harness.shortcuts.stage","shortcut":p.read_text()})
+          )
+          PY
+          curl --fail --silent --show-error --location \
+            -H 'Content-Type: application/json' \
+            -H 'User-Agent: Cherri/shortcut-optimization' \
+            --data-binary @build/stager/hubsign-request.json \
+            https://hubsign.routinehub.services/sign \
+            --output build/stager/harness.shortcuts.stage.shortcut
+          python - <<'PY'
+          import hashlib, pathlib
+          p=pathlib.Path("build/stager/harness.shortcuts.stage.shortcut")
+          b=p.read_bytes()
+          if b[:4] != b"AEA1": raise SystemExit(f"bad signed magic {b[:16]!r}")
+          print("signed_bytes",len(b))
+          print("signed_sha256",hashlib.sha256(b).hexdigest())
+          PY
+          rm build/stager/hubsign-request.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shortcut-stager
+          path: |
+            build/stager/**
+            examples/shortcut-worker/harness.shortcuts.stage.plist
+            examples/shortcut-worker/*_processed.cherri
+          if-no-files-found: error
