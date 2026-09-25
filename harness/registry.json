@@ -1,0 +1,130 @@
+{
+  "schema_version": "0.1",
+  "status": "snapshot_not_live_source_of_truth",
+  "observed_at": "2026-09-24",
+  "description": "Source-controlled snapshot of the hardcoded harness.info manifest. The live phone dispatcher does not yet consume this file. Evolve this into the registry source of truth.",
+  "policy": {
+    "allowlist_default": true,
+    "exact_method_names": true,
+    "generic_fallbacks_not_preferred": true,
+    "destructive_operations_require_confirmation": true
+  },
+  "groups": {
+    "core": [
+      {
+        "method": "tool.exec",
+        "native_shortcut": "tool.exec",
+        "effect": "runtime",
+        "enabled": true
+      },
+      {
+        "method": "supabase.worker",
+        "native_shortcut": "supabase.worker",
+        "effect": "runtime",
+        "enabled": true
+      },
+      {
+        "method": "supabase.worker.backup",
+        "native_shortcut": "supabase.worker.backup",
+        "effect": "runtime",
+        "enabled": true
+      }
+    ],
+    "tests": [
+      {
+        "method": "supabase.worker.http.test",
+        "native_shortcut": "supabase.worker.http.test",
+        "effect": "test",
+        "enabled": true
+      },
+      {
+        "method": "supabase.worker.token.test",
+        "native_shortcut": "supabase.worker.token.test",
+        "effect": "test",
+        "enabled": true
+      },
+      {
+        "method": "rpc.binary.photo.test",
+        "native_shortcut": "rpc.binary.photo.test",
+        "effect": "test",
+        "enabled": true
+      }
+    ],
+    "tools": [
+      {
+        "method": "probe.echo",
+        "native_shortcut": "probe.echo",
+        "effect": "read_or_benign_run",
+        "enabled": true
+      },
+      {
+        "method": "shell.exec.simple",
+        "native_shortcut": "shell.exec.simple",
+        "effect": "powerful_runtime",
+        "enabled": true
+      },
+      {
+        "method": "shell.inspect",
+        "native_shortcut": "shell.inspect",
+        "effect": "read",
+        "enabled": true
+      },
+      {
+        "method": "shell.exec",
+        "native_shortcut": "shell.exec",
+        "effect": "powerful_runtime",
+        "enabled": true
+      },
+      {
+        "method": "phone.info",
+        "native_shortcut": "phone.info",
+        "effect": "read",
+        "enabled": true
+      },
+      {
+        "method": "harness.info",
+        "native_shortcut": "harness.info",
+        "effect": "read",
+        "enabled": true
+      },
+      {
+        "method": "linux.inspect",
+        "native_shortcut": "linux.inspect",
+        "effect": "read",
+        "enabled": true
+      },
+      {
+        "method": "linux.exec",
+        "native_shortcut": "linux.exec",
+        "effect": "powerful_runtime",
+        "enabled": true
+      }
+    ],
+    "drivers": [
+      {
+        "method": "safari.exec.javascript",
+        "native_shortcut": "safari.exec.javascript",
+        "effect": "browser_runtime",
+        "enabled": true,
+        "dispatch_verified": false
+      },
+      {
+        "method": "safari.open.url",
+        "native_shortcut": "safari.open.url",
+        "effect": "ui_handoff",
+        "enabled": true,
+        "dispatch_verified": false
+      }
+    ]
+  },
+  "planned": [
+    {
+      "method": "shortcuts.control",
+      "native_shortcut": "shortcuts.control",
+      "domain": "shortcuts",
+      "enabled": false,
+      "status": "planned_or_unverified",
+      "note": "Do not infer installation state from this manifest. Replace monolithic control routing with first-class semantic shortcuts.* methods when practical."
+    }
+  ]
+}
