@@ -1,0 +1,16 @@
+{
+  "status": "drafted",
+  "signed": false,
+  "device_verified": false,
+  "source_sha256": "da54821f29938c7879b786826b136d0f3851e0892703b30f9b0df0a94c4219f8",
+  "output_sha256": "6778a75e81845548c14e287bf9093a8fc7afe2573ebe228c06d1a1a4fd137964",
+  "action_count": 11,
+  "appended_fields": 1,
+  "original_fields_preserved": true,
+  "catalog_baseline_identical": true,
+  "canonical_roundtrip": true,
+  "fixture_key": "_roundtrip_fixture",
+  "fixture_value": "harness.info.patch.v1",
+  "full_validator_passed": false,
+  "baseline_diagnostic_count": 4
+}

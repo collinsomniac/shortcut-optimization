@@ -1,5 +1,13 @@
 # Next-chat handoff
 
+## Native export milestone — 2026-09-25 UTC (supersedes earlier export blocker)
+
+The supplied `harness.info` export was decoded locally on Linux with AEA signature/integrity verification, canonicalized, and structurally patched. All 11 actions and existing tokenized Dictionary fields were preserved; one inert `_roundtrip_fixture` text field was added. 19 tests pass. Playground diagnostics are identical before/after (four pre-existing checks, not a full validation pass). **Unsigned patch only; signing/import/device fixture execution remain blocked.**
+
+Artifact evidence refines the old “hardcoded manifest” description: the export uses Get My Shortcuts in four fixed harness folders, then formats their members. The folder scope/schema are fixed, the members are dynamically discovered, and the whole library is not scanned. Dispatcher allowlist behavior and installed/exported byte identity remain unknown. Do not assume adding an output field registers a callable tool.
+
+Next: establish a trusted signer and import a separately named duplicate, then verify `_roundtrip_fixture = harness.info.patch.v1` on-device. Full native artifacts remain private. [Exact experiment, hashes, boundaries and reproduction](../experiments/native-harness-roundtrip/README.md).
+
 ## Latest experiment — 2026-09-25 UTC
 
 - Live `harness.info` completed; the artifact `get` facade reached the phone but returned inner `tool_not_found` for `shortcuts.control`, despite transport `ok=true`. Native controller installation remains unknown.
@@ -55,7 +63,7 @@ Priorities:
 
 ## Critical correction
 
-`harness.info` is hardcoded by design. It is an allowlist/manifest, not a dynamic scan.
+`harness.info` is a scoped harness manifest, not a full-library inventory. The supplied export dynamically scans four fixed folders; dispatcher policy remains separately unverified.
 
 Do not use its absence of a name as proof a Shortcut is absent from the library.
 

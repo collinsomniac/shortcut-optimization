@@ -143,3 +143,10 @@ For volatile plan limits, beta/prototype actions, model artifacts and OS-specifi
 | [ORT WebGPU documentation](https://onnxruntime.ai/docs/tutorials/web/ep-webgpu.html) | Documented GPU execution and buffer placement. Installed runtime source inspected for SkipLayerNormalization residual sum output. No claim of GPU numerical parity or zero-copy visualization. |
 
 Project result and negative findings: [activation atlas implementation](../../examples/latent-scope/docs/activation-atlas-implementation.md). Frozen reference PCA gives repeatable coordinates but weak coverage of later decoding states; these labels are descriptive prompt similarities, not discovered interpretable features.
+
+
+## 2026-09-25 — Local native Shortcut decoding
+
+- https://github.com/kinnay/AEA and https://aea.readthedocs.io/en/latest/reference/aea/ — python-aea 1.1.0, profile-0 signature/integrity decoder. **Reproduced locally** on the user-supplied harness export; no macOS or remote service required for decoding. Apple CA trust and re-signing are separate.
+- https://github.com/tctvn/iOSShortcutDecoder — revision `195a0977e3c27ca3ec45da2cd2b2c7e9420b06b2`, inspected as embedded-key extraction lead. Lossy JSON conversion and magic scanning were not adopted.
+- Full evidence and constraints: [native harness round trip](../../experiments/native-harness-roundtrip/README.md).

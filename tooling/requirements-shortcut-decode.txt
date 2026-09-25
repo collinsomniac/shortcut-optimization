@@ -1,0 +1,6 @@
+python-aea==1.1.0
+cryptography==46.0.0
+lz4==4.4.5
+pyliblzfse==0.4.1
+cffi==2.0.0
+pycparser==3.0

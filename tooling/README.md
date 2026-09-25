@@ -48,3 +48,9 @@ python3 tooling/shortcut_artifact.py patch source.plist patched.unsigned.plist -
 Outputs must be new files. A patch supplies `expected_sha256`, `action_uuid`, `action_identifier`, `parameter`, `expected_value`, and `value`. Only an existing same-type scalar literal can change; UUID/control-flow/AppIntent descriptor edits are refused. The report omits parameter contents and explicitly says unsigned and not device-verified.
 
 See the [reproducible registry experiment](../experiments/registry-roundtrip/README.md) for a generated patch specification and verified local postconditions. This does not establish general graph editing or live installation.
+
+## Native signed exports and Dictionary patches
+
+`decode_shortcut.py` locally verifies/unpacks bounded AEA profile-0 exports using the embedded public key and extracts one exact AA01 `Shortcut.wflow` blob. Install the pinned optional `requirements-shortcut-decode.txt`. This verifies archive integrity, **not Apple CA trust**, and provides no signing capability.
+
+`patch_shortcut_dictionary.py` adds one inert text field to a native tokenized Dictionary using source hash, dictionary hash and unique UUID guards. It preserves existing keys, values and variable connections and refuses dynamic keys. Neither command overwrites existing output files. See the [actual native export experiment](../experiments/native-harness-roundtrip/README.md).

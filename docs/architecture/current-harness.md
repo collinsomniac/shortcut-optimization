@@ -102,9 +102,9 @@ Verified capabilities from the existing harness include:
 - shell/Linux helper actions;
 - an existing hardcoded tool registry used by the worker dispatcher.
 
-Important: **`harness.info` is a manually maintained allowlist/manifest, not a live inventory of every installed Shortcut.** Absence from `harness.info` does not prove a Shortcut is absent from the phone.
+Important: **`harness.info` is a folder-scoped manifest, not a live inventory of every installed Shortcut.** The supplied 2026-09-25 export uses four Get My Shortcuts actions scoped to fixed harness folders. Folder membership is dynamically read; dispatcher policy is a separate uninspected mechanism. Absence from `harness.info` does not prove a Shortcut is absent from the phone.
 
-Current hardcoded manifest observed:
+Manifest output observed:
 
 ~~~text
 core:
@@ -375,3 +375,7 @@ The primary implementation backlog is [GitHub issue #4: Programmatic Shortcut re
 ## Structural editor update — 2026-09-25 UTC
 
 A local guarded literal editor and typed canonical plist representation now exist; see the [empirical registry experiment](../../experiments/registry-roundtrip/README.md). The synthetic fixture passes local postconditions and pinned iOS 27 catalog validation. Native export/sign/import/run remains unverified; the live artifact-get request returned dispatcher `tool_not_found`. No live registry or RPC compatibility changes were made.
+
+## Native export update — 2026-09-25 UTC
+
+The actual supplied harness export now has a reproduced local AEA decode/canonicalize/Dictionary-field patch path. All original wiring is preserved. Signing/import/device fixture execution is still unverified. See [native round trip](../../experiments/native-harness-roundtrip/README.md). The parser supports profile-0 archives, not arbitrary signed/encrypted containers.

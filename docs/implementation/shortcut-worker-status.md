@@ -1,5 +1,13 @@
 # Shortcut Worker implementation status
 
+## Native export milestone — 2026-09-25 UTC (supersedes earlier export blocker)
+
+The supplied `harness.info` export was decoded locally on Linux with AEA signature/integrity verification, canonicalized, and structurally patched. All 11 actions and existing tokenized Dictionary fields were preserved; one inert `_roundtrip_fixture` text field was added. 19 tests pass. Playground diagnostics are identical before/after (four pre-existing checks, not a full validation pass). **Unsigned patch only; signing/import/device fixture execution remain blocked.**
+
+Artifact evidence refines the old “hardcoded manifest” description: the export uses Get My Shortcuts in four fixed harness folders, then formats their members. The folder scope/schema are fixed, the members are dynamically discovered, and the whole library is not scanned. Dispatcher allowlist behavior and installed/exported byte identity remain unknown. Do not assume adding an output field registers a callable tool.
+
+Next: establish a trusted signer and import a separately named duplicate, then verify `_roundtrip_fixture = harness.info.patch.v1` on-device. Full native artifacts remain private. [Exact experiment, hashes, boundaries and reproduction](../../experiments/native-harness-roundtrip/README.md).
+
 ## Latest experiment — 2026-09-25 UTC
 
 - Live `harness.info` completed; the artifact `get` facade reached the phone but returned inner `tool_not_found` for `shortcuts.control`, despite transport `ok=true`. Native controller installation remains unknown.
@@ -25,7 +33,7 @@ This page records what is verified, what is implemented server-side, and what re
 
 ## Important correction: harness.info is not discovery
 
-`harness.info` currently returns a **hardcoded registry/allowlist** of harness tools chosen by the user for fine-grained control.
+`harness.info` returns a **folder-scoped harness manifest**. The supplied export discovers the members of four fixed native folders; the dispatcher allowlist is a separate, uninspected mechanism.
 
 Therefore:
 

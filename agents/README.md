@@ -14,7 +14,7 @@ The project now has both a research corpus **and live harness infrastructure**. 
 
 - Prefer the contained `shortcuts.*` subsystem for Shortcut work.
 - Treat generic shell/desktop execution as a fallback, not the default abstraction.
-- `harness.info` is currently a hardcoded allowlist/manifest, not live Shortcut discovery.
+- `harness.info` is scoped to four fixed harness folders; its supplied export dynamically lists their members. It is not full-library discovery and does not establish dispatcher policy.
 - Use Get My Shortcuts for native collection inventory; do not crawl a-Shell's filesystem looking for the private Shortcuts database.
 - Distinguish launch, execution and verified postcondition.
 - Preserve exact identity/version/hash for mutations where possible.
