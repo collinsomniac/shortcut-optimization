@@ -1,21 +1,32 @@
 # Agent entry point
 
-**Current research phase:** before using the operational flow below, read [research brief](research-brief.md), [research home base](../docs/research/index.md), and [research methodology](../docs/research/methodology.md). The repository currently has no released installable capability, so research agents should expand/curate evidence rather than pretend the catalog is executable.
+For active continuation, begin with:
 
-## Future operational flow
+1. [Next-chat handoff](next-chat-handoff.md)
+2. [Current harness architecture](../docs/architecture/current-harness.md)
+3. [Shortcut Worker implementation status](../docs/implementation/shortcut-worker-status.md)
+4. [Shortcut Worker protocol](../examples/shortcut-worker/protocol.json)
+5. [Research brief](research-brief.md)
 
-1. Read ../README.md and ../docs/evidence.md.
-2. Read catalog.json. Check lifecycle and artifact availability before offering installation.
-3. Inspect the selected package's contract, permissions, dependencies and evidence.
-4. Ask only for missing device/setup information that changes the recommendation.
-5. Help the user install an actual released artifact, then test a benign fixture.
-6. Construct a URL for a known installed shortcut. The user opens it on the phone.
-7. Wait for an explicit result. Validate its request ID and content before planning a dependent step.
+The project now has both a research corpus **and live harness infrastructure**. Do not assume that every proposed semantic method is already routable on the phone; verify live state against Supabase and the target device before claiming support.
 
-Reading this repository grants no device access. Skills are instructions; neither they nor a static website create an execution channel. Do not claim automatic import, folder organization or same-chat callbacks without a tested interface.
+## Operating principles
 
-The catalog is a draft project convention, not an Apple standard. `null` means unavailable/unknown. Proposed entries must never appear as installable in a client.
+- Prefer the contained `shortcuts.*` subsystem for Shortcut work.
+- Treat generic shell/desktop execution as a fallback, not the default abstraction.
+- `harness.info` is currently a hardcoded allowlist/manifest, not live Shortcut discovery.
+- Use Get My Shortcuts for native collection inventory; do not crawl a-Shell's filesystem looking for the private Shortcuts database.
+- Distinguish launch, execution and verified postcondition.
+- Preserve exact identity/version/hash for mutations where possible.
+- Require confirmation for destructive deletion.
+- Keep credentials and private exported workflows out of GitHub and untrusted signing services.
 
-The example request/result pair defines a future structured adapter; SO Echo itself only echoes raw text and does not implement this envelope.
+## Research work
 
-For new research rather than package invocation, use [capability record template](../docs/research/capability-record-template.md) and add substantial sources to the [source ledger](../docs/research/source-ledger.md).
+For source/evidence work, also read:
+- [Research home base](../docs/research/index.md)
+- [Research methodology](../docs/research/methodology.md)
+- [Evidence policy](../docs/evidence.md)
+- [Source ledger](../docs/research/source-ledger.md)
+
+Use the repository as the durable source of truth. When a live experiment changes a claim, update the implementation status and next-chat handoff in the same pass.
