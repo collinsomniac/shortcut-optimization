@@ -1,0 +1,28 @@
+Create a Shortcut named "harness.shortcuts.run".
+
+This is a reusable agent dispatcher for running other Shortcuts already installed on this iPhone. Do not use Apple Intelligence after this Shortcut is created, do not make network requests, and do not show prompts or notifications.
+
+Input:
+- Receive Text as Shortcut Input.
+- The Text will be JSON with:
+  - "name": required exact Shortcut name.
+  - "input": optional text to pass to the target Shortcut.
+
+Behavior:
+1. Parse Shortcut Input as a Dictionary.
+2. Get the "name" and "input" values.
+3. If "name" is empty, stop and return the JSON text:
+   {"ok":false,"error":"missing_name"}
+4. Use Get My Shortcuts to get the installed Shortcut collection.
+5. Find the Shortcut whose Name exactly equals the supplied "name". Do not use fuzzy or partial matching.
+6. If no exact match exists, return:
+   {"ok":false,"error":"not_found"}
+7. Run that Shortcut and pass the supplied "input" value as its Shortcut Input. If "input" is missing, pass empty text.
+8. Return the target Shortcut's result directly as this Shortcut's output.
+
+Important:
+- The Shortcut must not open the target in the editor.
+- It must not create or modify Shortcuts.
+- It must not ask the user to select a Shortcut.
+- It must be reusable with a different target name on every run.
+- Keep the action graph as small and deterministic as possible.
