@@ -6,11 +6,12 @@ Do **not** resume the action-pasteboard or imported Generate Shortcut routes as
 the primary plan. Both have device evidence against them.
 
 Current install candidate:
-- `harness.shortcuts.library`
+- `harness.shortcuts.library` v0.2
 - source: `examples/shortcut-worker/harness.shortcuts.library.cherri`
 - build workflow: `.github/workflows/compile-shortcut-library-manager.yml`
-- green run: `36095962428`
-- signed SHA-256: `641e75e4c3202cc2b6092bc909305c04dbc23ceec091be13d2aa02443d23704b`
+- green run: `36096803489`
+- signed SHA-256: `2d1968b1bcb432d1dfa8d31bdea19ca00c129b9ee7f0984a6b7645b90589e1ab`
+- adds `export_to_worker` through the separately grounded a-Shell Put File intent
 
 The build is deterministic in source/tool versions but uses runtime-random
 control-flow UUIDs because Cherri's derive-UUID mode produced invalid duplicate
@@ -21,6 +22,7 @@ reproducibility anchors.
 After the user imports the signed controller, validate in this order:
 1. invoke `capabilities` by run-shortcut URL with JSON text input;
 2. invoke `list` and inspect output;
+3. invoke `export_to_worker` on a harmless existing Shortcut and use `shell.exec.simple` to verify whether a native `.shortcut` file appears in the a-Shell App Group;
 3. create a disposable uniquely named test Shortcut;
 4. run/open it;
 5. rename it;
