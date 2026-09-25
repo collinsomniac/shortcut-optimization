@@ -1,0 +1,13 @@
+#define name SO Compat 5 - Cherri Control Flow
+#define color blue
+#define glyph flowchart
+#define inputs text
+#define outputs text
+#define version 27
+
+@probe = "yes"
+if @probe == "yes" {
+    show("SO Compat Control Flow")
+} else {
+    show("Unexpected branch")
+}
