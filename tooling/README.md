@@ -35,3 +35,16 @@ python3 tooling/build_shortcut_inventory_probe.py \
 ```
 
 This is a compiler fixture, not an installable release by itself. It still requires a trusted signing/import path. It is useful for separating library-access tests from Apple Intelligence generation.
+
+## Guarded artifact literal editing
+
+`shortcut_artifact.py` accepts decoded **unsigned** binary/XML workflows. It preserves all decoded fields using a canonical typed tree; it does not decode signed containers or retain signatures. Canonical files contain full workflow values and must remain private for private inputs.
+
+```sh
+python3 tooling/shortcut_artifact.py canonical source.plist source.canonical.json
+python3 tooling/shortcut_artifact.py patch source.plist patched.unsigned.plist --spec patch.json
+```
+
+Outputs must be new files. A patch supplies `expected_sha256`, `action_uuid`, `action_identifier`, `parameter`, `expected_value`, and `value`. Only an existing same-type scalar literal can change; UUID/control-flow/AppIntent descriptor edits are refused. The report omits parameter contents and explicitly says unsigned and not device-verified.
+
+See the [reproducible registry experiment](../experiments/registry-roundtrip/README.md) for a generated patch specification and verified local postconditions. This does not establish general graph editing or live installation.

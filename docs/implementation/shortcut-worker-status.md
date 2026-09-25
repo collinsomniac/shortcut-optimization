@@ -1,5 +1,14 @@
 # Shortcut Worker implementation status
 
+## Latest experiment — 2026-09-25 UTC
+
+- Live `harness.info` completed; the artifact `get` facade reached the phone but returned inner `tool_not_found` for `shortcuts.control`, despite transport `ok=true`. Native controller installation remains unknown.
+- No native exports/versions/receipts are recorded yet. The shared bus and existing dispatcher remain unchanged.
+- Added guarded unsigned-plist literal editing with typed canonical preservation, exact-source hash/old-value checks, and unique action UUID selection.
+- A synthetic registry fixture appended one disabled entry deterministically; full untouched-field comparison and 13 tests passed. Pinned Playground iOS 27 validation passed. **Not signed, imported, or device-executed.**
+- Next: obtain a native File export of `harness.info` or a duplicate; inspect its actual representation before adapting the patch. Signed containers require a trusted decoding route. No private harness artifact should go to an external signer by default.
+- Reproduction, request IDs, artifact hashes, the checked-in probe's malformed trailing-byte finding, and exact remaining boundary: [registry round trip](../../experiments/registry-roundtrip/README.md).
+
 Snapshot: 2026-09-24.
 
 This page records what is verified, what is implemented server-side, and what remains unverified on the native Shortcuts side.

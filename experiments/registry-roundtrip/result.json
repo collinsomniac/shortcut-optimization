@@ -1,0 +1,17 @@
+{
+  "status": "drafted",
+  "signed": false,
+  "device_verified": false,
+  "source_sha256": "dba5da203b01cc4c40a68c8bd8b67fae784f4cd9e7b03856b3ba1e574f7724d9",
+  "output_sha256": "95b868d5125d635ba25ed4807963230dafce2954fa8f8fe19a132f73b70c24b4",
+  "canonical_sha256": "0a4eb4af6418ddf4c4442cbcefe9d8f32b5001ce0b705d4a9e9b5705d2d88493",
+  "changed_action_uuid": "30B4D0AC-19C7-4CA8-B5F8-2F9310089F25",
+  "changed_parameter": "WFTextActionText",
+  "fixture": "synthetic_registry_in_existing_envelope",
+  "native_export": false,
+  "offline_postcondition_verified": true,
+  "envelope_source_sha256": "f3268673062c9f6c2098a453654649676e3336728a9158586f9326971b02bcb6",
+  "fixture_trailer_removed_hex": "c3bfc3bfc3bf",
+  "unknown_fields_preserved": true,
+  "deterministic_output": true
+}

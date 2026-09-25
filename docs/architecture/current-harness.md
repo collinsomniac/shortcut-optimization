@@ -371,3 +371,7 @@ A fresh agent should be able to:
 ## Tracking
 
 The primary implementation backlog is [GitHub issue #4: Programmatic Shortcut registry and self-editing round trip](https://github.com/collinsomniac/shortcut-optimization/issues/4).
+
+## Structural editor update — 2026-09-25 UTC
+
+A local guarded literal editor and typed canonical plist representation now exist; see the [empirical registry experiment](../../experiments/registry-roundtrip/README.md). The synthetic fixture passes local postconditions and pinned iOS 27 catalog validation. Native export/sign/import/run remains unverified; the live artifact-get request returned dispatcher `tool_not_found`. No live registry or RPC compatibility changes were made.
