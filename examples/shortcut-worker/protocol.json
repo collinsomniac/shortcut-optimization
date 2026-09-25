@@ -177,6 +177,15 @@
         "Delete Shortcuts"
       ],
       "requires": "confirm=true"
+    },
+    "shortcuts.export_to_worker": {
+      "effect": "read",
+      "backend": [
+        "Get My Shortcuts",
+        "a-Shell Put File"
+      ],
+      "semantics": "Resolve exact installed Shortcut and copy its native file representation into the a-Shell worker sandbox for inspection/versioning.",
+      "status": "compiled_not_device_verified"
     }
   },
   "result_statuses": [
