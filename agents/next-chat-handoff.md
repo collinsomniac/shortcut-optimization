@@ -51,8 +51,12 @@ sheet.
 
 Apple's final import confirmation remains the trust boundary.
 
-Inspect the latest stager workflow run before claiming a signed/device-compatible
-stager exists.
+Green CI: `36200750546`.
+Signed stager:
+- 26,934 bytes / AEA1;
+- SHA-256 `e21b977817577bf03d9b3b3364f53568e8994dfeaa04d9018b0f6e325bc395b0`.
+
+Compilation/schema/signing are verified. Device staging/import behavior is not.
 
 ## Executor policy
 
