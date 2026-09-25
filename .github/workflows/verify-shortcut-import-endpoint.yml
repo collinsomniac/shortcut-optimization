@@ -1,0 +1,41 @@
+name: Verify Shortcut compatibility delivery endpoint
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/verify-shortcut-import-endpoint.yml'
+      - 'public/shortcut-import-compat/**'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify every fixture through Supabase delivery endpoint
+        env:
+          ENDPOINT: https://zpdtlzpvshlpyqbfbzye.supabase.co/functions/v1/shortcut-import-compat
+        run: |
+          set -euo pipefail
+          python - <<'PY' > /tmp/fixtures.tsv
+          import json
+          m=json.load(open("public/shortcut-import-compat/manifest.json"))
+          for x in m["fixtures"]:
+              print(x["slug"], x["sha256"], x["bytes"], sep="\t")
+          PY
+
+          while IFS=$'\t' read -r slug expected_sha expected_bytes; do
+            echo "verify $slug"
+            curl --fail --silent --show-error --location \
+              --dump-header "/tmp/$slug.headers" \
+              "$ENDPOINT?name=$slug" \
+              --output "/tmp/$slug.shortcut"
+
+            test "$(head -c 4 "/tmp/$slug.shortcut")" = "AEA1"
+            actual_sha="$(sha256sum "/tmp/$slug.shortcut" | awk '{print $1}')"
+            actual_bytes="$(wc -c < "/tmp/$slug.shortcut" | tr -d ' ')"
+            test "$actual_sha" = "$expected_sha"
+            test "$actual_bytes" = "$expected_bytes"
+            grep -Eiq '^content-type: application/x-apple-shortcut' "/tmp/$slug.headers"
+            grep -Eiq "^x-shortcut-sha256: $expected_sha" "/tmp/$slug.headers"
+          done < /tmp/fixtures.tsv
