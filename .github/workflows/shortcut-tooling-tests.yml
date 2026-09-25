@@ -4,9 +4,11 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'tooling/build_generate_shortcut_bootstrap.py'
-      - 'tooling/test_build_generate_shortcut_bootstrap.py'
-      - 'examples/shortcut-worker/bootstrap-prompt.txt'
+      - 'tooling/**'
+      - 'examples/shortcut-worker/**'
+      - 'experiments/registry-roundtrip/**'
+      - 'experiments/native-harness-roundtrip/**'
+      - 'experiments/ios-action-pasteboard/**'
       - '.github/workflows/shortcut-tooling-tests.yml'
 
 jobs:
@@ -18,7 +20,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Unit tests
-        run: python -m unittest tooling/test_build_generate_shortcut_bootstrap.py
+        run: python -m unittest discover -s tooling -p 'test_*.py'
       - name: Build live donor bootstrap
         run: |
           python tooling/build_generate_shortcut_bootstrap.py \
