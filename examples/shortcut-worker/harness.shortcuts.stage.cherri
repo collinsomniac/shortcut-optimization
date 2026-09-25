@@ -25,6 +25,18 @@ if !@filename {
 }
 
 const downloaded = downloadURL(@url)
-const saved = saveFile("{@filename}", @downloaded, true)
-openFile(@saved, false)
+
+rawAction("is.workflow.actions.documentpicker.save", {
+    "WFFileDestinationPath": "{@filename}",
+    "WFInput": "${downloaded}",
+    "WFSaveFileOverwrite": true,
+    "WFAskWhereToSave": false
+})
+
+const staged = getFile("{@filename}")
+rawAction("is.workflow.actions.openin", {
+    "WFInput": "${staged}",
+    "WFOpenInAskWhenRun": false
+})
+
 output('{"ok":true,"status":"opened_import","filename":"{@filename}"}')
