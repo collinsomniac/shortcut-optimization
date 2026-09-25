@@ -36,12 +36,14 @@ jobs:
           go run . "$GITHUB_WORKSPACE/examples/shortcut-worker/harness.shortcuts.library.cherri" \
             --debug \
             --skip-sign \
-            --derive-uuids \
+            --comments \
             --no-ansi \
             --output "$GITHUB_WORKSPACE/build/library-manager/harness.shortcuts.library.shortcut"
           GENERATED="$GITHUB_WORKSPACE/examples/shortcut-worker/harness.shortcuts.library.plist"
           test -s "$GENERATED"
-          cp "$GENERATED" "$GITHUB_WORKSPACE/build/library-manager/harness.shortcuts.library.plist"
+          python "$GITHUB_WORKSPACE/tooling/normalize_shortcuts_appintents.py" \
+            "$GENERATED" \
+            "$GITHUB_WORKSPACE/build/library-manager/harness.shortcuts.library.plist"
           find "$GITHUB_WORKSPACE" -maxdepth 4 -type f \( -name '*.plist' -o -name '*processed*.cherri' -o -name 'harness.shortcuts.library.shortcut' \) -print
       - name: Inspect generated artifact
         run: |
