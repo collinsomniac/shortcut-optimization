@@ -1,0 +1,200 @@
+{
+  "schema_version": "0.1",
+  "observed_at": "2026-09-25",
+  "target": "iOS 27 / live user device",
+  "notes": [
+    "Apple-native management actions are first-class capabilities and should be preferred over UI automation.",
+    "The live screenshots show the Apple Shortcuts actions plus third-party Actions and Pushcut surfaces.",
+    "No dedicated first-party Duplicate Shortcut AppIntent is present in the inspected iOS 27 Shortcuts catalog; duplication should use the artifact/editor layer."
+  ],
+  "apple_native": [
+    {
+      "semantic": "shortcuts.create",
+      "title": "Create Shortcut",
+      "identifier": "com.apple.shortcuts.CreateWorkflowAction",
+      "status": "catalog_and_device_observed",
+      "effect": "reversible_write"
+    },
+    {
+      "semantic": "shortcuts.delete",
+      "title": "Delete Shortcuts",
+      "identifier": "com.apple.shortcuts.DeleteWorkflowAction",
+      "status": "catalog_and_device_observed",
+      "effect": "destructive",
+      "requires_confirmation": true
+    },
+    {
+      "semantic": "shortcuts.attributes.get",
+      "title": "Get Shortcut Attributes",
+      "identifier": "com.apple.shortcuts.GetShortcutAttributesAction",
+      "status": "catalog_observed",
+      "effect": "read"
+    },
+    {
+      "semantic": "shortcuts.attributes.set",
+      "title": "Set Shortcut Attributes",
+      "identifier": "com.apple.shortcuts.SetShortcutAttributesAction",
+      "status": "catalog_observed",
+      "effect": "reversible_write"
+    },
+    {
+      "semantic": "shortcuts.move",
+      "title": "Move Shortcut",
+      "identifier": "com.apple.shortcuts.MoveShortcutToFolderAction",
+      "status": "catalog_and_device_observed",
+      "effect": "reversible_write"
+    },
+    {
+      "semantic": "shortcuts.open",
+      "title": "Open Shortcut",
+      "identifier": "com.apple.shortcuts.OpenWorkflowAction",
+      "status": "catalog_and_device_observed",
+      "effect": "ui_handoff"
+    },
+    {
+      "semantic": "shortcuts.rename",
+      "title": "Rename Shortcut",
+      "identifier": "com.apple.shortcuts.RenameShortcutAction",
+      "status": "catalog_and_device_observed",
+      "effect": "reversible_write"
+    },
+    {
+      "semantic": "shortcuts.run",
+      "title": "Run Shortcut",
+      "identifier": "com.apple.shortcuts.RunShortcutIntent",
+      "status": "catalog_and_device_observed",
+      "effect": "runtime"
+    },
+    {
+      "semantic": "shortcuts.run_from_folder",
+      "title": "Run Shortcut from Folder",
+      "identifier": "com.apple.shortcuts.RunShortcutFromCollectionIntent",
+      "status": "catalog_observed",
+      "effect": "runtime"
+    },
+    {
+      "semantic": "shortcuts.folder.create",
+      "title": "Create Folder",
+      "identifier": "com.apple.shortcuts.CreateFolderAction",
+      "status": "catalog_and_device_observed",
+      "effect": "reversible_write"
+    },
+    {
+      "semantic": "shortcuts.folder.open",
+      "title": "Open Folder",
+      "identifier": "com.apple.shortcuts.OpenNavigationDestinationAction",
+      "status": "catalog_and_device_observed",
+      "effect": "ui_handoff"
+    },
+    {
+      "semantic": "shortcuts.share.create_link",
+      "title": "Create iCloud Link for Shortcut",
+      "identifier": "com.apple.shortcuts.CreateShortcutiCloudLinkAction",
+      "status": "catalog_and_device_observed",
+      "effect": "external_share"
+    },
+    {
+      "semantic": "shortcuts.icon.set",
+      "title": "Change Shortcut Icon",
+      "identifier": "com.apple.shortcuts.ChangeShortcutIconAction",
+      "status": "catalog_observed",
+      "effect": "reversible_write"
+    },
+    {
+      "semantic": "shortcuts.home_screen.add",
+      "title": "Add Shortcut to Home Screen",
+      "identifier": "com.apple.shortcuts.AddShortcutToHomeScreenAction",
+      "status": "catalog_observed",
+      "effect": "external_write"
+    },
+    {
+      "semantic": "shortcuts.search_ui",
+      "title": "Search in Shortcuts",
+      "identifier": "com.apple.shortcuts.SearchShortcutsAction",
+      "status": "catalog_and_device_observed",
+      "effect": "ui_handoff"
+    },
+    {
+      "semantic": "shortcuts.search_actions_ui",
+      "title": "Search Shortcuts Actions",
+      "identifier": "com.apple.shortcuts.SearchActionDrawerAction",
+      "status": "catalog_observed",
+      "effect": "ui_handoff"
+    },
+    {
+      "semantic": "shortcuts.stop",
+      "title": "Stop Shortcut",
+      "identifier": "com.apple.shortcuts.StopWorkflowAction",
+      "status": "catalog_observed",
+      "effect": "runtime"
+    }
+  ],
+  "legacy_or_non_appintent": [
+    {
+      "semantic": "shortcuts.inventory.list",
+      "title": "Get My Shortcuts",
+      "identifier": "is.workflow.actions.getmyworkflows",
+      "status": "device_observed_and_export_verified",
+      "effect": "read"
+    }
+  ],
+  "third_party": [
+    {
+      "provider": "Actions",
+      "semantic": "shortcut_action_clipboard.set_uti",
+      "title": "Set Uniform Type Identifier",
+      "identifier": "com.sindresorhus.Actions.SetUniformTypeIdentifier",
+      "status": "installed_and_helper_resolved",
+      "effect": "clipboard_write"
+    },
+    {
+      "provider": "Actions",
+      "semantic": "shortcuts.lock.manage",
+      "title": "Manage Shortcut Lock",
+      "status": "device_observed",
+      "effect": "reversible_write"
+    },
+    {
+      "provider": "Actions",
+      "semantic": "shortcuts.app.hide",
+      "title": "Hide Shortcuts App",
+      "status": "device_observed",
+      "effect": "ui_handoff"
+    },
+    {
+      "provider": "Pushcut",
+      "semantic": "shortcuts.schedule",
+      "title": "Schedule Shortcut",
+      "status": "device_observed",
+      "effect": "runtime_schedule"
+    },
+    {
+      "provider": "Pushcut",
+      "semantic": "shortcuts.run_pushcut",
+      "title": "Run Shortcut (via Pushcut)",
+      "status": "device_observed",
+      "effect": "runtime"
+    }
+  ],
+  "unresolved_observed_actions": [
+    {
+      "title": "Export Shortcuts",
+      "status": "device_observed_provider_not_yet_attributed"
+    },
+    {
+      "title": "Import Shortcuts",
+      "status": "device_observed_provider_not_yet_attributed"
+    }
+  ],
+  "explicit_absences": [
+    {
+      "semantic": "shortcuts.duplicate",
+      "status": "no_dedicated_first_party_appintent_found",
+      "implementation_strategies": [
+        "artifact_clone",
+        "action_pasteboard_clone",
+        "UI Duplicate fallback"
+      ]
+    }
+  ]
+}
