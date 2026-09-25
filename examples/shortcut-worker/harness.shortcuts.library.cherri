@@ -20,7 +20,7 @@ const request = getDictionary(ShortcutInput)
 
 comment('Return the static capability contract.')
 if @op == "capabilities" {
-    output('{"ok":true,"op":"capabilities","controller_version":"0.1","operations":["capabilities","list","create","run","open","create_folder","rename","delete","create_link"]}')
+    output('{"ok":true,"op":"capabilities","controller_version":"0.1","operations":["capabilities","list","create","run","open","create_folder","rename","delete","create_link","export_to_worker"]}')
 }
 
 comment('List the native Shortcut objects. The caller may normalize their attributes.')
@@ -80,7 +80,7 @@ if @op == "create_folder" {
 }
 
 comment('For entity-bearing operations, scan the library and act on the first exact-name match. Agent-managed names are required to be unique.')
-if @op == "rename" || @op == "create_link" || @op == "delete" {
+if @op == "rename" || @op == "create_link" || @op == "delete" || @op == "export_to_worker" {
     if !@name {
         output('{"ok":false,"error":"missing_name"}')
     }
@@ -112,6 +112,15 @@ if @op == "rename" || @op == "create_link" || @op == "delete" {
                 rawAction("is.workflow.actions.output", {
                     "WFOutput": "${link}"
                 })
+            }
+
+            if @op == "export_to_worker" {
+                rawAction("AsheKube.app.a-Shell.PutFileIntent", {
+                    "file": "${@candidate}",
+                    "overwrite": true,
+                    "ShowWhenRun": false
+                })
+                output('{"ok":true,"op":"export_to_worker","status":"export_requested"}')
             }
 
             if @op == "delete" {
