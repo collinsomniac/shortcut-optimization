@@ -7,109 +7,123 @@
 
 #include 'actions/shortcuts'
 
+comment('harness.shortcuts.library v0.1 — persistent native Shortcut library management.')
+comment('Input is a JSON dictionary with op plus operation parameters. Destructive delete requires confirm=true.')
+
 const request = getDictionary(ShortcutInput)
 @op = "{request['op']}"
 @name = "{request['name']}"
 @newName = "{request['new_name']}"
 @runInput = "{request['input']}"
 @confirm = "{request['confirm']}"
+@folder = "{request['folder']}"
 
+comment('Return the static capability contract.')
 if @op == "capabilities" {
     output('{"ok":true,"op":"capabilities","controller_version":"0.1","operations":["capabilities","list","create","run","open","create_folder","rename","delete","create_link"]}')
-} else {
-    if @op == "list" {
-        const allShortcuts = getShortcuts()
-        rawAction("is.workflow.actions.output", {
-            "WFOutput": "${allShortcuts}"
-        })
-    } else {
-        if @op == "create" {
-            if !@name {
-                output('{"ok":false,"op":"create","error":"missing_name"}')
-            }
-            makeShortcut(@name, false)
-            output('{"ok":true,"op":"create","status":"created"}')
-        } else {
-            if @op == "run" {
-                if !@name {
-                    output('{"ok":false,"op":"run","error":"missing_name"}')
+}
+
+comment('List the native Shortcut objects. The caller may normalize their attributes.')
+if @op == "list" {
+    const allShortcuts = getShortcuts()
+    rawAction("is.workflow.actions.output", {
+        "WFOutput": "${allShortcuts}"
+    })
+}
+
+comment('Create a persistent empty Shortcut object. Content installation is handled by the artifact plane.')
+if @op == "create" {
+    if !@name {
+        output('{"ok":false,"op":"create","error":"missing_name"}')
+    }
+    rawAction("com.apple.shortcuts.CreateWorkflowAction", {
+        "name": "${@name}",
+        "OpenWhenRun": false
+    })
+    output('{"ok":true,"op":"create","status":"created"}')
+}
+
+comment('Run an already installed Shortcut by exact name using the stable legacy run action.')
+if @op == "run" {
+    if !@name {
+        output('{"ok":false,"op":"run","error":"missing_name"}')
+    }
+    const runResult = run(@name, @runInput)
+    rawAction("is.workflow.actions.output", {
+        "WFOutput": "${runResult}"
+    })
+}
+
+comment('Open an already installed Shortcut by name.')
+if @op == "open" {
+    if !@name {
+        output('{"ok":false,"op":"open","error":"missing_name"}')
+    }
+    rawAction("com.apple.shortcuts.OpenWorkflowAction", {
+        "target": {
+            "title": "${@name}"
+        }
+    })
+    output('{"ok":true,"op":"open","status":"launched"}')
+}
+
+comment('Create a native Shortcuts folder.')
+if @op == "create_folder" {
+    if !@folder {
+        output('{"ok":false,"op":"create_folder","error":"missing_folder"}')
+    }
+    rawAction("com.apple.shortcuts.CreateFolderAction", {
+        "name": "${@folder}",
+        "OpenWhenRun": false
+    })
+    output('{"ok":true,"op":"create_folder","status":"created"}')
+}
+
+comment('For entity-bearing operations, scan the library and act on the first exact-name match. Agent-managed names are required to be unique.')
+if @op == "rename" || @op == "create_link" || @op == "delete" {
+    if !@name {
+        output('{"ok":false,"error":"missing_name"}')
+    }
+    if @op == "delete" && @confirm != "true" {
+        output('{"ok":false,"op":"delete","error":"confirmation_required"}')
+    }
+
+    const all = getShortcuts()
+    for candidate in all {
+        const candidateName = getShortcutDetail(@candidate, "Name")
+        @candidateNameText = "{candidateName}"
+
+        comment('Exact name match only; output ends the Shortcut after a successful operation.')
+        if @candidateNameText == "{@name}" {
+            if @op == "rename" {
+                if !@newName {
+                    output('{"ok":false,"op":"rename","error":"missing_new_name"}')
                 }
-                const runResult = run(@name, @runInput)
-                rawAction("is.workflow.actions.output", {
-                    "WFOutput": "${runResult}"
+                rawAction("com.apple.shortcuts.RenameShortcutAction", {
+                    "shortcut": "${@candidate}",
+                    "name": "${@newName}",
+                    "OpenWhenRun": false
                 })
-            } else {
-                if @op == "open" {
-                    if !@name {
-                        output('{"ok":false,"op":"open","error":"missing_name"}')
-                    }
-                    openShortcut(@name)
-                    output('{"ok":true,"op":"open","status":"launched"}')
-                } else {
-                    if @op == "create_folder" {
-                        const folderName = "{request['folder']}"
-                        if !folderName {
-                            output('{"ok":false,"op":"create_folder","error":"missing_folder"}')
-                        }
-                        rawAction("com.apple.shortcuts.CreateFolderAction", {
-                            "name": "${folderName}",
-                            "OpenWhenRun": false
-                        })
-                        output('{"ok":true,"op":"create_folder","status":"created"}')
-                    } else {
-                        // Resolve an exact Shortcut object once for entity-bearing operations.
-                        const all = getShortcuts()
-                        @matched: variable
-                        @matches = 0
-                        for candidate in all {
-                            const candidateName = getShortcutDetail(@candidate, "Name")
-                            @candidateNameText = "{candidateName}"
-                            if @candidateNameText == @name {
-                                @matched = @candidate
-                                @matches += 1
-                            }
-                        }
+                output('{"ok":true,"op":"rename","status":"updated"}')
+            }
 
-                        if @matches == 0 {
-                            output('{"ok":false,"error":"not_found"}')
-                        }
-                        if @matches > 1 {
-                            output('{"ok":false,"error":"ambiguous_name"}')
-                        }
+            if @op == "create_link" {
+                const link = createShortcutLink(@candidate)
+                rawAction("is.workflow.actions.output", {
+                    "WFOutput": "${link}"
+                })
+            }
 
-                        if @op == "rename" {
-                            if !@newName {
-                                output('{"ok":false,"op":"rename","error":"missing_new_name"}')
-                            }
-                            rawAction("com.apple.shortcuts.RenameShortcutAction", {
-                                "shortcut": "${@matched}",
-                                "name": "${@newName}",
-                                "OpenWhenRun": false
-                            })
-                            output('{"ok":true,"op":"rename","status":"updated"}')
-                        } else {
-                            if @op == "create_link" {
-                                const link = createShortcutLink(@matched)
-                                rawAction("is.workflow.actions.output", {
-                                    "WFOutput": "${link}"
-                                })
-                            } else {
-                                if @op == "delete" {
-                                    if @confirm != "true" {
-                                        output('{"ok":false,"op":"delete","error":"confirmation_required"}')
-                                    }
-                                    rawAction("com.apple.shortcuts.DeleteWorkflowAction", {
-                                        "entities": "${@matched}"
-                                    })
-                                    output('{"ok":true,"op":"delete","status":"deleted"}')
-                                } else {
-                                    output('{"ok":false,"error":"unsupported_operation"}')
-                                }
-                            }
-                        }
-                    }
-                }
+            if @op == "delete" {
+                rawAction("com.apple.shortcuts.DeleteWorkflowAction", {
+                    "entities": "${@candidate}"
+                })
+                output('{"ok":true,"op":"delete","status":"deleted"}')
             }
         }
     }
+    output('{"ok":false,"error":"not_found"}')
 }
+
+comment('Reject operations not implemented by this native management controller.')
+output('{"ok":false,"error":"unsupported_operation"}')
