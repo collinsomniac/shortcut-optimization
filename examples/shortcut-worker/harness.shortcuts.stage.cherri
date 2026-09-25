@@ -5,7 +5,7 @@
 #define outputs text
 #define version 27
 
-#include 'actions/network'
+#include 'actions/web'
 #include 'actions/documents'
 
 comment('harness.shortcuts.stage v0.1 — stage a signed .shortcut artifact for native import.')
@@ -24,7 +24,7 @@ if !@filename {
     @filename = "harness-staged.shortcut"
 }
 
-const downloaded = getContentsOfURL(@url)
+const downloaded = downloadURL(@url)
 const saved = saveFile("{@filename}", @downloaded, true)
 openFile(@saved, false)
 output('{"ok":true,"status":"opened_import","filename":"{@filename}"}')
