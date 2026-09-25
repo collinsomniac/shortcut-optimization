@@ -152,3 +152,20 @@ The already-patched private `harness.info` was also packed locally into the help
 The private payload was **not committed and not sent to HubSign**.
 
 Current device boundary: install the generic helper, reproduce the committed two-action fixture, then proceed to the private 11-action duplicate only if the native paste succeeds.
+
+
+## Direct-input retry — 2026-09-25 UTC
+
+The first live test used `input=clipboard` after a-Shell `pbcopy`; the worker
+could not read that clipboard back with `pbpaste`, so the missing Paste menu
+was not conclusive.
+
+The same committed 1,805-byte two-action payload was subsequently passed
+directly to the installed `SO-Copy-Actions` Shortcut using:
+
+`shortcuts://run-shortcut?name=SO-Copy-Actions&input=text&text=...`
+
+The launch completed through `iphone-main` without a transport error.
+Device-side confirmation is still required: reopen an action context menu after
+that direct-input invocation and check whether Paste is now offered. Until that
+is observed, native action paste remains unverified.
