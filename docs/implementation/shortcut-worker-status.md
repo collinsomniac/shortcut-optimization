@@ -272,3 +272,63 @@ First live fixture:
 `{"name":"probe.echo","input":"RUNNER_PROBE_001"}`
 
 Pass only if the exact echo value is returned.
+
+
+## Device transport/import compatibility matrix — 2026-09-25 evening
+
+The first phone attempts for `harness.shortcuts.library.v0.3.shortcut` and
+`harness.shortcuts.stage.v0.1.shortcut` used ChatGPT-hosted attachment links.
+iOS reported **“The file download failed. Please try again later.”** in the
+generic file viewer before Shortcuts opened.
+
+Therefore those attempts are classified as **transport failures**, not Shortcut
+import failures.
+
+A controlled compatibility matrix now exists under
+`experiments/import-compat/` and `public/shortcut-import-compat/`.
+
+The public Supabase Edge Function `shortcut-import-compat`:
+- whitelists only source-controlled generic fixtures from the manifest;
+- fetches their committed bytes;
+- verifies AEA1, byte length and SHA-256;
+- returns `application/x-apple-shortcut` with attachment disposition.
+
+CI run `36202803514` successfully fetched and verified every fixture through
+the live endpoint.
+
+The matrix explicitly separates:
+- already-known-good repo/plist + HubSign;
+- tiny manual plist + HubSign;
+- compact Cherri;
+- Cherri `--comments`;
+- Get My Shortcuts;
+- Create Shortcut AppIntent;
+- control flow;
+- full manager;
+- document/network stager.
+
+Important Cherri finding: `--comments` materializes included documentation as
+real Shortcut Comment actions. A tiny one-action source becomes 37 actions.
+Compact and comment-heavy builds are therefore separate compatibility axes.
+
+Device results are recorded in
+`experiments/import-compat/device-results.json`.
+
+### Parameterized runner v1 review
+
+The Apple-generated `harness.shortcuts.run` has the desired broad topology,
+but screenshots show both dictionary lookups exposed as anonymous
+`Dictionary Value` Magic Variables. Later condition/filter bindings are not
+proven to reference the intended `name` value, and the collapsed Run Shortcut
+card does not prove `input` is forwarded.
+
+Treat v1 as structurally promising but semantically unverified.
+
+Use
+`examples/shortcut-worker/parameterized-runner-builder-prompt-v2.txt`
+for the next builder test. It requires explicit variables:
+- `Target Shortcut Name`
+- `Target Shortcut Input`
+
+A deterministic target prompt is also available at
+`examples/shortcut-worker/runner-echo-target-builder-prompt.txt`.
