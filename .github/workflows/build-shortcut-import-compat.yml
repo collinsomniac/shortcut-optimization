@@ -7,6 +7,7 @@ on:
       - 'experiments/import-compat/*.cherri'
       - 'examples/shortcut-worker/harness.shortcuts.library.cherri'
       - 'examples/shortcut-worker/harness.shortcuts.stage.cherri'
+      - 'examples/shortcut-worker/harness.shortcuts.control.cherri'
       - '.github/workflows/build-shortcut-import-compat.yml'
       - 'tooling/normalize_shortcuts_appintents.py'
       - 'tooling/validate_shortcuts_playground_runtime.py'
@@ -110,6 +111,9 @@ jobs:
           compile_one experiments/import-compat/cherri-inventory.cherri cherri-inventory "SO Compat 3 - Cherri Inventory" compact
           compile_one experiments/import-compat/cherri-create.cherri cherri-create "SO Compat 4 - Cherri Create" compact
           compile_one experiments/import-compat/cherri-controlflow.cherri cherri-controlflow "SO Compat 5 - Cherri Control Flow" compact
+
+          # Resident device controller: one installed Shortcut for agent-facing local control.
+          compile_one examples/shortcut-worker/harness.shortcuts.control.cherri harness.shortcuts.control "harness.shortcuts.control" compact
 
           # Production-source controls: compact builds plus comment-heavy builds
           # matching the previous CI behavior.
