@@ -249,11 +249,9 @@ Writing processed version to /home/runner/work/shortcut-optimization/shortcut-op
 
 ### COLLECTED DICTIONARY ###
 {
-        "ShowWhenRun": false,
-        "command": "echo harness-shortcuts-control-v0.3-ready > harness.shortcuts.control.proof",
-        "keepGoing": false,
-        "openWindow": "close"
-    }
+                "shortcuts": "${@selfEntity}",
+                "folder": "${toolsFolder}"
+            }
 
 
 
@@ -324,13 +322,13 @@ Writing processed version to /home/runner/work/shortcut-optimization/shortcut-op
 
 --- Current Line ---
 Previous Character:
-LF 710:20
+LF 744:20
 
 Current Character:
-EMPTY 711:1
+EMPTY 745:1
 
 Next Character:
-EMPTY 711:2
+EMPTY 745:2
 
 Current Line:
 
@@ -427,30 +425,31 @@ Current Line:
  90 | {comment  text [Doc]: [Regular Expressions] Match Text: Use regular expressions to match text. Use raw text (single quotes) to match using an regular expression with braces to avoid conflicts with the regular expression syntax.}
  91 | {comment  text [Doc]: [Regular Expressions] Get Match Group: Get match group at `index` in `matches`.}
  92 | {comment  text [Doc]: [Regular Expressions] Get Match Groups: Get all groups in `matches`.}
- 93 | {action comment action {comment %!s(*main.actionDefinition=&{{Comment Add an explicit comment.   } comment   [{text rawtext WFCommentActionText <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{rawtext harness.shortcuts.control v0.3 — resident native Shortcuts library authority.}]}}
- 94 | {action comment action {comment %!s(*main.actionDefinition=&{{Comment Add an explicit comment.   } comment   [{text rawtext WFCommentActionText <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{rawtext Owns library CRUD, execution, organization primitives, and receipts. Content compilation/signing/staging is separate.}]}}
+ 93 | {action comment action {comment %!s(*main.actionDefinition=&{{Comment Add an explicit comment.   } comment   [{text rawtext WFCommentActionText <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{rawtext shortcuts.control v0.4 — resident native Shortcuts library authority.}]}}
+ 94 | {action comment action {comment %!s(*main.actionDefinition=&{{Comment Add an explicit comment.   } comment   [{text rawtext WFCommentActionText <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{rawtext Pure Shortcuts: no a-Shell, no long-running worker process, no UI automation.}]}}
  95 | {action comment action {comment %!s(*main.actionDefinition=&{{Comment Add an explicit comment.   } comment   [{text rawtext WFCommentActionText <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{rawtext Input is JSON. If callback is supplied, the controller POSTs the actual device result to the harness.}]}}
- 96 | {variable request action {getDictionary %!s(*main.actionDefinition=&{{Get Dictionary Get the dictionary from `input`.   Dictionaries} detect.dictionary   [{input variable WFInput <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  } dictionary false false false 0 0 false}) [{variable {Variable variable ShortcutInput   %!s(bool=false) %!s(bool=false) }}]}}
- 97 | {variable op text {request['op']}}
- 98 | {variable name text {request['name']}}
- 99 | {variable newName text {request['new_name']}}
-100 | {variable runInput text {request['input']}}
-101 | {variable confirm text {request['confirm']}}
-102 | {variable folder text {request['folder']}}
-103 | {variable callback text {request['callback']}}
-104 | {variable handled text false}
-105 | {variable state text success}
-106 | {variable result text }
-107 | {conditional 6cd1714f-624d-4c27-af4c-5f80c3ac3489 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text ping}]}] %!s(int=-1)}}
-108 | {variable handled text true}
-109 | {variable pingProof action {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text AsheKube.app.a-Shell.ExecuteCommandIntent} {dictionary map[ShowWhenRun:%!s(bool=false) command:echo harness-shortcuts-control-v0.3-ready > harness.shortcuts.control.proof keepGoing:%!s(bool=false) openWindow:close]}]}}
-110 | {variable result text ok ping harness.shortcuts.control 0.3}
+ 96 | {action comment action {comment %!s(*main.actionDefinition=&{{Comment Add an explicit comment.   } comment   [{text rawtext WFCommentActionText <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{rawtext bootstrap moves this Shortcut beside probe.echo so the existing folder-driven dispatcher can discover it.}]}}
+ 97 | {variable request action {getDictionary %!s(*main.actionDefinition=&{{Get Dictionary Get the dictionary from `input`.   Dictionaries} detect.dictionary   [{input variable WFInput <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  } dictionary false false false 0 0 false}) [{variable {Variable variable ShortcutInput   %!s(bool=false) %!s(bool=false) }}]}}
+ 98 | {variable op text {request['op']}}
+ 99 | {variable name text {request['name']}}
+100 | {variable newName text {request['new_name']}}
+101 | {variable runInput text {request['input']}}
+102 | {variable confirm text {request['confirm']}}
+103 | {variable folder text {request['folder']}}
+104 | {variable callback text {request['callback']}}
+105 | {variable handled text false}
+106 | {variable state text success}
+107 | {variable result text }
+108 | {conditional 9c85418f-eb78-4812-b3ad-b0dfdc7b674f if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text ping}]}] %!s(int=-1)}}
+109 | {variable handled text true}
+110 | {variable result text ok ping shortcuts.control 0.4}
 111 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-112 | {conditional 6cd1714f-624d-4c27-af4c-5f80c3ac3489 endif }
+112 | {conditional 9c85418f-eb78-4812-b3ad-b0dfdc7b674f endif }
 113 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-114 | {conditional 6bebe67c-087f-419f-a327-773ccde688ce if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text capabilities}]}] %!s(int=-1)}}
+114 | {conditional 48f9aa23-e162-4832-8d7c-45e6087218a0 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text capabilities}]}] %!s(int=-1)}}
 115 | {variable handled text true}
-116 | {variable result text ping
+116 | {variable result text bootstrap
+ping
 capabilities
 list
 get
@@ -462,222 +461,262 @@ move_new_folder
 rename
 delete
 create_link
-receipt:http+app-group}
+receipt:http}
 117 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-118 | {conditional 6bebe67c-087f-419f-a327-773ccde688ce endif }
+118 | {conditional 48f9aa23-e162-4832-8d7c-45e6087218a0 endif }
 119 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-120 | {conditional 94fbd0f5-8371-4cd1-850d-a06ce6359d47 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text list}]}] %!s(int=-1)}}
-121 | {variable handled text true}
-122 | {variable allShortcuts action {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []}}
-123 | {variable shortcutNames action {getText %!s(*main.actionDefinition=&{{Get Text Get text from input.   } detect.text   [{input variable WFInput <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  } text false false false 0 0 false}) [{variable {Variable variable allShortcuts   %!s(bool=true) %!s(bool=false) }}]}}
-124 | {variable result text {shortcutNames}}
-125 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-126 | {conditional 94fbd0f5-8371-4cd1-850d-a06ce6359d47 endif }
-127 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-128 | {conditional 68eba764-fbcb-48f0-92af-e0f36fb46caa if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text get}]}] %!s(int=-1)}}
-129 | {variable handled text true}
-130 | {conditional 2fab4b5d-6b9a-4979-bbf6-36d096299078 if {[{%!s(int=101) [{variable {Variable variable name   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
-131 | {variable state text error}
-132 | {variable result text error missing_name}
-133 | {conditional 2fab4b5d-6b9a-4979-bbf6-36d096299078 else <nil>}
-134 | {variable found text false}
-135 | {variable all action {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []}}
-136 | {for  8867196c-ea58-43a0-8125-bf9831be0d3d variable {Variable variable all   %!s(bool=true) %!s(bool=false) }}
-137 | {variable candidate variable { variable Repeat Item   %!s(bool=false) %!s(bool=false) }}
-138 | {variable candidateName action {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable candidate   %!s(bool=false) %!s(bool=false) }} {text Name}]}}
-139 | {variable candidateNameText text {candidateName}}
-140 | {conditional 4f4ee225-ad4d-4615-b424-ee1fabb1a734 if {[{%!s(int=4) [{variable {Variable variable candidateNameText   %!s(bool=false) %!s(bool=false) }} {text {@name}}]}] %!s(int=-1)}}
-141 | {variable found text true}
-142 | {variable candidateFolder action {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable candidate   %!s(bool=false) %!s(bool=false) }} {text Folder}]}}
-143 | {variable candidateActions action {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable candidate   %!s(bool=false) %!s(bool=false) }} {text Action Count}]}}
-144 | {variable candidateSize action {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable candidate   %!s(bool=false) %!s(bool=false) }} {text File Size}]}}
-145 | {variable result text name={candidateName}
+120 | {action comment action {comment %!s(*main.actionDefinition=&{{Comment Add an explicit comment.   } comment   [{text rawtext WFCommentActionText <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{rawtext Bootstrap: use probe.echo as a known resident member of the live tools folder.}]}}
+121 | {conditional cbd55493-42e9-45b4-9289-bf714a013cb9 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text bootstrap}]}] %!s(int=-1)}}
+122 | {variable handled text true}
+123 | {variable foundSelf text false}
+124 | {variable foundAnchor text false}
+125 | {variable bootstrapEntities action {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []}}
+126 | {for  713bd7c1-cba7-43a2-b496-dfcdee459516 variable {Variable variable bootstrapEntities   %!s(bool=true) %!s(bool=false) }}
+127 | {variable bootstrapEntity variable { variable Repeat Item   %!s(bool=false) %!s(bool=false) }}
+128 | {variable bootstrapName action {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable bootstrapEntity   %!s(bool=false) %!s(bool=false) }} {text Name}]}}
+129 | {variable bootstrapNameText text {bootstrapName}}
+130 | {conditional a0eed7e8-d191-4291-9c09-00b3b2dd27e3 if {[{%!s(int=4) [{variable {Variable variable bootstrapNameText   %!s(bool=false) %!s(bool=false) }} {text shortcuts.control}]}] %!s(int=-1)}}
+131 | {variable foundSelf text true}
+132 | {variable selfEntity variable {Variable variable bootstrapEntity   %!s(bool=false) %!s(bool=false) }}
+133 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+134 | {conditional a0eed7e8-d191-4291-9c09-00b3b2dd27e3 endif }
+135 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+136 | {conditional 44d529ad-df3a-4985-98ca-97f40b0b4db6 if {[{%!s(int=4) [{variable {Variable variable bootstrapNameText   %!s(bool=false) %!s(bool=false) }} {text probe.echo}]}] %!s(int=-1)}}
+137 | {variable foundAnchor text true}
+138 | {variable anchorEntity variable {Variable variable bootstrapEntity   %!s(bool=false) %!s(bool=false) }}
+139 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+140 | {conditional 44d529ad-df3a-4985-98ca-97f40b0b4db6 endif }
+141 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+142 | {for  713bd7c1-cba7-43a2-b496-dfcdee459516 endif }
+143 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+144 | {conditional 40147776-cc66-45fa-8e71-2d8853e30cb4 if {[{%!s(int=4) [{variable {Variable variable foundSelf   %!s(bool=false) %!s(bool=false) }} {text false}]}] %!s(int=-1)}}
+145 | {variable state text error}
+146 | {variable result text error bootstrap_self_not_found}
+147 | {conditional 40147776-cc66-45fa-8e71-2d8853e30cb4 else <nil>}
+148 | {conditional a0ab4b0e-7253-426d-a3ba-ce79b95a220d if {[{%!s(int=4) [{variable {Variable variable foundAnchor   %!s(bool=false) %!s(bool=false) }} {text false}]}] %!s(int=-1)}}
+149 | {variable state text error}
+150 | {variable result text error bootstrap_anchor_not_found}
+151 | {conditional a0ab4b0e-7253-426d-a3ba-ce79b95a220d else <nil>}
+152 | {variable toolsFolder action {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable anchorEntity   %!s(bool=false) %!s(bool=false) }} {text Folder}]}}
+153 | {action rawAction action {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.MoveShortcutToFolderAction} {dictionary map[folder:${toolsFolder} shortcuts:${@selfEntity}]}]}}
+154 | {variable result text ok bootstrapped shortcuts.control beside probe.echo}
+155 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+156 | {conditional a0ab4b0e-7253-426d-a3ba-ce79b95a220d endif }
+157 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+158 | {conditional 40147776-cc66-45fa-8e71-2d8853e30cb4 endif }
+159 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+160 | {conditional cbd55493-42e9-45b4-9289-bf714a013cb9 endif }
+161 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+162 | {conditional 26334011-d671-4359-9c02-3d91453af1c1 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text list}]}] %!s(int=-1)}}
+163 | {variable handled text true}
+164 | {variable allShortcuts action {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []}}
+165 | {variable shortcutNames action {getText %!s(*main.actionDefinition=&{{Get Text Get text from input.   } detect.text   [{input variable WFInput <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  } text false false false 0 0 false}) [{variable {Variable variable allShortcuts   %!s(bool=true) %!s(bool=false) }}]}}
+166 | {variable result text {shortcutNames}}
+167 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+168 | {conditional 26334011-d671-4359-9c02-3d91453af1c1 endif }
+169 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+170 | {conditional a25ccc17-d550-4390-8953-b16d76b9b038 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text get}]}] %!s(int=-1)}}
+171 | {variable handled text true}
+172 | {conditional 33946e89-c608-48cd-b4c7-2f8ade6d4323 if {[{%!s(int=101) [{variable {Variable variable name   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
+173 | {variable state text error}
+174 | {variable result text error missing_name}
+175 | {conditional 33946e89-c608-48cd-b4c7-2f8ade6d4323 else <nil>}
+176 | {variable found text false}
+177 | {variable all action {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []}}
+178 | {for  f9dce593-b294-444d-b77b-0060009ab9bd variable {Variable variable all   %!s(bool=true) %!s(bool=false) }}
+179 | {variable candidate variable { variable Repeat Item   %!s(bool=false) %!s(bool=false) }}
+180 | {variable candidateName action {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable candidate   %!s(bool=false) %!s(bool=false) }} {text Name}]}}
+181 | {variable candidateNameText text {candidateName}}
+182 | {conditional 9ef08e44-59b3-44cf-b1be-c08dee61ed84 if {[{%!s(int=4) [{variable {Variable variable candidateNameText   %!s(bool=false) %!s(bool=false) }} {text {@name}}]}] %!s(int=-1)}}
+183 | {variable found text true}
+184 | {variable candidateFolder action {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable candidate   %!s(bool=false) %!s(bool=false) }} {text Folder}]}}
+185 | {variable candidateActions action {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable candidate   %!s(bool=false) %!s(bool=false) }} {text Action Count}]}}
+186 | {variable candidateSize action {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable candidate   %!s(bool=false) %!s(bool=false) }} {text File Size}]}}
+187 | {variable result text name={candidateName}
 folder={candidateFolder}
 action_count={candidateActions}
 file_size={candidateSize}}
-146 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-147 | {conditional 4f4ee225-ad4d-4615-b424-ee1fabb1a734 endif }
-148 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-149 | {for  8867196c-ea58-43a0-8125-bf9831be0d3d endif }
-150 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-151 | {conditional 6c2db215-f341-49df-bb7d-747d5dd55b9e if {[{%!s(int=4) [{variable {Variable variable found   %!s(bool=false) %!s(bool=false) }} {text false}]}] %!s(int=-1)}}
-152 | {variable state text error}
-153 | {variable result text error not_found}
-154 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-155 | {conditional 6c2db215-f341-49df-bb7d-747d5dd55b9e endif }
-156 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-157 | {conditional 2fab4b5d-6b9a-4979-bbf6-36d096299078 endif }
-158 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-159 | {conditional 68eba764-fbcb-48f0-92af-e0f36fb46caa endif }
-160 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-161 | {conditional a5fe7783-4601-4640-bbe5-de8d5e691986 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text run}]}] %!s(int=-1)}}
-162 | {variable handled text true}
-163 | {conditional 50e2c5cf-0dc7-49b3-b2e5-750830a2a3f2 if {[{%!s(int=101) [{variable {Variable variable name   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
-164 | {variable state text error}
-165 | {variable result text error missing_name}
-166 | {conditional 50e2c5cf-0dc7-49b3-b2e5-750830a2a3f2 else <nil>}
-167 | {variable runResult action {run %!s(*main.actionDefinition=&{{Run Shortcut Run Shortcut with name `shortcutName`, providing it with `input`.   } runworkflow   [{shortcutName text WFWorkflowName <nil>  false false false false false} {input variable WFInput <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable name   %!s(bool=false) %!s(bool=false) }} {variable {Variable variable runInput   %!s(bool=false) %!s(bool=false) }}]}}
-168 | {variable result text {runResult}}
-169 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-170 | {conditional 50e2c5cf-0dc7-49b3-b2e5-750830a2a3f2 endif }
-171 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-172 | {conditional a5fe7783-4601-4640-bbe5-de8d5e691986 endif }
-173 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-174 | {conditional 57be6958-d21b-45db-9999-0d8a4fa931b2 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text create}]}] %!s(int=-1)}}
-175 | {variable handled text true}
-176 | {conditional c20fddc6-85a8-4851-ac57-859454355e92 if {[{%!s(int=101) [{variable {Variable variable name   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
-177 | {variable state text error}
-178 | {variable result text error missing_name}
-179 | {conditional c20fddc6-85a8-4851-ac57-859454355e92 else <nil>}
-180 | {action rawAction action {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.CreateWorkflowAction} {dictionary map[OpenWhenRun:%!s(bool=false) name:${@name}]}]}}
-181 | {variable result text ok created {@name}}
-182 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-183 | {conditional c20fddc6-85a8-4851-ac57-859454355e92 endif }
-184 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-185 | {conditional 57be6958-d21b-45db-9999-0d8a4fa931b2 endif }
-186 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-187 | {conditional e94cd955-457b-42b4-98e3-d32bccf8836c if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text open}]}] %!s(int=-1)}}
-188 | {variable handled text true}
-189 | {conditional 3133fde5-27b8-4cf3-b64a-027cb16ee961 if {[{%!s(int=101) [{variable {Variable variable name   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
-190 | {variable state text error}
-191 | {variable result text error missing_name}
-192 | {conditional 3133fde5-27b8-4cf3-b64a-027cb16ee961 else <nil>}
-193 | {action rawAction action {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.OpenWorkflowAction} {dictionary map[target:map[title:${@name}]]}]}}
-194 | {variable result text ok opened {@name}}
-195 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-196 | {conditional 3133fde5-27b8-4cf3-b64a-027cb16ee961 endif }
-197 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-198 | {conditional e94cd955-457b-42b4-98e3-d32bccf8836c endif }
-199 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-200 | {conditional 4b9e1940-7595-473c-a49a-d1e80e2aa8f0 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text create_folder}]}] %!s(int=-1)}}
-201 | {variable handled text true}
-202 | {conditional 13fd2a58-6e39-4909-9b30-1d4bcdeeef9f if {[{%!s(int=101) [{variable {Variable variable folder   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
-203 | {variable state text error}
-204 | {variable result text error missing_folder}
-205 | {conditional 13fd2a58-6e39-4909-9b30-1d4bcdeeef9f else <nil>}
-206 | {action rawAction action {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.CreateFolderAction} {dictionary map[OpenWhenRun:%!s(bool=false) name:${@folder}]}]}}
-207 | {variable result text ok folder_created {@folder}}
-208 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-209 | {conditional 13fd2a58-6e39-4909-9b30-1d4bcdeeef9f endif }
-210 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-211 | {conditional 4b9e1940-7595-473c-a49a-d1e80e2aa8f0 endif }
-212 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-213 | {action comment action {comment %!s(*main.actionDefinition=&{{Comment Add an explicit comment.   } comment   [{text rawtext WFCommentActionText <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{rawtext Reliable fully-native organize primitive: make a new folder entity, then move the exact named Shortcut into it.}]}}
-214 | {action comment action {comment %!s(*main.actionDefinition=&{{Comment Add an explicit comment.   } comment   [{text rawtext WFCommentActionText <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{rawtext Moving into an already-existing empty folder remains unsupported until we have a name-to-folder-entity resolver.}]}}
-215 | {conditional 7ce17360-1155-406d-a4f8-8121052eee7b if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text move_new_folder}]}] %!s(int=-1)}}
-216 | {variable handled text true}
-217 | {conditional 1d8f15e4-4092-445d-a12a-dbe860499197 if {[{%!s(int=101) [{variable {Variable variable name   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
-218 | {variable state text error}
-219 | {variable result text error missing_name}
-220 | {conditional 1d8f15e4-4092-445d-a12a-dbe860499197 else <nil>}
-221 | {conditional 35ceee8c-83ba-4ccf-9702-2a279286128f if {[{%!s(int=101) [{variable {Variable variable folder   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
-222 | {variable state text error}
-223 | {variable result text error missing_folder}
-224 | {conditional 35ceee8c-83ba-4ccf-9702-2a279286128f else <nil>}
-225 | {variable foundMoveSource text false}
-226 | {variable moveEntities action {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []}}
-227 | {for  1640517d-04df-472f-a1f2-baaa52ec1749 variable {Variable variable moveEntities   %!s(bool=true) %!s(bool=false) }}
-228 | {variable moveEntity variable { variable Repeat Item   %!s(bool=false) %!s(bool=false) }}
-229 | {variable moveName action {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable moveEntity   %!s(bool=false) %!s(bool=false) }} {text Name}]}}
-230 | {variable moveNameText text {moveName}}
-231 | {conditional 4ae76e09-efab-4b48-926c-3a6b2d7c24e8 if {[{%!s(int=4) [{variable {Variable variable moveNameText   %!s(bool=false) %!s(bool=false) }} {text {@name}}]}] %!s(int=-1)}}
-232 | {variable foundMoveSource text true}
-233 | {variable createdFolder action {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.CreateFolderAction} {dictionary map[OpenWhenRun:%!s(bool=false) name:${@folder}]}]}}
-234 | {action rawAction action {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.MoveShortcutToFolderAction} {dictionary map[folder:${createdFolder} shortcuts:${@moveEntity}]}]}}
-235 | {variable result text ok moved {@name} -> new_folder {@folder}}
-236 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-237 | {conditional 4ae76e09-efab-4b48-926c-3a6b2d7c24e8 endif }
-238 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-239 | {for  1640517d-04df-472f-a1f2-baaa52ec1749 endif }
-240 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-241 | {conditional aaaece2c-56ca-4a18-a9e0-c0d17e7459ad if {[{%!s(int=4) [{variable {Variable variable foundMoveSource   %!s(bool=false) %!s(bool=false) }} {text false}]}] %!s(int=-1)}}
-242 | {variable state text error}
-243 | {variable result text error not_found}
-244 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-245 | {conditional aaaece2c-56ca-4a18-a9e0-c0d17e7459ad endif }
-246 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-247 | {conditional 35ceee8c-83ba-4ccf-9702-2a279286128f endif }
-248 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-249 | {conditional 1d8f15e4-4092-445d-a12a-dbe860499197 endif }
+188 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+189 | {conditional 9ef08e44-59b3-44cf-b1be-c08dee61ed84 endif }
+190 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+191 | {for  f9dce593-b294-444d-b77b-0060009ab9bd endif }
+192 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+193 | {conditional e6cefd3d-440a-45c8-8622-9d254950c193 if {[{%!s(int=4) [{variable {Variable variable found   %!s(bool=false) %!s(bool=false) }} {text false}]}] %!s(int=-1)}}
+194 | {variable state text error}
+195 | {variable result text error not_found}
+196 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+197 | {conditional e6cefd3d-440a-45c8-8622-9d254950c193 endif }
+198 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+199 | {conditional 33946e89-c608-48cd-b4c7-2f8ade6d4323 endif }
+200 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+201 | {conditional a25ccc17-d550-4390-8953-b16d76b9b038 endif }
+202 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+203 | {conditional 29b5df5a-d655-4e01-9f59-06b6c8db3cb6 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text run}]}] %!s(int=-1)}}
+204 | {variable handled text true}
+205 | {conditional 30c99e17-61f7-4560-829b-f94c7509595a if {[{%!s(int=101) [{variable {Variable variable name   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
+206 | {variable state text error}
+207 | {variable result text error missing_name}
+208 | {conditional 30c99e17-61f7-4560-829b-f94c7509595a else <nil>}
+209 | {variable runResult action {run %!s(*main.actionDefinition=&{{Run Shortcut Run Shortcut with name `shortcutName`, providing it with `input`.   } runworkflow   [{shortcutName text WFWorkflowName <nil>  false false false false false} {input variable WFInput <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable name   %!s(bool=false) %!s(bool=false) }} {variable {Variable variable runInput   %!s(bool=false) %!s(bool=false) }}]}}
+210 | {variable result text {runResult}}
+211 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+212 | {conditional 30c99e17-61f7-4560-829b-f94c7509595a endif }
+213 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+214 | {conditional 29b5df5a-d655-4e01-9f59-06b6c8db3cb6 endif }
+215 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+216 | {conditional 5b3bac29-8772-4e4b-a9fc-c4f3cd6a6ffe if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text create}]}] %!s(int=-1)}}
+217 | {variable handled text true}
+218 | {conditional 93c701b1-f812-4239-bb80-f66b778f8515 if {[{%!s(int=101) [{variable {Variable variable name   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
+219 | {variable state text error}
+220 | {variable result text error missing_name}
+221 | {conditional 93c701b1-f812-4239-bb80-f66b778f8515 else <nil>}
+222 | {action rawAction action {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.CreateWorkflowAction} {dictionary map[OpenWhenRun:%!s(bool=false) name:${@name}]}]}}
+223 | {variable result text ok created {@name}}
+224 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+225 | {conditional 93c701b1-f812-4239-bb80-f66b778f8515 endif }
+226 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+227 | {conditional 5b3bac29-8772-4e4b-a9fc-c4f3cd6a6ffe endif }
+228 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+229 | {conditional 56cf5d34-f106-41c7-bcb0-d7cbdc4234f3 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text open}]}] %!s(int=-1)}}
+230 | {variable handled text true}
+231 | {conditional 65171595-5aba-4622-9592-e260354f7520 if {[{%!s(int=101) [{variable {Variable variable name   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
+232 | {variable state text error}
+233 | {variable result text error missing_name}
+234 | {conditional 65171595-5aba-4622-9592-e260354f7520 else <nil>}
+235 | {action rawAction action {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.OpenWorkflowAction} {dictionary map[target:map[title:${@name}]]}]}}
+236 | {variable result text ok opened {@name}}
+237 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+238 | {conditional 65171595-5aba-4622-9592-e260354f7520 endif }
+239 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+240 | {conditional 56cf5d34-f106-41c7-bcb0-d7cbdc4234f3 endif }
+241 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+242 | {conditional b4e381f3-164b-4d28-8786-4d83dbc98496 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text create_folder}]}] %!s(int=-1)}}
+243 | {variable handled text true}
+244 | {conditional 912bff8d-9d8d-46c7-82ca-caa95a5a3d8d if {[{%!s(int=101) [{variable {Variable variable folder   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
+245 | {variable state text error}
+246 | {variable result text error missing_folder}
+247 | {conditional 912bff8d-9d8d-46c7-82ca-caa95a5a3d8d else <nil>}
+248 | {action rawAction action {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.CreateFolderAction} {dictionary map[OpenWhenRun:%!s(bool=false) name:${@folder}]}]}}
+249 | {variable result text ok folder_created {@folder}}
 250 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-251 | {conditional 7ce17360-1155-406d-a4f8-8121052eee7b endif }
+251 | {conditional 912bff8d-9d8d-46c7-82ca-caa95a5a3d8d endif }
 252 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-253 | {conditional dce1b88b-2d82-4e27-a0b0-2c35b3dc3aec if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text rename}]} {%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text delete}]} {%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text create_link}]}] %!s(int=0)}}
-254 | {variable handled text true}
-255 | {conditional 9e52894e-48d9-4d9e-bd7b-f03643f2c577 if {[{%!s(int=101) [{variable {Variable variable name   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
-256 | {variable state text error}
-257 | {variable result text error missing_name}
-258 | {conditional 9e52894e-48d9-4d9e-bd7b-f03643f2c577 else <nil>}
-259 | {conditional f33e64c6-4a7a-4e54-a9da-60ddd5628a06 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text delete}]} {%!s(int=5) [{variable {Variable variable confirm   %!s(bool=false) %!s(bool=false) }} {text true}]}] %!s(int=1)}}
-260 | {variable state text error}
-261 | {variable result text error confirmation_required}
-262 | {conditional f33e64c6-4a7a-4e54-a9da-60ddd5628a06 else <nil>}
-263 | {variable foundEntity text false}
-264 | {variable entities action {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []}}
-265 | {for  452d73eb-77e9-4287-b1d0-708e25127fe8 variable {Variable variable entities   %!s(bool=true) %!s(bool=false) }}
-266 | {variable entity variable { variable Repeat Item   %!s(bool=false) %!s(bool=false) }}
-267 | {variable entityName action {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable entity   %!s(bool=false) %!s(bool=false) }} {text Name}]}}
-268 | {variable entityNameText text {entityName}}
-269 | {conditional b03cdaab-aba7-4468-84fe-d0a2d4655c7a if {[{%!s(int=4) [{variable {Variable variable entityNameText   %!s(bool=false) %!s(bool=false) }} {text {@name}}]}] %!s(int=-1)}}
-270 | {variable foundEntity text true}
-271 | {conditional 52f3c595-566f-478b-aed6-d3ab23d7072c if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text rename}]}] %!s(int=-1)}}
-272 | {conditional 9cad53ac-a283-4099-a13f-c048ddcecf35 if {[{%!s(int=101) [{variable {Variable variable newName   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
-273 | {variable state text error}
-274 | {variable result text error missing_new_name}
-275 | {conditional 9cad53ac-a283-4099-a13f-c048ddcecf35 else <nil>}
-276 | {action rawAction action {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.RenameShortcutAction} {dictionary map[OpenWhenRun:%!s(bool=false) name:${@newName} shortcut:${@entity}]}]}}
-277 | {variable result text ok renamed {@name} -> {@newName}}
+253 | {conditional b4e381f3-164b-4d28-8786-4d83dbc98496 endif }
+254 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+255 | {conditional 9ed32963-015c-4cce-aad8-3a66bcfcc68e if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text move_new_folder}]}] %!s(int=-1)}}
+256 | {variable handled text true}
+257 | {conditional 5915305c-d044-43a6-8c72-5fb1592099fd if {[{%!s(int=101) [{variable {Variable variable name   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
+258 | {variable state text error}
+259 | {variable result text error missing_name}
+260 | {conditional 5915305c-d044-43a6-8c72-5fb1592099fd else <nil>}
+261 | {conditional 29f246cf-acc5-4ec4-b081-b1a535e76911 if {[{%!s(int=101) [{variable {Variable variable folder   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
+262 | {variable state text error}
+263 | {variable result text error missing_folder}
+264 | {conditional 29f246cf-acc5-4ec4-b081-b1a535e76911 else <nil>}
+265 | {variable foundMoveSource text false}
+266 | {variable moveEntities action {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []}}
+267 | {for  c54d5b21-7690-4735-910f-eaf9f42e7c86 variable {Variable variable moveEntities   %!s(bool=true) %!s(bool=false) }}
+268 | {variable moveEntity variable { variable Repeat Item   %!s(bool=false) %!s(bool=false) }}
+269 | {variable moveName action {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable moveEntity   %!s(bool=false) %!s(bool=false) }} {text Name}]}}
+270 | {variable moveNameText text {moveName}}
+271 | {conditional efd8eda7-3ff4-47f7-807b-18779abd0794 if {[{%!s(int=4) [{variable {Variable variable moveNameText   %!s(bool=false) %!s(bool=false) }} {text {@name}}]}] %!s(int=-1)}}
+272 | {variable foundMoveSource text true}
+273 | {variable createdFolder action {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.CreateFolderAction} {dictionary map[OpenWhenRun:%!s(bool=false) name:${@folder}]}]}}
+274 | {action rawAction action {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.MoveShortcutToFolderAction} {dictionary map[folder:${createdFolder} shortcuts:${@moveEntity}]}]}}
+275 | {variable result text ok moved {@name} -> new_folder {@folder}}
+276 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+277 | {conditional efd8eda7-3ff4-47f7-807b-18779abd0794 endif }
 278 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-279 | {conditional 9cad53ac-a283-4099-a13f-c048ddcecf35 endif }
+279 | {for  c54d5b21-7690-4735-910f-eaf9f42e7c86 endif }
 280 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-281 | {conditional 52f3c595-566f-478b-aed6-d3ab23d7072c endif }
-282 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-283 | {conditional bf108f4a-f9fe-481a-8a1c-d8dbd7f18e99 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text create_link}]}] %!s(int=-1)}}
-284 | {variable link action {createShortcutLink %!s(*main.actionDefinition=&{{Create Shortcut Link   shortcuts } CreateShortcutiCloudLinkAction com.apple.shortcuts  [{shortcut variable shortcut <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {Shortcuts com.apple.shortcuts CreateShortcutiCloudLinkAction}  false false false 0 0 true}) [{variable {Variable variable entity   %!s(bool=false) %!s(bool=false) }}]}}
-285 | {variable result text {link}}
+281 | {conditional a518d3cd-e7b3-4378-b23e-6d51453571c4 if {[{%!s(int=4) [{variable {Variable variable foundMoveSource   %!s(bool=false) %!s(bool=false) }} {text false}]}] %!s(int=-1)}}
+282 | {variable state text error}
+283 | {variable result text error not_found}
+284 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+285 | {conditional a518d3cd-e7b3-4378-b23e-6d51453571c4 endif }
 286 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-287 | {conditional bf108f4a-f9fe-481a-8a1c-d8dbd7f18e99 endif }
+287 | {conditional 29f246cf-acc5-4ec4-b081-b1a535e76911 endif }
 288 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-289 | {conditional 4ecf7f91-4ee0-48b7-86e9-c6f370e48404 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text delete}]}] %!s(int=-1)}}
-290 | {action rawAction action {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.DeleteWorkflowAction} {dictionary map[entities:${@entity}]}]}}
-291 | {variable result text ok deleted {@name}}
+289 | {conditional 5915305c-d044-43a6-8c72-5fb1592099fd endif }
+290 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+291 | {conditional 9ed32963-015c-4cce-aad8-3a66bcfcc68e endif }
 292 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-293 | {conditional 4ecf7f91-4ee0-48b7-86e9-c6f370e48404 endif }
-294 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-295 | {conditional b03cdaab-aba7-4468-84fe-d0a2d4655c7a endif }
-296 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-297 | {for  452d73eb-77e9-4287-b1d0-708e25127fe8 endif }
-298 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-299 | {conditional 8ba1cb7b-6b7a-4a18-bb8f-9d90beb76d4d if {[{%!s(int=4) [{variable {Variable variable foundEntity   %!s(bool=false) %!s(bool=false) }} {text false}]}] %!s(int=-1)}}
+293 | {conditional b764e3be-3c58-4b55-997a-d5fcd78254ae if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text rename}]} {%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text delete}]} {%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text create_link}]}] %!s(int=0)}}
+294 | {variable handled text true}
+295 | {conditional f3217ba3-8eb6-4b6e-b2f0-568c78cc4c94 if {[{%!s(int=101) [{variable {Variable variable name   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
+296 | {variable state text error}
+297 | {variable result text error missing_name}
+298 | {conditional f3217ba3-8eb6-4b6e-b2f0-568c78cc4c94 else <nil>}
+299 | {conditional fa3b95c4-023f-4af4-a5b2-cc36202f7d30 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text delete}]} {%!s(int=5) [{variable {Variable variable confirm   %!s(bool=false) %!s(bool=false) }} {text true}]}] %!s(int=1)}}
 300 | {variable state text error}
-301 | {variable result text error not_found}
-302 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-303 | {conditional 8ba1cb7b-6b7a-4a18-bb8f-9d90beb76d4d endif }
-304 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-305 | {conditional f33e64c6-4a7a-4e54-a9da-60ddd5628a06 endif }
-306 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-307 | {conditional 9e52894e-48d9-4d9e-bd7b-f03643f2c577 endif }
-308 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-309 | {conditional dce1b88b-2d82-4e27-a0b0-2c35b3dc3aec endif }
-310 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-311 | {conditional b0b120c3-afa9-4af7-8976-2e30dbcde89a if {[{%!s(int=4) [{variable {Variable variable handled   %!s(bool=false) %!s(bool=false) }} {text false}]}] %!s(int=-1)}}
-312 | {variable state text error}
-313 | {variable result text error unsupported_operation}
-314 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-315 | {conditional b0b120c3-afa9-4af7-8976-2e30dbcde89a endif }
-316 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-317 | {conditional f6a48e03-6396-46e4-8857-0a1dc2609cbc if {[{%!s(int=100) [{variable {Variable variable callback   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
-318 | {action jsonRequest action {jsonRequest %!s(*main.actionDefinition=&{{JSON Request Send a `method` JSON request to `url` with `body` and optional `headers.   HTTP} downloadurl   [{url text WFURL <nil>  false false false false false} {method text WFHTTPMethod <nil> HTTPMethod false false true false false} {body dictionary WFJSONValues <nil>  false false true false true} {headers dictionary WFHTTPHeaders <nil>  false false true false true}] <nil> <nil> map[WFHTTPBodyType:JSON] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable callback   %!s(bool=false) %!s(bool=false) }} {text POST} {dictionary map[result:{@result} state:{@state}]}]}}
-319 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-320 | {conditional f6a48e03-6396-46e4-8857-0a1dc2609cbc endif }
-321 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
-322 | {action output action {output %!s(*main.actionDefinition=&{{Stop and Output Stop and output `output`. Do nothing if there is nowhere to output.   Output} output   [{output text WFOutput <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  true false false 0 0 false}) [{text {@result}}]}}
+301 | {variable result text error confirmation_required}
+302 | {conditional fa3b95c4-023f-4af4-a5b2-cc36202f7d30 else <nil>}
+303 | {variable foundEntity text false}
+304 | {variable entities action {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []}}
+305 | {for  defe793d-dc4c-4872-8e2c-0a6ed57d02bf variable {Variable variable entities   %!s(bool=true) %!s(bool=false) }}
+306 | {variable entity variable { variable Repeat Item   %!s(bool=false) %!s(bool=false) }}
+307 | {variable entityName action {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable entity   %!s(bool=false) %!s(bool=false) }} {text Name}]}}
+308 | {variable entityNameText text {entityName}}
+309 | {conditional d27ae502-7985-4af3-a10b-4684decb1a3e if {[{%!s(int=4) [{variable {Variable variable entityNameText   %!s(bool=false) %!s(bool=false) }} {text {@name}}]}] %!s(int=-1)}}
+310 | {variable foundEntity text true}
+311 | {conditional 89c5d09a-ee90-45e0-9426-4a1ea43039f5 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text rename}]}] %!s(int=-1)}}
+312 | {conditional 4d283294-ffff-48ff-aa41-1266020c4128 if {[{%!s(int=101) [{variable {Variable variable newName   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
+313 | {variable state text error}
+314 | {variable result text error missing_new_name}
+315 | {conditional 4d283294-ffff-48ff-aa41-1266020c4128 else <nil>}
+316 | {action rawAction action {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.RenameShortcutAction} {dictionary map[OpenWhenRun:%!s(bool=false) name:${@newName} shortcut:${@entity}]}]}}
+317 | {variable result text ok renamed {@name} -> {@newName}}
+318 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+319 | {conditional 4d283294-ffff-48ff-aa41-1266020c4128 endif }
+320 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+321 | {conditional 89c5d09a-ee90-45e0-9426-4a1ea43039f5 endif }
+322 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+323 | {conditional 6ff60ec3-cbc6-44f5-864d-f755f4326f7e if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text create_link}]}] %!s(int=-1)}}
+324 | {variable link action {createShortcutLink %!s(*main.actionDefinition=&{{Create Shortcut Link   shortcuts } CreateShortcutiCloudLinkAction com.apple.shortcuts  [{shortcut variable shortcut <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {Shortcuts com.apple.shortcuts CreateShortcutiCloudLinkAction}  false false false 0 0 true}) [{variable {Variable variable entity   %!s(bool=false) %!s(bool=false) }}]}}
+325 | {variable result text {link}}
+326 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+327 | {conditional 6ff60ec3-cbc6-44f5-864d-f755f4326f7e endif }
+328 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+329 | {conditional 790204ce-7d9b-4f3f-8396-cf28a504f9d2 if {[{%!s(int=4) [{variable {Variable variable op   %!s(bool=false) %!s(bool=false) }} {text delete}]}] %!s(int=-1)}}
+330 | {action rawAction action {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.DeleteWorkflowAction} {dictionary map[entities:${@entity}]}]}}
+331 | {variable result text ok deleted {@name}}
+332 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+333 | {conditional 790204ce-7d9b-4f3f-8396-cf28a504f9d2 endif }
+334 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+335 | {conditional d27ae502-7985-4af3-a10b-4684decb1a3e endif }
+336 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+337 | {for  defe793d-dc4c-4872-8e2c-0a6ed57d02bf endif }
+338 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+339 | {conditional ca4fd613-211d-44a2-8f44-0ae2bfa7299e if {[{%!s(int=4) [{variable {Variable variable foundEntity   %!s(bool=false) %!s(bool=false) }} {text false}]}] %!s(int=-1)}}
+340 | {variable state text error}
+341 | {variable result text error not_found}
+342 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+343 | {conditional ca4fd613-211d-44a2-8f44-0ae2bfa7299e endif }
+344 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+345 | {conditional fa3b95c4-023f-4af4-a5b2-cc36202f7d30 endif }
+346 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+347 | {conditional f3217ba3-8eb6-4b6e-b2f0-568c78cc4c94 endif }
+348 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+349 | {conditional b764e3be-3c58-4b55-997a-d5fcd78254ae endif }
+350 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+351 | {conditional c0f7cdef-14b7-482b-a66b-4b9aac0b2017 if {[{%!s(int=4) [{variable {Variable variable handled   %!s(bool=false) %!s(bool=false) }} {text false}]}] %!s(int=-1)}}
+352 | {variable state text error}
+353 | {variable result text error unsupported_operation}
+354 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+355 | {conditional c0f7cdef-14b7-482b-a66b-4b9aac0b2017 endif }
+356 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+357 | {conditional 4a512648-08da-4c31-a3f8-481559284b37 if {[{%!s(int=100) [{variable {Variable variable callback   %!s(bool=false) %!s(bool=false) }}]}] %!s(int=-1)}}
+358 | {action jsonRequest action {jsonRequest %!s(*main.actionDefinition=&{{JSON Request Send a `method` JSON request to `url` with `body` and optional `headers.   HTTP} downloadurl   [{url text WFURL <nil>  false false false false false} {method text WFHTTPMethod <nil> HTTPMethod false false true false false} {body dictionary WFJSONValues <nil>  false false true false true} {headers dictionary WFHTTPHeaders <nil>  false false true false true}] <nil> <nil> map[WFHTTPBodyType:JSON] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable callback   %!s(bool=false) %!s(bool=false) }} {text POST} {dictionary map[result:{@result} state:{@state}]}]}}
+359 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+360 | {conditional 4a512648-08da-4c31-a3f8-481559284b37 endif }
+361 | {action nothing action {nothing %!s(*main.actionDefinition=&{{Nothing Clear the current output.   } nothing   [] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) []}}
+362 | {action output action {output %!s(*main.actionDefinition=&{{Stop and Output Stop and output `output`. Do nothing if there is nowhere to output.   Output} output   [{output text WFOutput <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  true false false 0 0 false}) [{text {@result}}]}}
 
 ## AUTOMATIONS ##
 
 
 ## DEFINITIONS ##
-Name: harness.shortcuts.control
+Name: shortcuts.control
 Color: 463140863
 Glyph: 59870
 Inputs: [WFStringContentItem]
@@ -696,42 +735,50 @@ map[Acceleration:[m/s² g-force] Angle:[degrees arcminutes arcseconds radians gr
 map[]
 
 ## VARIABLES ##
-@moveEntity = moveEntity (text) (repeat item var)
-@op = {request['op']} (text)
-@runInput = {request['input']} (text)
-@handled = false (text)
-@candidateNameText = {candidateName} (text)
-const link = {createShortcutLink %!s(*main.actionDefinition=&{{Create Shortcut Link   shortcuts } CreateShortcutiCloudLinkAction com.apple.shortcuts  [{shortcut variable shortcut <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {Shortcuts com.apple.shortcuts CreateShortcutiCloudLinkAction}  false false false 0 0 true}) [{variable {Variable variable entity   %!s(bool=false) %!s(bool=false) }}]} (action)
-@result =  (text)
-const shortcutNames = {getText %!s(*main.actionDefinition=&{{Get Text Get text from input.   } detect.text   [{input variable WFInput <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  } text false false false 0 0 false}) [{variable {Variable variable allShortcuts   %!s(bool=true) %!s(bool=false) }}]} (action)
-@foundMoveSource = false (text)
-const entities = {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []} (action)
-@folder = {request['folder']} (text)
-const moveEntities = {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []} (action)
-@moveNameText = {moveName} (text)
-@foundEntity = false (text)
-@entity = entity (text) (repeat item var)
-@state = success (text)
-@entityNameText = {entityName} (text)
-@name = {request['name']} (text)
 @newName = {request['new_name']} (text)
-const  ()
-const candidateName = {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable candidate   %!s(bool=false) %!s(bool=false) }} {text Name}]} (action)
-const candidateActions = {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable candidate   %!s(bool=false) %!s(bool=false) }} {text Action Count}]} (action)
-const candidateSize = {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable candidate   %!s(bool=false) %!s(bool=false) }} {text File Size}]} (action)
-const moveName = {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable moveEntity   %!s(bool=false) %!s(bool=false) }} {text Name}]} (action)
-const createdFolder = {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.CreateFolderAction} {dictionary map[OpenWhenRun:%!s(bool=false) name:${@folder}]}]} (action)
-const request = {getDictionary %!s(*main.actionDefinition=&{{Get Dictionary Get the dictionary from `input`.   Dictionaries} detect.dictionary   [{input variable WFInput <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  } dictionary false false false 0 0 false}) [{variable {Variable variable ShortcutInput   %!s(bool=false) %!s(bool=false) }}]} (action)
-@confirm = {request['confirm']} (text)
+@runInput = {request['input']} (text)
+@foundSelf = false (text)
+@anchorEntity = {Variable variable bootstrapEntity   %!s(bool=false) %!s(bool=false) } (variable)
+@entity = entity (text) (repeat item var)
 const entityName = {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable entity   %!s(bool=false) %!s(bool=false) }} {text Name}]} (action)
-@callback = {request['callback']} (text)
-const pingProof = {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text AsheKube.app.a-Shell.ExecuteCommandIntent} {dictionary map[ShowWhenRun:%!s(bool=false) command:echo harness-shortcuts-control-v0.3-ready > harness.shortcuts.control.proof keepGoing:%!s(bool=false) openWindow:close]}]} (action)
+@op = {request['op']} (text)
+const shortcutNames = {getText %!s(*main.actionDefinition=&{{Get Text Get text from input.   } detect.text   [{input variable WFInput <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  } text false false false 0 0 false}) [{variable {Variable variable allShortcuts   %!s(bool=true) %!s(bool=false) }}]} (action)
+const entities = {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []} (action)
+@entityNameText = {entityName} (text)
+@confirm = {request['confirm']} (text)
+const bootstrapEntities = {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []} (action)
+const bootstrapName = {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable bootstrapEntity   %!s(bool=false) %!s(bool=false) }} {text Name}]} (action)
+const toolsFolder = {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable anchorEntity   %!s(bool=false) %!s(bool=false) }} {text Folder}]} (action)
+const request = {getDictionary %!s(*main.actionDefinition=&{{Get Dictionary Get the dictionary from `input`.   Dictionaries} detect.dictionary   [{input variable WFInput <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  } dictionary false false false 0 0 false}) [{variable {Variable variable ShortcutInput   %!s(bool=false) %!s(bool=false) }}]} (action)
+@folder = {request['folder']} (text)
+@foundAnchor = false (text)
+const candidateSize = {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable candidate   %!s(bool=false) %!s(bool=false) }} {text File Size}]} (action)
+const createdFolder = {rawAction %!s(*main.actionDefinition=&{{    }    [{identifier text  <nil>  false false false false false} {parameters dictionary  <nil>  false false true false false}] <nil> 0x9e2dc0 map[] <nil> <nil> {  }  false false false 0 0 true}) [{text com.apple.shortcuts.CreateFolderAction} {dictionary map[OpenWhenRun:%!s(bool=false) name:${@folder}]}]} (action)
+const allShortcuts = {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []} (action)
 const all = {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []} (action)
+const candidateActions = {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable candidate   %!s(bool=false) %!s(bool=false) }} {text Action Count}]} (action)
+@moveNameText = {moveName} (text)
+@callback = {request['callback']} (text)
+@handled = false (text)
+@candidate = candidate (text) (repeat item var)
+@candidateNameText = {candidateName} (text)
 const candidateFolder = {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable candidate   %!s(bool=false) %!s(bool=false) }} {text Folder}]} (action)
 const runResult = {run %!s(*main.actionDefinition=&{{Run Shortcut Run Shortcut with name `shortcutName`, providing it with `input`.   } runworkflow   [{shortcutName text WFWorkflowName <nil>  false false false false false} {input variable WFInput <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable name   %!s(bool=false) %!s(bool=false) }} {variable {Variable variable runInput   %!s(bool=false) %!s(bool=false) }}]} (action)
-const allShortcuts = {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []} (action)
+@foundMoveSource = false (text)
+const moveName = {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable moveEntity   %!s(bool=false) %!s(bool=false) }} {text Name}]} (action)
+@name = {request['name']} (text)
+@state = success (text)
+@result =  (text)
+@bootstrapEntity = bootstrapEntity (text) (repeat item var)
+@bootstrapNameText = {bootstrapName} (text)
+const candidateName = {getShortcutDetail %!s(*main.actionDefinition=&{{Get Shortcut Detail Get a detail about a Shortcut.   } properties.workflow   [{shortcut variable WFInput <nil>  false false false false false} {detail text WFContentItemPropertyName <nil> shortcutDetail false false false false false}] <nil> <nil> map[] <nil> <nil> {  }  false false false 0 0 false}) [{variable {Variable variable candidate   %!s(bool=false) %!s(bool=false) }} {text Name}]} (action)
+const moveEntities = {getShortcuts %!s(*main.actionDefinition=&{{Get Shortcuts Get all of the Shortcuts on the device.   } getmyworkflows   [] <nil> <nil> map[] <nil> <nil> {  } array false false false 0 0 false}) []} (action)
+@moveEntity = moveEntity (text) (repeat item var)
+const  ()
+@selfEntity = {Variable variable bootstrapEntity   %!s(bool=false) %!s(bool=false) } (variable)
 @found = false (text)
-@candidate = candidate (text) (repeat item var)
+@foundEntity = false (text)
+const link = {createShortcutLink %!s(*main.actionDefinition=&{{Create Shortcut Link   shortcuts } CreateShortcutiCloudLinkAction com.apple.shortcuts  [{shortcut variable shortcut <nil>  false false false false false}] <nil> <nil> map[] <nil> <nil> {Shortcuts com.apple.shortcuts CreateShortcutiCloudLinkAction}  false false false 0 0 true}) [{variable {Variable variable entity   %!s(bool=false) %!s(bool=false) }}]} (action)
 
 ## MENUS ##
 map[]
@@ -744,9 +791,9 @@ Done.
 Generating Shortcut data...### SHORTCUT GEN ###
 
 ## UUIDS ##
-map[:06202377-89e7-4b0d-ae79-93d87e1b832d Text:89c5f226-10c9-4f2d-a497-386dfdc95fc9 Text 1:4dfaf0b8-3825-4a3f-851b-0142e4dd7adc Text 10:b00fe9e0-83e9-4927-9438-4e9e102c6912 Text 11:5223ec35-a74a-428b-863c-6386dd0df6a7 Text 12:44fbd075-306e-433e-a0d6-7029869743d7 Text 13:cd77245c-b623-4831-a941-d30cd90608a5 Text 14:e9be2e82-bbed-45ef-9202-1e3a9ac75777 Text 15:6a47f4e9-6935-4b60-8f01-4ae35b25dd99 Text 16:7520aeca-ee84-4ab3-a233-5c97253e474e Text 17:75fceee2-cfaf-41c7-b7c0-0989be62be53 Text 18:485c4671-3e90-4430-9db1-4342a02cc68f Text 19:e786d653-1b6f-4789-9cd0-51435b21529a Text 2:76d350a1-3569-4ab7-a5c8-d7e764da128f Text 20:ce4fc306-8f08-40ef-b0bf-3ad83bd48414 Text 21:a31a2fb2-c9e7-49e7-9a09-f80fcea1260c Text 22:38f8b773-cce7-466b-ac02-1f66946e5e67 Text 23:43a08da7-588a-4913-b0c4-3822791e1aea Text 24:c765ebfb-5005-4177-b656-126f81df8e68 Text 25:2b8371e2-0d8e-4cf3-8a5c-a70a985bf98f Text 26:2e69971e-df01-499b-8275-f20976bc22c6 Text 27:5365bbdd-901c-4c86-8744-31ffea54e07d Text 28:564df3f1-61c6-4011-ab72-35e5209ab520 Text 29:a6ca9468-fd2d-461b-8210-5e9f67bbe48e Text 3:fb231c2b-fefe-4ec1-975c-a9c2183e07b9 Text 30:1c8cd8c4-5a19-4cc2-a750-64b53aeb59ad Text 31:0391af8f-a2f8-42a2-8326-0004766012cd Text 32:13837a8b-11c4-40f3-b972-7b29788e64ff Text 33:01ac4a1d-a3ea-49bf-acf3-1275e33e9511 Text 34:890a2e38-2ab3-4665-90e4-a0fc12e41ade Text 35:a3e37e68-d668-473e-8f56-b36d71e82e43 Text 36:0671fb37-07f9-4ebc-aa54-bf36d9b025eb Text 37:96a81eae-ae76-4730-8b70-18f455bb30a7 Text 38:f6e9c768-2927-4718-bfad-7228b8551985 Text 39:38b6e223-0b56-448b-83a7-25a3f24988e1 Text 4:ab5a89f4-7399-454f-88e4-52610ad728ad Text 40:81c999c7-6c9f-41ce-bd28-7c8d8e0416e1 Text 41:7694d215-ebe1-456e-8f37-ce9b2a7dd7b6 Text 42:753b551f-6944-4fca-b1e7-5310c393c56a Text 43:5d529edb-dfd4-4331-b56e-dbbc2f7dc430 Text 44:f1713276-a262-4a21-b96e-8f1a1e3c4772 Text 45:0a261ca5-7c7f-4090-8c19-e2795b7dd643 Text 46:ebd49834-a96a-4f0d-a10d-aeecec39cc16 Text 47:5fee1c82-4904-416e-8632-78eb13ca85ce Text 48:614f0aa3-0e1a-4630-b884-289eb2e2ca41 Text 49:9bdc8b35-dc07-41d2-ba70-9029c195ef0d Text 5:255183af-0972-49a9-9057-e5adc815df4f Text 50:72432055-55b0-4797-a44c-c232de172ee0 Text 51:6af0f483-7764-41b1-9706-1dc0b215130b Text 52:c248f5ea-b9f0-4e13-8ed8-91dde0af3034 Text 53:c17bb927-7f3b-47e1-8128-e8ce3565a8ce Text 54:8395cc20-56f8-499d-a574-e83dd1e21be8 Text 55:2893fdea-dd10-4745-9b8a-a46bb4191387 Text 56:4038e9c5-0046-4751-8f55-1d2839ad37e0 Text 57:0ae3da23-054b-4c2a-96d0-f05f2a91823b Text 58:ab8c078f-6e41-4a5a-8a9d-06412a06f0a2 Text 59:a636e285-2c7a-483c-b445-0d95f7edfd78 Text 6:c65473b5-c369-4696-b6a9-c1d7d1230061 Text 60:c81ae453-7a2f-458c-b0e8-2e6c9ec4f218 Text 61:e07a84da-95d8-46cb-8a3e-896e0df70f13 Text 62:69526129-5d70-4cad-a6ce-f718ef165d3f Text 63:069ea7e4-c2fd-42f0-9567-bfc18396ef81 Text 64:c8e62b5b-6096-42d6-b24b-6a1256c1bbe0 Text 65:7417f482-42cb-4ef9-a26f-441e602f8961 Text 66:4ee18bdc-c019-48bb-bb0c-1b14e95f9a6b Text 67:69a316f5-acce-4e0b-808a-76ec5dd2854a Text 68:11a9f79a-f65b-4c13-ae81-dad2c50a3d9b Text 7:1ab721ed-8d86-4ef6-9edd-a4502b9eba81 Text 8:c5ac4a99-da23-4408-8ad3-f5a7f96e6bf3 Text 9:5fbbef03-55ce-40d2-bdc8-95bbed5ab2ac Variable:d1186bd4-aec6-4dc4-9858-971cd2732381 Variable 1:e599502c-2bc9-4c9a-8f1c-8759f18b0df1 Variable 2:458a1d01-7336-4e3e-9324-041f1258625d all:c9e7b978-7848-4b72-b7db-d2bbc20d11b1 allShortcuts:8cfb8044-cea9-46cf-913a-585b8baea34a candidateActions:1fa587fd-d95a-4f34-a533-fc75a8e86e9c candidateFolder:295cbc79-e81a-4bde-ae4f-bc5d2c571a3d candidateName:724d1ea2-fbe3-40e6-ad26-c409c29733d7 candidateSize:cd68dbee-3cd3-4b67-8abc-64de289dddf3 createdFolder:57458a41-05a9-4868-96ad-5087188d2b1a entities:184fe86b-86cc-4d7a-ab7f-5729b32ab176 entityName:c9b1a2b5-6db4-428a-a329-e45df002da77 link:41b7cb3b-29bf-4654-9fe1-c01b8ba369bb moveEntities:2aef832f-9087-4d50-b91c-a7cad0c2561a moveName:23dfc3c0-5068-45d1-8ba8-6d3fa9650282 pingProof:ab120092-a5f9-49f7-90a1-463d45383aa0 request:5f53f7c9-4394-4e95-a260-e7936ad5a0bb runResult:51dea3c0-2c6c-41ce-be11-5da0bb59d5c9 shortcutNames:9a53ed04-9e9b-4c18-bca9-5ef03f588cdf]
+map[:0e81b03a-1a2d-4af5-9903-79e21e9eee9f Text:aeca8aac-b7dc-4ec0-8dd5-5c4658cfa050 Text 1:e6d0d632-6bc4-40b6-97b7-32ff3bd50e34 Text 10:2c403d9f-83e1-4f2f-a658-b87514da9817 Text 11:aa6d9d0c-1d79-4bf6-be6c-26b6e35af11f Text 12:99f32a14-ae53-4d73-89db-7b5e55ba4b29 Text 13:b842d7bc-c603-4cf5-ad85-70729208750f Text 14:a87bac6d-e252-4fa2-9473-cba2017933c8 Text 15:48d1f40e-9783-41fc-b839-3c0cacae6ce2 Text 16:e7c1246b-1253-48a6-9f33-feeacc4fac7a Text 17:8122f3b6-e535-4b5b-a56d-ff25be3b5629 Text 18:61c9e7fc-0e12-4249-b105-f214bd0bcb5f Text 19:7fe40577-1b90-4547-b6c6-a706c731effc Text 2:240bee2d-6272-445e-b92b-3beb84776cb1 Text 20:3bec7d5e-bc4c-4065-8e62-65ff5387c8d3 Text 21:cc8e1720-47b7-4489-bbe8-a4306bc9e15d Text 22:e7f23794-d68a-4aad-b986-b4494ca48928 Text 23:7e91121d-7181-4787-8a0d-d1a654175162 Text 24:52371547-5d4b-4a70-b723-9430351ccb37 Text 25:34930e2e-0801-43ad-8404-e09ba1777cb5 Text 26:3da1490d-32ec-4c93-a0ac-dba8185605c4 Text 27:1b3180f5-d5dc-4834-a2e7-61483a789275 Text 28:0d327f1e-e898-40ae-8254-6c4da17c5edc Text 29:9d089701-296b-4748-bf9d-d503cd96e67a Text 3:3525c88b-655a-4ef2-a9ce-1700a9dc5b21 Text 30:2e045ebd-e01a-4b8c-a121-96c50a9f41a3 Text 31:f41cd6c8-213c-414d-a03d-25f0666fe8e0 Text 32:fb696b65-4a09-4570-89b7-3638078c744b Text 33:6048e99a-67c4-4e1d-9a6c-85370766986c Text 34:049f605d-f849-47f8-bb95-188913d4afdc Text 35:2a6443be-36c1-4882-915f-e181968d43c2 Text 36:0557317f-7a13-4889-a3f8-00bb4e2d7dc3 Text 37:143ed369-736d-4458-9e23-2140067fcf95 Text 38:833ed352-f265-4776-9ce8-6f6fc3c73e1e Text 39:5a755075-4000-4792-8e1c-2923c6129725 Text 4:c9983ac9-5f76-4e84-8a69-1b21cfc1f877 Text 40:83ceef6e-5675-490c-aa89-9d795aa930db Text 41:21e67e3f-2a21-4c65-81a0-902d7b07caa6 Text 42:9d9e6ab9-9b70-49ff-a927-dcbba4c1dd2b Text 43:db979e31-a9c5-45d8-94f2-2f6b5c8efe29 Text 44:c06b45ea-cb37-4c9b-a35e-16dce1ebd1fe Text 45:fe4d0c63-9512-4ac6-b25c-8a85ef7cc5a9 Text 46:76b2b0fe-bd12-4e05-b084-9910065ed6d6 Text 47:a32c9516-e6c8-43c3-becb-f0859bcef7c5 Text 48:fdd450e3-a9b8-471b-ab77-3c8f62cae6e6 Text 49:83d4803e-c104-42f3-8aea-31813af98130 Text 5:429b621c-1100-4286-9398-c038abaaa1c5 Text 50:8a2223d5-62e3-4291-a361-9538e3239e2b Text 51:7319cf27-78c2-4bb8-a83c-af4973257a8a Text 52:8f25c108-4ce9-43b5-8a1a-c7b9129d91e8 Text 53:37aa60d9-da1e-497a-87e7-523690b6cb6b Text 54:a9d81a4c-67a6-4524-a5a4-750b8bffa497 Text 55:b8c40dfe-93f7-465c-8fe5-ae0df7e6faa5 Text 56:6f3af48a-0e7d-425e-a2cb-4422686f308a Text 57:a723285b-4964-4d27-8a64-4debac13f679 Text 58:eef58012-3f80-43be-8b62-2d64fe261805 Text 59:d7c3f6ac-4495-46d6-bb79-cf9ecfda0c84 Text 6:dd92aeb6-d4bb-4526-abe8-57216c80ac16 Text 60:890e6acc-4f27-4470-b2ea-d90d8f314ef9 Text 61:5cac1df5-d941-45bf-900a-310d7b755113 Text 62:11aba955-22a9-4646-a60b-b1e59d126299 Text 63:b50ef926-3c0c-413e-a134-817603ba6f37 Text 64:f50cb8ea-4d96-4fc9-9c3d-6d6fdc602a0e Text 65:c9f689db-4040-4696-a1f0-ca5442da1c89 Text 66:28ee6d43-7bf2-4ba0-92fe-0da98ba1a2f6 Text 67:6a01dca8-176a-4d30-ae16-e4bd907dcc12 Text 68:15a84f34-b350-4797-ac48-606e32575c9b Text 69:9ab5db28-b1cf-4035-9b96-302d8ec55412 Text 7:3e057fbd-37ae-497b-99e8-ddd7d8fbfe0b Text 70:6215cbe6-6dd7-4a11-a07f-78313dfc518a Text 71:e78918e3-ec42-4ceb-8422-8a42e6d7441b Text 72:20e653c1-d4c2-42f0-966a-033f39d59b03 Text 73:75a9ce65-9fc6-4002-a3fe-02a2729c996c Text 74:75a7e060-e856-4787-b585-b69cb65b7bcd Text 75:eefa9ac6-b9a1-4149-a91e-003239c5ca0b Text 76:c4480ad1-59fe-4b8f-8bc6-ecb9c6e23084 Text 77:0c423797-80fd-4f92-adf6-877e0fdf721f Text 78:82026f7a-28fb-41ce-b537-bb1a3a13dbbc Text 79:88f6957e-f8d6-4f45-ad55-7af0fb9b7886 Text 8:bccc778e-6c88-44c2-8ca5-2cd88ecf757d Text 9:e32e0368-eebd-46e3-aab3-eb21bc1ef172 Variable:22c03aa9-bee1-4a7f-bd0f-22cbf9508579 Variable 1:74d28fac-4eba-4805-9c7a-022f97184ac9 Variable 2:19d285d3-ee82-46b3-9c0b-299fb2bec004 Variable 3:6ae3768c-7a0f-4c0c-9f66-57c871202b83 all:b3d6b511-ffb8-458b-bda5-edf49a363f4d allShortcuts:c5edd921-6dff-4723-b3aa-8aeaff1cc074 bootstrapEntities:e98fe867-4690-400c-a630-21c68cb4a1db bootstrapEntity:b5e354b7-4991-4bc1-b278-38ed6d2b36ac bootstrapName:fb84ed67-d7f1-414c-a7d0-b886f4431f8d candidateActions:c3d47e5f-4047-460b-9a4e-d292ecbeec40 candidateFolder:b27f599b-d0b4-42a8-a081-870d8cfff22f candidateName:6a5d7ec1-7cee-4f3d-93a6-186917435fdb candidateSize:e7d780e8-eb18-4aa0-a9e6-e33f9f734cde createdFolder:1637a532-1dad-48dd-b1cc-5c94ca5cf972 entities:3ca68acc-ad09-49af-8296-b26571bf70bb entityName:b9925911-ba56-4b8d-ae8d-75af78ceb022 link:b6ad227d-7b9f-41da-b39d-6ecb1eda9776 moveEntities:38afa874-4056-47cf-8edd-c02733fc9818 moveName:76f1bafe-bbb9-4ca8-a830-99cac984ddf6 request:474b01b7-b39c-4816-8be1-0ba413480e10 runResult:92b502de-4dae-4739-b953-7ffa31dd092a shortcutNames:5c758558-88c3-432f-ba87-3649efc1b3f6 toolsFolder:337163d1-448a-4314-ad73-968d75570592]
 
 Done.
 
-Writing to harness.shortcuts.control.plist...Done.
-Writing to harness.shortcuts.control_unsigned.shortcut...Done.
+Writing to shortcuts.control.plist...Done.
+Writing to shortcuts.control_unsigned.shortcut...Done.
