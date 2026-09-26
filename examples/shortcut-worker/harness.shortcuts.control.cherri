@@ -1,0 +1,230 @@
+#define name harness.shortcuts.control
+#define color blue
+#define glyph wrench
+#define inputs text
+#define outputs text
+#define version 27
+
+#include 'actions/shortcuts'
+#include 'actions/web'
+#include 'actions/documents'
+#include 'actions/text'
+
+comment('harness.shortcuts.control v0.1 — resident agent control plane for the local Shortcuts library.')
+comment('JSON-in. Optional callback URL makes remote calls return their real device result.')
+comment('Arbitrary action-graph authoring stays in the compiler/signing plane; stage/install opens Apple native import confirmation.')
+
+const request = getDictionary(ShortcutInput)
+
+@op = "{request['op']}"
+@name = "{request['name']}"
+@newName = "{request['new_name']}"
+@runInput = "{request['input']}"
+@confirm = "{request['confirm']}"
+@folder = "{request['folder']}"
+@url = "{request['url']}"
+@filename = "{request['filename']}"
+@callback = "{request['callback']}"
+
+@handled = "false"
+@state = "success"
+@result = ""
+
+if @op == "ping" {
+    @handled = "true"
+    @result = "{\"ok\":true,\"op\":\"ping\",\"controller\":\"harness.shortcuts.control\",\"version\":\"0.1\"}"
+}
+
+if @op == "capabilities" {
+    @handled = "true"
+    @result = "{\"ok\":true,\"controller\":\"harness.shortcuts.control\",\"version\":\"0.1\",\"operations\":[\"ping\",\"capabilities\",\"list\",\"get\",\"run\",\"create\",\"open\",\"create_folder\",\"rename\",\"delete\",\"create_link\",\"stage\",\"install\",\"edit\"]}"
+}
+
+comment('Inventory result is newline-delimited native Shortcut names. Use get for structured per-item detail.')
+if @op == "list" {
+    @handled = "true"
+    const allShortcuts = getShortcuts()
+    const names = getText(allShortcuts)
+    @result = "{names}"
+}
+
+if @op == "get" {
+    @handled = "true"
+    if !@name {
+        @state = "error"
+        @result = "{\"ok\":false,\"op\":\"get\",\"error\":\"missing_name\"}"
+    } else {
+        @found = "false"
+        const all = getShortcuts()
+        for candidate in all {
+            const candidateName = getShortcutDetail(@candidate, "Name")
+            @candidateNameText = "{candidateName}"
+            if @candidateNameText == "{@name}" {
+                @found = "true"
+                const candidateFolder = getShortcutDetail(@candidate, "Folder")
+                const candidateActions = getShortcutDetail(@candidate, "Action Count")
+                const candidateSize = getShortcutDetail(@candidate, "File Size")
+                @result = "name={candidateName}\nfolder={candidateFolder}\naction_count={candidateActions}\nfile_size={candidateSize}"
+            }
+        }
+        if @found == "false" {
+            @state = "error"
+            @result = "{\"ok\":false,\"op\":\"get\",\"error\":\"not_found\"}"
+        }
+    }
+}
+
+if @op == "run" {
+    @handled = "true"
+    if !@name {
+        @state = "error"
+        @result = "{\"ok\":false,\"op\":\"run\",\"error\":\"missing_name\"}"
+    } else {
+        const runResult = run(@name, @runInput)
+        @result = "{runResult}"
+    }
+}
+
+if @op == "create" {
+    @handled = "true"
+    if !@name {
+        @state = "error"
+        @result = "{\"ok\":false,\"op\":\"create\",\"error\":\"missing_name\"}"
+    } else {
+        rawAction("com.apple.shortcuts.CreateWorkflowAction", {
+            "name": "${@name}",
+            "OpenWhenRun": false
+        })
+        @result = "{\"ok\":true,\"op\":\"create\",\"status\":\"created\"}"
+    }
+}
+
+if @op == "open" {
+    @handled = "true"
+    if !@name {
+        @state = "error"
+        @result = "{\"ok\":false,\"op\":\"open\",\"error\":\"missing_name\"}"
+    } else {
+        rawAction("com.apple.shortcuts.OpenWorkflowAction", {
+            "target": {
+                "title": "${@name}"
+            }
+        })
+        @result = "{\"ok\":true,\"op\":\"open\",\"status\":\"launched\"}"
+    }
+}
+
+if @op == "create_folder" {
+    @handled = "true"
+    if !@folder {
+        @state = "error"
+        @result = "{\"ok\":false,\"op\":\"create_folder\",\"error\":\"missing_folder\"}"
+    } else {
+        rawAction("com.apple.shortcuts.CreateFolderAction", {
+            "name": "${@folder}",
+            "OpenWhenRun": false
+        })
+        @result = "{\"ok\":true,\"op\":\"create_folder\",\"status\":\"created\"}"
+    }
+}
+
+if @op == "rename" || @op == "delete" || @op == "create_link" {
+    @handled = "true"
+    if !@name {
+        @state = "error"
+        @result = "{\"ok\":false,\"error\":\"missing_name\"}"
+    } else {
+        if @op == "delete" && @confirm != "true" {
+            @state = "error"
+            @result = "{\"ok\":false,\"op\":\"delete\",\"error\":\"confirmation_required\"}"
+        } else {
+            @foundEntity = "false"
+            const entities = getShortcuts()
+            for candidate in entities {
+                const candidateName = getShortcutDetail(@candidate, "Name")
+                @candidateNameText = "{candidateName}"
+
+                if @candidateNameText == "{@name}" {
+                    @foundEntity = "true"
+
+                    if @op == "rename" {
+                        if !@newName {
+                            @state = "error"
+                            @result = "{\"ok\":false,\"op\":\"rename\",\"error\":\"missing_new_name\"}"
+                        } else {
+                            rawAction("com.apple.shortcuts.RenameShortcutAction", {
+                                "shortcut": "${@candidate}",
+                                "name": "${@newName}",
+                                "OpenWhenRun": false
+                            })
+                            @result = "{\"ok\":true,\"op\":\"rename\",\"status\":\"updated\"}"
+                        }
+                    }
+
+                    if @op == "create_link" {
+                        const link = createShortcutLink(@candidate)
+                        @result = "{link}"
+                    }
+
+                    if @op == "delete" {
+                        rawAction("com.apple.shortcuts.DeleteWorkflowAction", {
+                            "entities": "${@candidate}"
+                        })
+                        @result = "{\"ok\":true,\"op\":\"delete\",\"status\":\"deleted\"}"
+                    }
+                }
+            }
+
+            if @foundEntity == "false" {
+                @state = "error"
+                @result = "{\"ok\":false,\"error\":\"not_found\"}"
+            }
+        }
+    }
+}
+
+comment('stage/install/edit all mean: fetch a signed artifact and hand it to Apple for native import/replace confirmation.')
+if @op == "stage" || @op == "install" || @op == "edit" {
+    @handled = "true"
+
+    if !@url {
+        @state = "error"
+        @result = "{\"ok\":false,\"error\":\"missing_url\"}"
+    } else {
+        if !@filename {
+            @filename = "harness-staged.shortcut"
+        }
+
+        const downloaded = downloadURL(@url)
+
+        rawAction("is.workflow.actions.documentpicker.save", {
+            "WFFileDestinationPath": "{@filename}",
+            "WFInput": "${downloaded}",
+            "WFSaveFileOverwrite": true,
+            "WFAskWhereToSave": false
+        })
+
+        const staged = getFile("{@filename}")
+        rawAction("is.workflow.actions.openin", {
+            "WFInput": "${staged}",
+            "WFOpenInAskWhenRun": false
+        })
+
+        @result = "{\"ok\":true,\"op\":\"{@op}\",\"status\":\"opened_import\",\"filename\":\"{@filename}\"}"
+    }
+}
+
+if @handled == "false" {
+    @state = "error"
+    @result = "{\"ok\":false,\"error\":\"unsupported_operation\"}"
+}
+
+comment('Remote callers supply callback. Local/manual callers still receive the same result as normal Shortcut output.')
+if @callback {
+    jsonRequest(@callback, "POST", {
+        "state": "{@state}",
+        "result": "{@result}"
+    })
+}
+
+output("{@result}")
