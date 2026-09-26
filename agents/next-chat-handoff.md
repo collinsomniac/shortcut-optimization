@@ -1,6 +1,6 @@
 # Next-chat handoff
 
-Updated: 2026-09-25 UTC.
+Updated: 2026-09-26 UTC.
 
 ## Read first
 
@@ -18,7 +18,7 @@ Do **not** restart from clipboard injection or imported
 
 ### 1. Resident native controller
 
-`shortcuts.control` v0.5
+`shortcuts.control` v0.8
 
 This supersedes `harness.shortcuts.library` as the agent-facing local authority. The older manager remains a compatibility/test fixture only.
 
@@ -27,12 +27,11 @@ Current source: `examples/shortcut-worker/harness.shortcuts.control.cherri`
 Stable signed bootstrap endpoint:
 `https://zpdtlzpvshlpyqbfbzye.supabase.co/functions/v1/shortcut-bootstrap`
 
-Verified response: `application/x-apple-shortcut`, 37,708 bytes,
-SHA-256 `09a47ed3629aa9875e2a9026b563ebed06e232eaac734a51df70f31ff52e0b26`,
-signed workflow name `shortcuts.control`.
+Verified response: `application/x-apple-shortcut`, 37,468 bytes,
+SHA-256 `5128c52f0633df61102d5aa6f805a97629bf02c9c5954b1f16340730556b411e`,
+signed workflow name `shortcuts.control`, version header `0.8`.
 
-v0.5 defaults a no-input first run to `bootstrap`; it finds `probe.echo`,
-uses that Shortcut's Folder entity, and moves itself into the live tools folder.
+v0.8 removes callback networking and self-registration. The resident worker now explicitly routes `shortcuts.control` and `shortcuts.open_url`.
 
 Legacy manager reference:
 
@@ -126,16 +125,13 @@ running without physical desktop presence.
 
 ## Immediate next actions
 
-1. Install/update `shortcuts.control` v0.5 from the immutable compatibility endpoint.
-2. Test controller `ping` with its direct HTTP callback, then `list`.
-3. Use Pushcut notification default-action transport as the reliable one-tap main-phone route; do not route normal controller calls through a-Shell.
-4. Verify `run` against a deterministic echo target.
-5. Exercise disposable create → rename → move_new_folder → delete.
-6. Update/install `harness.shortcuts.stage` v0.2 and verify its callback-before-import handoff.
-7. Test signed replacement/import and execution proof.
-8. Keep zero-touch wake and legacy silent import as separate platform-boundary research.
-9. Separately repair `desktop.exec` leasing for private arbitrary compilation.
-
+1. Complete Apple's Add/Replace confirmation for `shortcuts.control` v0.8 if the sheet is still pending.
+2. Probe `private.shortcut_call('ping', ...)` until the device reports v0.8.
+3. Re-run disposable acceptance in order: create → get → rename → create folder/move → get.
+4. Do not test delete until its native entity serialization is separately grounded and compiled.
+5. Keep `harness.shortcuts.library`, `harness.shortcuts.stage`, and `harness.shortcuts.run` as compatibility/research fixtures, not prerequisites.
+6. Prefer `private.shortcut_call(op, params, ttl)`; controller update handoff is `private.shortcut_install_controller(ttl)`.
+7. Heavy compile/diff/sign work remains on CI/desktop; a-Shell is not on the Shortcuts critical path.
 
 ## Latest device-facing test state — 2026-09-25 UTC
 
@@ -162,7 +158,28 @@ running without physical desktop presence.
 - therefore the remaining one-time native boundary is either:
   1. apply `rpc-worker-zero-touch-bootstrap-prompt.txt` surgically to the
      existing `RPC Worker Harness`, or
-  2. install/run `shortcuts.control` v0.5 once so it moves itself into the
+  2. install/run `shortcuts.control` v0.8 once so it moves itself into the
      existing tools folder.
 - after either path, immediately submit `shortcuts.run` / `shortcuts.control`
   probes and continue create → run → rename → move → delete acceptance tests.
+
+
+### Zero-touch control milestone — 2026-09-26
+
+Verified on the target phone:
+
+- `shortcuts.control` worker branch: working;
+- `ping`: working;
+- `list`: working against the real library;
+- `run probe.echo` with caller-provided input: exact output returned;
+- `shortcuts.open_url`: working and returns `{"opened":true}`;
+- `private.shortcut_call`: working;
+- `private.shortcut_install_controller`: working;
+- stale lease reaper: working.
+
+Installed v0.5 bugs:
+- empty callback causes `Get Contents of URL` / no-URL error;
+- raw create produced `New Shortcut` instead of requested name;
+- raw rename produced an interactive text prompt.
+
+v0.8 fixes callback removal and typed create/rename/folder/move serialization. The v0.8 artifact has been opened on-device but a version probe still reports v0.5, so Apple replacement confirmation remains pending at this handoff.
