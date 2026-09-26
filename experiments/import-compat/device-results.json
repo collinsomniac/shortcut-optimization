@@ -1,0 +1,136 @@
+{
+  "schema_version": "1",
+  "updated_at": "2026-09-25T18:16:00-07:00",
+  "device": "target iPhone / iOS 27",
+  "stages": [
+    "transported",
+    "recognized",
+    "imported",
+    "executed",
+    "verified"
+  ],
+  "fixtures": [
+    {
+      "slug": "known-good-copy-actions",
+      "expected_role": "transport positive control",
+      "transported": null,
+      "recognized": null,
+      "imported": "previously_yes",
+      "executed": null,
+      "verified": null,
+      "notes": "Exact SHA previously imported successfully; retest through new endpoint."
+    },
+    {
+      "slug": "manual-hubsign-probe",
+      "expected_role": "manual plist + HubSign control",
+      "transported": null,
+      "recognized": null,
+      "imported": null,
+      "executed": null,
+      "verified": null,
+      "notes": "Tiny Comment + Show Result."
+    },
+    {
+      "slug": "cherri-basic",
+      "expected_role": "minimal compact Cherri",
+      "transported": null,
+      "recognized": null,
+      "imported": null,
+      "executed": null,
+      "verified": null,
+      "notes": "1 action; static validator exits 1."
+    },
+    {
+      "slug": "cherri-basic-comments",
+      "expected_role": "same semantics with Cherri --comments",
+      "transported": null,
+      "recognized": null,
+      "imported": null,
+      "executed": null,
+      "verified": null,
+      "notes": "37 actions; isolates comment emission."
+    },
+    {
+      "slug": "cherri-inventory",
+      "expected_role": "Get My Shortcuts action family",
+      "transported": null,
+      "recognized": null,
+      "imported": null,
+      "executed": null,
+      "verified": null,
+      "notes": "2 actions; validator exits 1."
+    },
+    {
+      "slug": "cherri-create",
+      "expected_role": "Create Shortcut AppIntent family",
+      "transported": null,
+      "recognized": null,
+      "imported": null,
+      "executed": null,
+      "verified": null,
+      "notes": "3 actions; running would create disposable shell."
+    },
+    {
+      "slug": "cherri-controlflow",
+      "expected_role": "conditional grouping",
+      "transported": null,
+      "recognized": null,
+      "imported": null,
+      "executed": null,
+      "verified": null,
+      "notes": "9 actions."
+    },
+    {
+      "slug": "manager-v03-compact",
+      "expected_role": "production manager compact",
+      "transported": null,
+      "recognized": null,
+      "imported": null,
+      "executed": null,
+      "verified": null,
+      "notes": "134 actions; validator passes."
+    },
+    {
+      "slug": "manager-v03-comments",
+      "expected_role": "production manager comments",
+      "transported": null,
+      "recognized": null,
+      "imported": null,
+      "executed": null,
+      "verified": null,
+      "notes": "176 actions; validator passes."
+    },
+    {
+      "slug": "stager-v01-compact",
+      "expected_role": "stager compact",
+      "transported": null,
+      "recognized": null,
+      "imported": null,
+      "executed": null,
+      "verified": null,
+      "notes": "24 actions; validator exits 1."
+    },
+    {
+      "slug": "stager-v01-comments",
+      "expected_role": "stager comments",
+      "transported": null,
+      "recognized": null,
+      "imported": null,
+      "executed": null,
+      "verified": null,
+      "notes": "115 actions; validator passes."
+    }
+  ],
+  "interpretation_rules": [
+    "#1 transport failure means artifact construction is not under test.",
+    "#1 works and #2 import fails implicates signing/manual artifact acceptance.",
+    "#2 imports and #3 fails implicates Cherri serialization/envelope.",
+    "#3 imports and #4 fails implicates Cherri comment emission/bloat.",
+    "#3/#4 import and #5 fails implicates Get My Shortcuts representation.",
+    "#5 imports and #6 fails implicates Create Shortcut AppIntent serialization.",
+    "#6 imports and #7 fails implicates control-flow grouping.",
+    "#1-#7 import and manager compact fails implicates scale/other action family.",
+    "Manager compact imports but comments build fails implicates comment bloat.",
+    "Manager imports but stager fails implicates document/network action family."
+  ]
+}
