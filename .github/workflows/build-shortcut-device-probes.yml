@@ -52,8 +52,11 @@ jobs:
           fi
           plist="${emitted[0]}"
           python - "$plist" <<'PY'
-          import json, pathlib, sys
+          import json, pathlib, plistlib, sys
           p=pathlib.Path(sys.argv[1])
+          obj=plistlib.loads(p.read_bytes())
+          obj["WFWorkflowIsDisabledOnLockScreen"]=False
+          p.write_bytes(plistlib.dumps(obj,fmt=plistlib.FMT_XML,sort_keys=False))
           pathlib.Path("build/device-primitives/hubsign.json").write_text(
               json.dumps({"shortcutName":"harness.import.probe.v4","shortcut":p.read_text()})
           )
