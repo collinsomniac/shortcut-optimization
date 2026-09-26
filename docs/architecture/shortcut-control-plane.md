@@ -142,3 +142,40 @@ After that, test in this order:
 
 Only after the above passes should these primitives be treated as stable
 building blocks for higher-level agent workflows.
+
+## iOS notification timeout finding — 2026-09-25
+
+The iOS notification banner
+
+`pushcut.wake — Could not run Execute Command — The operation took too long to complete`
+
+does **not** mean the Pushcut wake or native RPC dispatcher failed.
+
+Measured on the target phone:
+
+- a Pushcut wake for `harness.info` leased after roughly 3.5 seconds and the
+  native tool completed in under one second with no user interaction;
+- `probe.echo` likewise completes natively and returns arbitrary JSON/text;
+- requests that enter `shell.exec.simple` can lease successfully and then
+  surface the Execute Command timeout notification.
+
+The failing boundary is a-Shell's `Execute Command` App Intent / app-switch
+lifetime, not the Pushcut notification trigger and not nested Shortcuts in
+general.
+
+a-Shell source confirms two execution paths. Its intent extension treats a
+small allowlist as lightweight commands expected to finish quickly; commands
+outside that set continue in the full app. `openurl` is allowlisted, but its
+implementation schedules URL opening through an app/window delegate, so URL
+handoff is not a reliable completion primitive from the extension. Wrapping
+`openurl` in `python3` forces the full-app path and is especially unsuitable
+for a locked/background wake.
+
+Policy:
+
+- the zero-touch critical path MUST remain pure Shortcuts after Pushcut wake;
+- do not route `shortcuts.*` through a-Shell;
+- a-Shell remains an explicitly requested bounded compute adapter;
+- shell RPC completion is never proof that a URL-handoff Shortcut executed;
+- distinguish `wake_requested`, `leased`, `native_completed`,
+  `handoff_launched`, and application-level `verified`.
