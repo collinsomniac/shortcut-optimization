@@ -1,6 +1,6 @@
 #define name harness.import.probe
 #define color blue
-#define glyph checkmark
+#define glyph wrench
 #define inputs text
 #define outputs text
 #define version 27
