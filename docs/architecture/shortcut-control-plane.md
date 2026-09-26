@@ -29,7 +29,7 @@ commands, HubSign requests, or Pushcut implementation details.
 The controller is the local library authority only. It does not compile or sign
 workflow content and it does not stage files.
 
-Current v0.3 operations:
+Current v0.5 operations:
 
 - `ping`
 - `capabilities`
@@ -156,7 +156,7 @@ are different states. Record the strongest state actually observed.
 
 Install/update these two signed artifacts once:
 
-- `harness.shortcuts.control` v0.3
+- `shortcuts.control` v0.5
 - `harness.shortcuts.stage` v0.2
 
 After that, test in this order:
@@ -211,3 +211,32 @@ Policy:
 - shell RPC completion is never proof that a URL-handoff Shortcut executed;
 - distinguish `wake_requested`, `leased`, `native_completed`,
   `handoff_launched`, and application-level `verified`.
+
+
+## Bootstrap status — 2026-09-25 late evening
+
+Live zero-touch probe request `53bbcd96-cad1-4cf4-b94f-c533f0236e5f`
+proved the current installed worker still returns `tool_not_found` for
+`shortcuts.run`. Wake, lease, and completion all succeeded, so this is a
+router-capability failure rather than a transport failure.
+
+Pushcut Automation Server was also probed using the existing Vault-held account
+secret without exposing it. Pushcut returned HTTP 502 with
+`Automation Server is currently not running on any iOS device linked to this account.`
+Do not make Automation Server a bootstrap dependency for the main phone.
+
+`shortcuts.control` v0.5 is now designed for a one-time native bootstrap:
+
+- its signed workflow name is exactly `shortcuts.control`;
+- it contains no a-Shell dependency;
+- an ordinary first run with no Shortcut Input defaults to `bootstrap`;
+- `bootstrap` finds the installed `probe.echo` entity, gets its Folder entity,
+  and moves `shortcuts.control` into the same live tools folder;
+- after that, the existing folder-scoped dispatcher can discover the controller
+  without another library move.
+
+The preferred long-term bootstrap remains the surgical in-place worker edit in
+`examples/shortcut-worker/rpc-worker-zero-touch-bootstrap-prompt.txt`, adding
+only `shortcuts.open_url` and `shortcuts.run`. Replacing the entire resident
+worker is avoided because the Pushcut automation already references the proven
+worker identity.
