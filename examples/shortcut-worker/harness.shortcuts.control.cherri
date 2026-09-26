@@ -102,7 +102,7 @@ if @op == "create" {
         @result = "error missing_name"
     } else {
         const createdShortcut = makeShortcut(@name, false)
-        const createdName = getShortcutDetail(@createdShortcut, "Name")
+        const createdName = getShortcutDetail(createdShortcut, "Name")
         @createdNameText = "{createdName}"
         if @createdNameText == "{@name}" {
             @result = "ok created {@name}"
