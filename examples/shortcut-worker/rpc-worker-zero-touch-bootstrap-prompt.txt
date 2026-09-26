@@ -1,8 +1,26 @@
-Modify the existing Shortcut named “RPC Worker Harness”. Do not create a second worker. Preserve all existing actions, authentication, request leasing, Pushcut-driven wake behavior, existing method handlers, result completion, and error behavior.
+Modify the existing Shortcut named “RPC Worker Harness”. Do not create a second worker. Preserve every existing action, authentication step, request leasing step, Pushcut wake behavior, existing method handler, result completion path, and unknown-method behavior.
 
-Goal: add exactly two new RPC methods to the existing method router so remote agents can manage Apple Shortcuts natively without a-Shell or user interaction.
+Goal: add exactly two small native RPC branches. Do not rewrite or simplify the rest of the worker.
 
-METHOD 1 — shortcuts.open_url
+METHOD 1 — shortcuts.control
+
+When request.method is exactly:
+shortcuts.control
+
+Behavior:
+1. Take request.params, preserving it as a Dictionary.
+2. Convert request.params to JSON text if the Run Shortcut input requires text.
+3. Use the native Run Shortcut action to run the already-installed Shortcut named exactly:
+   shortcuts.control
+4. Pass that JSON text as Shortcut Input.
+5. Capture the actual output returned by shortcuts.control.
+6. Feed that output into the worker's existing result-completion path for the current request ID.
+7. Do not use a URL, Safari, a-Shell, clipboard, Open App, or UI automation.
+8. If the child Shortcut errors, preserve the existing worker error behavior rather than fabricating success.
+
+This is an explicit known-tool branch. Do not implement a generic arbitrary-name dispatcher as part of this patch.
+
+METHOD 2 — shortcuts.open_url
 
 When request.method is exactly:
 shortcuts.open_url
@@ -11,65 +29,32 @@ Read:
 request.params.url
 
 Behavior:
-1. If url is empty, return a structured error with code missing_url.
-2. Use Apple’s native “Open URLs” action on that URL. Do not use Safari, a-Shell, shell commands, clipboard, or “Open App”.
-3. If execution continues after Open URLs, return a dictionary equivalent to:
-   {
-     "ok": true,
-     "result": {
-       "opened": true,
-       "url": <the requested URL>
-     }
-   }
-4. Feed that result into the worker’s existing completion mechanism using the current request ID.
-5. Do not show notifications, Quick Look, alerts, confirmation prompts, or Ask Each Time.
-
-METHOD 2 — shortcuts.run
-
-When request.method is exactly:
-shortcuts.run
-
-Read:
-request.params.name
-request.params.input
-
-Behavior:
-1. If name is empty, return a structured error with code missing_name.
-2. Use Get My Shortcuts.
-3. Find/filter the returned Shortcuts where Name is exactly request.params.name.
-4. If no Shortcut matches, return a structured error:
-   {
-     "ok": false,
-     "error": {
-       "code": "shortcut_not_found",
-       "name": <requested name>
-     }
-   }
-5. If exactly one Shortcut matches, use the native Run Shortcut action on that Shortcut, passing request.params.input as the Shortcut input.
-6. Return the child Shortcut’s actual output through the worker’s existing completion mechanism.
-7. Do not use a shortcuts:// URL for execution.
-8. Do not open the Shortcuts editor or show any UI.
+1. If url is empty, return the worker's normal structured error with code missing_url.
+2. Use Apple's first-party Open URLs action on that URL.
+3. Do not use Safari, a-Shell, shell commands, clipboard, or Open App.
+4. If execution resumes after Open URLs, return through the existing completion path with an equivalent of:
+   {"opened":true}
+5. Do not treat worker completion as proof that an imported Shortcut registered successfully; registration is verified by a later native inventory/run request.
 
 ROUTING REQUIREMENTS
 
-- Add these branches alongside the existing explicit method branches.
-- Existing methods such as probe.echo, shell.exec.simple, shell.exec, shell.inspect, phone.info, harness.info, linux.exec, and linux.inspect must remain unchanged.
-- Unknown methods must continue to use the existing tool_not_found/unknown-method behavior.
-- Do not alter the worker token or the harness-worker endpoint.
-- Do not alter the iOS Notification automation.
-- Do not alter existing queue lease/completion logic.
-- Do not add a-Shell to either new branch.
+- Add both branches alongside the current explicit method branches.
+- Existing handlers such as probe.echo, shell.exec.simple, shell.exec, shell.inspect, phone.info, harness.info, linux.exec, and linux.inspect must remain unchanged.
+- Unknown methods must continue to return the existing tool_not_found/unknown-method result.
+- Do not alter the worker token, Supabase endpoint, lease/completion logic, Pushcut notification automation, or current request schema.
+- Do not add a-Shell to either branch.
+- Do not move, rename, duplicate, or replace RPC Worker Harness.
 
 LOCKED EXECUTION
 
-Open the Shortcut’s Info/Privacy settings and ensure “Allow Running When Locked” is enabled for RPC Worker Harness.
+Preserve/enable Allow Running When Locked for RPC Worker Harness.
 
 FINAL SELF-CHECK
 
-Before finishing, verify visually in the Shortcut graph that:
-- shortcuts.open_url reaches Apple’s Open URLs action using request.params.url.
-- shortcuts.run resolves an installed Shortcut by exact Name and calls Run Shortcut with request.params.input.
-- both branches return through the same existing request completion path.
-- no existing branch was removed or reordered in a way that changes behavior.
+Before finishing, visually verify:
+- method == shortcuts.control reaches native Run Shortcut -> shortcuts.control with request.params forwarded as JSON input;
+- its child output reaches the same current request completion mechanism used by existing successful handlers;
+- method == shortcuts.open_url reaches native Open URLs using request.params.url;
+- no existing handler or transport action was removed or reordered in a behavior-changing way.
 
-Do not simplify or rewrite the rest of the worker. This is a surgical two-method patch.
+This is a surgical two-branch patch to the existing worker only.
