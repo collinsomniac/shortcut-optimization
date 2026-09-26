@@ -7,12 +7,11 @@
 
 #include 'actions/shortcuts'
 #include 'actions/web'
-#include 'actions/documents'
 #include 'actions/text'
 
-comment('harness.shortcuts.control v0.2 — resident agent control plane.')
-comment('JSON input selects a native local operation. If callback is supplied, the controller POSTs the real device result back to the harness.')
-comment('Compiler/signing remains the content-authoring plane; install/edit stage a signed artifact and leave final import confirmation to Apple.')
+comment('harness.shortcuts.control v0.3 — resident native Shortcuts library authority.')
+comment('Owns library CRUD, execution, organization primitives, and receipts. Content compilation/signing/staging is separate.')
+comment('Input is JSON. If callback is supplied, the controller POSTs the actual device result to the harness.')
 
 const request = getDictionary(ShortcutInput)
 
@@ -22,8 +21,6 @@ const request = getDictionary(ShortcutInput)
 @runInput = "{request['input']}"
 @confirm = "{request['confirm']}"
 @folder = "{request['folder']}"
-@url = "{request['url']}"
-@filename = "{request['filename']}"
 @callback = "{request['callback']}"
 
 @handled = "false"
@@ -34,16 +31,16 @@ if @op == "ping" {
     @handled = "true"
     const pingProof = rawAction("AsheKube.app.a-Shell.ExecuteCommandIntent", {
         "ShowWhenRun": false,
-        "command": "echo harness-shortcuts-control-v0.2-ready > harness.shortcuts.control.proof",
+        "command": "echo harness-shortcuts-control-v0.3-ready > harness.shortcuts.control.proof",
         "keepGoing": false,
         "openWindow": "close"
     })
-    @result = "ok ping harness.shortcuts.control 0.2"
+    @result = "ok ping harness.shortcuts.control 0.3"
 }
 
 if @op == "capabilities" {
     @handled = "true"
-    @result = "ping\ncapabilities\nlist\nget\nrun\ncreate\nopen\ncreate_folder\nrename\ndelete\ncreate_link\nstage\ninstall\nedit\nreceipt:app-group+http"
+    @result = "ping\ncapabilities\nlist\nget\nrun\ncreate\nopen\ncreate_folder\nmove_new_folder\nrename\ndelete\ncreate_link\nreceipt:http+app-group"
 }
 
 if @op == "list" {
@@ -133,6 +130,44 @@ if @op == "create_folder" {
     }
 }
 
+comment('Reliable fully-native organize primitive: make a new folder entity, then move the exact named Shortcut into it.')
+comment('Moving into an already-existing empty folder remains unsupported until we have a name-to-folder-entity resolver.')
+if @op == "move_new_folder" {
+    @handled = "true"
+    if !@name {
+        @state = "error"
+        @result = "error missing_name"
+    } else {
+        if !@folder {
+            @state = "error"
+            @result = "error missing_folder"
+        } else {
+            @foundMoveSource = "false"
+            const moveEntities = getShortcuts()
+            for moveEntity in moveEntities {
+                const moveName = getShortcutDetail(@moveEntity, "Name")
+                @moveNameText = "{moveName}"
+                if @moveNameText == "{@name}" {
+                    @foundMoveSource = "true"
+                    const createdFolder = rawAction("com.apple.shortcuts.CreateFolderAction", {
+                        "name": "${@folder}",
+                        "OpenWhenRun": false
+                    })
+                    rawAction("com.apple.shortcuts.MoveShortcutToFolderAction", {
+                        "shortcuts": "${@moveEntity}",
+                        "folder": "${createdFolder}"
+                    })
+                    @result = "ok moved {@name} -> new_folder {@folder}"
+                }
+            }
+            if @foundMoveSource == "false" {
+                @state = "error"
+                @result = "error not_found"
+            }
+        }
+    }
+}
+
 if @op == "rename" || @op == "delete" || @op == "create_link" {
     @handled = "true"
 
@@ -187,36 +222,6 @@ if @op == "rename" || @op == "delete" || @op == "create_link" {
                 @result = "error not_found"
             }
         }
-    }
-}
-
-if @op == "stage" || @op == "install" || @op == "edit" {
-    @handled = "true"
-
-    if !@url {
-        @state = "error"
-        @result = "error missing_url"
-    } else {
-        if !@filename {
-            @filename = "harness-staged.shortcut"
-        }
-
-        const downloaded = downloadURL(@url)
-
-        rawAction("is.workflow.actions.documentpicker.save", {
-            "WFFileDestinationPath": "{@filename}",
-            "WFInput": "${downloaded}",
-            "WFSaveFileOverwrite": true,
-            "WFAskWhereToSave": false
-        })
-
-        const staged = getFile("{@filename}")
-        rawAction("is.workflow.actions.openin", {
-            "WFInput": "${staged}",
-            "WFOpenInAskWhenRun": false
-        })
-
-        @result = "ok opened_import {@filename}"
     }
 }
 
