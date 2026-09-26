@@ -169,6 +169,8 @@ jobs:
             exit 0
           fi
           git commit -m "test: publish signed Shortcut import compatibility matrix [skip ci]"
+          git fetch origin main
+          git rebase origin/main
           publication_ref="$(git rev-parse HEAD)"
           git push origin HEAD:main
 
@@ -185,6 +187,8 @@ jobs:
           PY
           git add public/shortcut-import-compat/current.json
           git commit -m "test: point Shortcut compatibility endpoint at ${publication_ref} [skip ci]"
+          git fetch origin main
+          git rebase origin/main
           git push origin HEAD:main
 
       - uses: actions/upload-artifact@v4
