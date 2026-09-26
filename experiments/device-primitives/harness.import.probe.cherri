@@ -1,4 +1,4 @@
-#define name harness.import.probe.v3
+#define name harness.import.probe.v4
 #define color blue
 #define glyph wrench
 #define inputs text
@@ -7,19 +7,11 @@
 
 #include 'actions/web'
 
-comment('Device primitive probe v3: proves registration + execution without x-callback or clipboard.')
-comment('Writes a deterministic marker into the a-Shell App Group via its headless Execute Command intent.')
-comment('Optional Shortcut input is a callback URL for a second independent proof channel.')
+comment('Device primitive probe v4: lock-safe registration + execution proof.')
+comment('No a-Shell, no app opening, no UI. Shortcut input is an optional HTTPS callback URL.')
 
 @callback = "{ShortcutInput}"
-@result = "harness-import-probe-v3-executed"
-
-const shellProof = rawAction("AsheKube.app.a-Shell.ExecuteCommandIntent", {
-    "ShowWhenRun": false,
-    "command": "echo harness-import-probe-v3-executed > harness.import.probe.v3.proof",
-    "keepGoing": false,
-    "openWindow": "close"
-})
+@result = "harness-import-probe-v4-executed"
 
 if @callback {
     jsonRequest(@callback, "POST", {
