@@ -4,18 +4,27 @@ Updated: 2026-09-25 UTC.
 
 ## Read first
 
-1. [Current harness architecture](../docs/architecture/current-harness.md)
-2. [Execution boundaries](../docs/architecture/execution-boundaries.md)
-3. [Shortcut Worker status](../docs/implementation/shortcut-worker-status.md)
-4. [Protocol](../examples/shortcut-worker/protocol.json)
-5. [GitHub issue #4](https://github.com/collinsomniac/shortcut-optimization/issues/4)
+1. [Shortcuts control plane](../docs/architecture/shortcut-control-plane.md)
+2. [Current harness architecture](../docs/architecture/current-harness.md)
+3. [Execution boundaries](../docs/architecture/execution-boundaries.md)
+4. [Shortcut Worker status](../docs/implementation/shortcut-worker-status.md)
+5. [Protocol](../examples/shortcut-worker/protocol.json)
+6. [GitHub issue #4](https://github.com/collinsomniac/shortcut-optimization/issues/4)
 
 ## Current preferred path
 
 Do **not** restart from clipboard injection or imported
 `GenerateShortcutAction`.
 
-### 1. Pure-native persistent manager
+### 1. Resident native controller
+
+`harness.shortcuts.control` v0.3
+
+This supersedes `harness.shortcuts.library` as the agent-facing local authority. The older manager remains a compatibility/test fixture only.
+
+Current source: `examples/shortcut-worker/harness.shortcuts.control.cherri`
+
+Legacy manager reference:
 
 `harness.shortcuts.library` v0.3
 
@@ -107,13 +116,15 @@ running without physical desktop presence.
 
 ## Immediate next actions
 
-1. Check latest stager CI.
-2. Make exact v0.3 manager signed artifact available for phone import.
-3. User imports v0.3; test only `capabilities` and `list`.
-4. Test the parameterized runner independently.
-5. Once stager passes, install it and stage a harmless signed Shortcut.
-6. Repair `desktop.exec` leasing; verify VS Code detection/launch.
-7. Update canonical docs/issue after each empirical result.
+1. Install/update `harness.shortcuts.control` v0.3 from the immutable compatibility endpoint.
+2. Test controller `ping` with its direct HTTP callback, then `list`.
+3. Use Pushcut notification default-action transport as the reliable one-tap main-phone route; do not route normal controller calls through a-Shell.
+4. Verify `run` against a deterministic echo target.
+5. Exercise disposable create → rename → move_new_folder → delete.
+6. Update/install `harness.shortcuts.stage` v0.2 and verify its callback-before-import handoff.
+7. Test signed replacement/import and execution proof.
+8. Keep zero-touch wake and legacy silent import as separate platform-boundary research.
+9. Separately repair `desktop.exec` leasing for private arbitrary compilation.
 
 
 ## Latest device-facing test state — 2026-09-25 UTC
