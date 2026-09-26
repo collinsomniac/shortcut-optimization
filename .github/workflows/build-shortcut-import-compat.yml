@@ -118,7 +118,7 @@ jobs:
 
           # Device registration/execution proof. Uses a-Shell's headless Execute Command
           # AppIntent to write a marker into the same App Group used by iphone-main.
-          compile_one experiments/device-primitives/harness.import.probe.cherri device-import-exec-proof "harness.import.probe.v3" compact
+          compile_one experiments/device-primitives/harness.import.probe.cherri device-import-exec-proof "harness.import.probe.v4" compact
 
           # Production-source controls: compact builds plus comment-heavy builds
           # matching the previous CI behavior.
