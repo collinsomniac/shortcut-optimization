@@ -1,0 +1,14 @@
+Create a Shortcut named "SO Runner Echo".
+
+Purpose: deterministic target for testing another Shortcut's Run Shortcut action.
+
+Behavior:
+- Receive Text as Shortcut Input.
+- If no input is provided, use empty text.
+- Stop and Output exactly the received text.
+- Do not show notifications, alerts, Quick Look, or prompts.
+- Do not use Apple Intelligence.
+- Do not make network requests.
+- Do not modify any data.
+
+Keep it as small as possible.
