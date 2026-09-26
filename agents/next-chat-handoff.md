@@ -18,11 +18,21 @@ Do **not** restart from clipboard injection or imported
 
 ### 1. Resident native controller
 
-`harness.shortcuts.control` v0.3
+`shortcuts.control` v0.5
 
 This supersedes `harness.shortcuts.library` as the agent-facing local authority. The older manager remains a compatibility/test fixture only.
 
 Current source: `examples/shortcut-worker/harness.shortcuts.control.cherri`
+
+Stable signed bootstrap endpoint:
+`https://zpdtlzpvshlpyqbfbzye.supabase.co/functions/v1/shortcut-bootstrap`
+
+Verified response: `application/x-apple-shortcut`, 37,708 bytes,
+SHA-256 `09a47ed3629aa9875e2a9026b563ebed06e232eaac734a51df70f31ff52e0b26`,
+signed workflow name `shortcuts.control`.
+
+v0.5 defaults a no-input first run to `bootstrap`; it finds `probe.echo`,
+uses that Shortcut's Folder entity, and moves itself into the live tools folder.
 
 Legacy manager reference:
 
@@ -116,7 +126,7 @@ running without physical desktop presence.
 
 ## Immediate next actions
 
-1. Install/update `harness.shortcuts.control` v0.3 from the immutable compatibility endpoint.
+1. Install/update `shortcuts.control` v0.5 from the immutable compatibility endpoint.
 2. Test controller `ping` with its direct HTTP callback, then `list`.
 3. Use Pushcut notification default-action transport as the reliable one-tap main-phone route; do not route normal controller calls through a-Shell.
 4. Verify `run` against a deterministic echo target.
@@ -140,3 +150,19 @@ running without physical desktop presence.
   installed `probe.echo` with input `RUNNER_PROBE_001`.
 - A native `harness.shortcuts.fetch` builder prompt exists as fallback if
   direct HTTPS attachment delivery behaves inconsistently.
+
+
+### Live bootstrap verification — 2026-09-25 late evening
+
+- zero-touch request `53bbcd96-cad1-4cf4-b94f-c533f0236e5f` proved
+  `shortcuts.run` is still absent from the installed resident worker:
+  wake/lease/completion succeeded and the inner result was `tool_not_found`;
+- Pushcut Automation Server probe returned HTTP 502 because no linked iOS device
+  is currently running Automation Server;
+- therefore the remaining one-time native boundary is either:
+  1. apply `rpc-worker-zero-touch-bootstrap-prompt.txt` surgically to the
+     existing `RPC Worker Harness`, or
+  2. install/run `shortcuts.control` v0.5 once so it moves itself into the
+     existing tools folder.
+- after either path, immediately submit `shortcuts.run` / `shortcuts.control`
+  probes and continue create → run → rename → move → delete acceptance tests.
