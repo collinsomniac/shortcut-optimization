@@ -1,6 +1,6 @@
 {
   "schema_version": "1",
-  "updated_at": "2026-09-25T18:31:00-07:00",
+  "updated_at": "2026-09-25T18:35:30-07:00",
   "device": "target iPhone / iOS 27",
   "stages": [
     "transported",
@@ -53,42 +53,42 @@
     {
       "slug": "cherri-inventory",
       "expected_role": "Get My Shortcuts action family",
-      "transported": null,
+      "transported": "no",
       "recognized": null,
       "imported": null,
       "executed": null,
       "verified": null,
-      "notes": "2 actions; validator exits 1."
+      "notes": "Device request hit shortcut-import-compat v1 during CI republication and returned HTTP 502 artifact_size_mismatch (expected 22083, actual 22081). Publication race; no iOS compatibility inference. Retry after v2 immutable-revision fix."
     },
     {
       "slug": "cherri-create",
       "expected_role": "Create Shortcut AppIntent family",
-      "transported": null,
+      "transported": "no",
       "recognized": null,
       "imported": null,
       "executed": null,
       "verified": null,
-      "notes": "3 actions; running would create disposable shell."
+      "notes": "Device request hit shortcut-import-compat v1 during CI republication and returned HTTP 502 artifact_size_mismatch (expected 22206, actual 22202). Publication race; no iOS compatibility inference. Retry after v2 immutable-revision fix."
     },
     {
       "slug": "cherri-controlflow",
       "expected_role": "conditional grouping",
-      "transported": null,
+      "transported": "no",
       "recognized": null,
       "imported": null,
       "executed": null,
       "verified": null,
-      "notes": "9 actions."
+      "notes": "Device request hit shortcut-import-compat v1 during CI republication and returned HTTP 502 artifact_size_mismatch (expected 22476, actual 22473). Publication race; no iOS compatibility inference. Retry after v2 immutable-revision fix."
     },
     {
       "slug": "manager-v03-compact",
       "expected_role": "production manager compact",
-      "transported": null,
-      "recognized": null,
-      "imported": null,
+      "transported": "yes",
+      "recognized": "yes",
+      "imported": "yes",
       "executed": null,
       "verified": null,
-      "notes": "134 actions; validator passes."
+      "notes": "HTTP 200 served 28169-byte application/x-apple-shortcut at 2026-09-26T01:34:15Z; iOS displayed Add Shortcut and editor opened successfully. Execution not yet tested."
     },
     {
       "slug": "manager-v03-comments",
@@ -103,22 +103,22 @@
     {
       "slug": "stager-v01-compact",
       "expected_role": "stager compact",
-      "transported": null,
-      "recognized": null,
-      "imported": null,
+      "transported": "yes",
+      "recognized": "yes",
+      "imported": "yes",
       "executed": null,
       "verified": null,
-      "notes": "24 actions; validator exits 1."
+      "notes": "HTTP 200 served 23510-byte application/x-apple-shortcut at 2026-09-26T01:34:41Z; iOS displayed Add Shortcut and editor opened successfully. Execution not yet tested."
     },
     {
       "slug": "stager-v01-comments",
       "expected_role": "stager comments",
-      "transported": null,
-      "recognized": null,
-      "imported": null,
+      "transported": "yes",
+      "recognized": "yes",
+      "imported": "yes",
       "executed": null,
       "verified": null,
-      "notes": "115 actions; validator passes."
+      "notes": "HTTP 200 served 26927-byte application/x-apple-shortcut at 2026-09-26T01:35:01Z; iOS displayed Add Shortcut and editor opened successfully with emitted documentation comments. Execution not yet tested."
     }
   ],
   "interpretation_rules": [
@@ -132,5 +132,8 @@
     "#1-#7 import and manager compact fails implicates scale/other action family.",
     "Manager compact imports but comments build fails implicates comment bloat.",
     "Manager imports but stager fails implicates document/network action family."
+  ],
+  "infrastructure_findings": [
+    "2026-09-25 18:33-18:34 MST: updating device-results.json triggered the compatibility build because the workflow watched experiments/import-compat/**. HubSign re-signing changed artifact bytes while raw GitHub main briefly exposed a mixed old-manifest/new-artifact view. shortcut-import-compat v2 now resolves current.json to an immutable Git commit and fetches both manifest and artifact from that revision; workflow trigger narrowed to experiments/import-compat/*.cherri."
   ]
 }
