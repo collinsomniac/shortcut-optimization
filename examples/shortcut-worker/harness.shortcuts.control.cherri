@@ -9,7 +9,7 @@
 #include 'actions/web'
 #include 'actions/text'
 
-comment('shortcuts.control v0.4 — resident native Shortcuts library authority.')
+comment('shortcuts.control v0.5 — resident native Shortcuts library authority.')
 comment('Pure Shortcuts: no a-Shell, no long-running worker process, no UI automation.')
 comment('Input is JSON. If callback is supplied, the controller POSTs the actual device result to the harness.')
 comment('bootstrap moves this Shortcut beside probe.echo so the existing folder-driven dispatcher can discover it.')
@@ -17,6 +17,11 @@ comment('bootstrap moves this Shortcut beside probe.echo so the existing folder-
 const request = getDictionary(ShortcutInput)
 
 @op = "{request['op']}"
+
+comment('First-run bootstrap: an ordinary no-input run self-registers into the live tools folder.')
+if !@op {
+    @op = "bootstrap"
+}
 @name = "{request['name']}"
 @newName = "{request['new_name']}"
 @runInput = "{request['input']}"
@@ -30,7 +35,7 @@ const request = getDictionary(ShortcutInput)
 
 if @op == "ping" {
     @handled = "true"
-    @result = "ok ping shortcuts.control 0.4"
+    @result = "ok ping shortcuts.control 0.5"
 }
 
 if @op == "capabilities" {
