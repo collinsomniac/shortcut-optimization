@@ -55,7 +55,7 @@ jobs:
           import json, pathlib, sys
           p=pathlib.Path(sys.argv[1])
           pathlib.Path("build/device-primitives/hubsign.json").write_text(
-              json.dumps({"shortcutName":"harness.import.probe.v3","shortcut":p.read_text()})
+              json.dumps({"shortcutName":"harness.import.probe.v4","shortcut":p.read_text()})
           )
           PY
           curl --fail --silent --show-error --location             -H 'Content-Type: application/json'             -H 'User-Agent: Cherri/shortcut-optimization-device-probe'             --data-binary @build/device-primitives/hubsign.json             https://hubsign.routinehub.services/sign             --output public/shortcut-device-probes/harness.import.probe.shortcut
@@ -71,7 +71,7 @@ jobs:
                 "filename":p.name,
                 "bytes":len(b),
                 "sha256":hashlib.sha256(b).hexdigest(),
-                "shortcut_name":"harness.import.probe.v3"
+                "shortcut_name":"harness.import.probe.v4"
               },indent=2)+"\n"
           )
           PY
