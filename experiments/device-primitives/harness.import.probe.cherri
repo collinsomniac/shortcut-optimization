@@ -8,7 +8,7 @@
 #include 'actions/web'
 
 comment('Device primitive probe v4: lock-safe registration + execution proof.')
-comment('No a-Shell, no app opening, no UI. Shortcut input is an optional HTTPS callback URL.')
+comment('No a-Shell, no app opening, no UI. Shortcut input is an optional HTTPS callback URL; v4 canonical probe.')
 
 @callback = "{ShortcutInput}"
 @result = "harness-import-probe-v4-executed"
