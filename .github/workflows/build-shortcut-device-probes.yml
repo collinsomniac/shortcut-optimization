@@ -85,4 +85,6 @@ jobs:
           git add public/shortcut-device-probes
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "test: publish signed Shortcut device probe [skip ci]"
+          git fetch origin main
+          git rebase origin/main
           git push origin HEAD:main
