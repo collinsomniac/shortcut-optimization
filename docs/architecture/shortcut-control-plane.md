@@ -56,33 +56,65 @@ import surface. Receipt is deliberately sent before the foreground transition.
 
 ## Transport modes
 
-### Interactive main-phone transport
+### Zero-touch main-phone transport
 
-A Pushcut notification may carry a default action that directly runs
-`harness.shortcuts.control` with the JSON request. This requires one user tap
-but avoids a-Shell entirely.
+Zero-touch wake is empirically proven on the user's main iPhone:
 
-### a-Shell launch adapter
+```
+Supabase pending RPC
+→ Pushcut Harness Wake notification
+→ iOS 27 Notification automation
+→ RPC Worker Harness
+→ lease request
+→ execute
+→ complete to Supabase
+```
 
-The existing `iphone-main` worker can launch a `shortcuts://` URL, but iOS
-may suspend a-Shell immediately after the foreground switch. Therefore:
+The iOS automation is Pushcut, no notification filters, Run Immediately, with
+Allow Running When Locked enabled. This is not Pushcut Automation Server.
 
-- never wait for `openurl` as the operation result;
-- never treat `shell.exec.simple` completion as Shortcut execution proof;
-- the controller/stager callback owns completion;
-- callback consumption may close the suspended launch request and return the
-  worker to idle.
+Fresh `probe.echo` tests complete without a tap while the user remains in
+another app.
 
-### Zero-touch wake
+### Native Shortcuts bridge
 
-Not yet solved on the user's main iPhone. The configured Pushcut webhook is a
-notification webhook, not an Automation Server endpoint. Pushcut Automation
-Server provides unattended execution but is designed around a dedicated iOS
-device running the server.
+The current worker router is explicit/hardcoded. The minimal bootstrap patch is:
 
-The legacy `shortcuts://import-shortcut?...&silent=true` route remains an
-experimental compatibility path. Current tests were confounded by the wake/app
-suspension boundary and do not yet prove either success or rejection on iOS 27.
+- `shortcuts.open_url(url)` → first-party Open URLs;
+- `shortcuts.run(name,input)` → Get My Shortcuts + exact-name native Run Shortcut.
+
+After those two methods exist, signed registration and execution stay entirely
+inside Shortcuts. The worker does not need a-Shell for Shortcuts control.
+
+### a-Shell boundary
+
+a-Shell remains useful for terminating shell computation only. Controlled
+no-wake tests show that a-Shell `openurl` does not reliably re-enter the
+Shortcuts worker, even when opening:
+
+- `shortcuts://run-shortcut?name=RPC Worker Harness`;
+- an HTTPS page that immediately redirects to that Shortcuts URL.
+
+Do not use a-Shell, Safari, or x-callback as the Shortcuts registration or
+execution bridge.
+
+### Registration path
+
+The preferred registration primitive is the native Shortcuts URL importer,
+opened from inside the already-running Shortcuts worker:
+
+```
+shortcuts://import-shortcut?url=<signed-artifact-url>&silent=true
+```
+
+Current Apple documentation still describes x-callback completion after a
+Shortcut is imported, and iOS 27 binaries retain the signed Shortcut import
+engine. The final empirical gate is invoking this route from the native worker,
+rather than through a-Shell.
+
+Agent-built workflows are signed with
+`WFWorkflowIsDisabledOnLockScreen = false`, so imported tools are immediately
+eligible for locked execution.
 
 ## Native content boundary
 
