@@ -1,8 +1,10 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
-const RAW_BASE =
-  "https://raw.githubusercontent.com/collinsomniac/shortcut-optimization/main/public/shortcut-import-compat";
-const MANIFEST_URL = `${RAW_BASE}/manifest.json`;
+const REPO_RAW_ROOT =
+  "https://raw.githubusercontent.com/collinsomniac/shortcut-optimization";
+const PUBLIC_PATH = "public/shortcut-import-compat";
+const POINTER_URL = `${REPO_RAW_ROOT}/main/${PUBLIC_PATH}/current.json`;
+const SHA40 = /^[0-9a-f]{40}$/;
 
 type Fixture = {
   slug: string;
@@ -12,6 +14,11 @@ type Fixture = {
   name?: string;
   mode?: string;
   action_count?: number;
+};
+
+type PublicationPointer = {
+  schema_version?: string;
+  ref?: string;
 };
 
 function json(body: unknown, status = 200) {
@@ -35,6 +42,15 @@ function safeFilename(value: string): string {
   return value.replace(/[\\/:*?"<>|\r\n]+/g, "_").slice(0, 180);
 }
 
+async function fetchNoCache(url: string): Promise<Response> {
+  return await fetch(url, {
+    headers: {
+      "cache-control": "no-cache",
+      "user-agent": "shortcut-optimization-import-compat/2",
+    },
+  });
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method !== "GET") {
     return json({ ok: false, error: "method_not_allowed" }, 405);
@@ -45,14 +61,61 @@ Deno.serve(async (req: Request) => {
     return json({ ok: false, error: "missing_name" }, 400);
   }
 
-  let manifestResponse: Response;
+  let pointerResponse: Response;
   try {
-    manifestResponse = await fetch(MANIFEST_URL, {
-      headers: { "cache-control": "no-cache" },
-    });
+    pointerResponse = await fetchNoCache(POINTER_URL);
   } catch (error) {
     return json(
-      { ok: false, error: "manifest_fetch_failed", detail: String(error) },
+      { ok: false, error: "publication_pointer_fetch_failed", detail: String(error) },
+      502,
+    );
+  }
+
+  if (!pointerResponse.ok) {
+    return json(
+      {
+        ok: false,
+        error: "publication_pointer_unavailable",
+        status: pointerResponse.status,
+      },
+      503,
+    );
+  }
+
+  let pointer: PublicationPointer;
+  try {
+    pointer = await pointerResponse.json();
+  } catch (error) {
+    return json(
+      { ok: false, error: "publication_pointer_invalid_json", detail: String(error) },
+      502,
+    );
+  }
+
+  const revision = pointer?.ref ?? "";
+  if (!SHA40.test(revision)) {
+    return json(
+      { ok: false, error: "publication_pointer_invalid_ref" },
+      502,
+    );
+  }
+
+  // Pin the manifest and artifact to one immutable Git commit. A stale pointer
+  // remains safe because it still identifies a self-consistent publication.
+  const rawBase = `${REPO_RAW_ROOT}/${revision}/${PUBLIC_PATH}`;
+  const manifestURL = `${rawBase}/manifest.json`;
+
+  let manifestResponse: Response;
+  try {
+    manifestResponse = await fetchNoCache(manifestURL);
+  } catch (error) {
+    return json(
+      {
+        ok: false,
+        error: "manifest_fetch_failed",
+        revision,
+        detail: String(error),
+      },
       502,
     );
   }
@@ -62,6 +125,7 @@ Deno.serve(async (req: Request) => {
       {
         ok: false,
         error: "manifest_unavailable",
+        revision,
         status: manifestResponse.status,
       },
       503,
@@ -79,22 +143,22 @@ Deno.serve(async (req: Request) => {
       {
         ok: false,
         error: "unknown_public_fixture",
+        revision,
         allowed: fixtures.map((item) => item.slug),
       },
       404,
     );
   }
 
-  const artifactURL = `${RAW_BASE}/${encodeURIComponent(fixture.filename)}`;
-  const artifactResponse = await fetch(artifactURL, {
-    headers: { "cache-control": "no-cache" },
-  });
+  const artifactURL = `${rawBase}/${encodeURIComponent(fixture.filename)}`;
+  const artifactResponse = await fetchNoCache(artifactURL);
 
   if (!artifactResponse.ok) {
     return json(
       {
         ok: false,
         error: "artifact_fetch_failed",
+        revision,
         status: artifactResponse.status,
       },
       502,
@@ -107,7 +171,13 @@ Deno.serve(async (req: Request) => {
     : "";
   if (magic !== "AEA1") {
     return json(
-      { ok: false, error: "invalid_artifact_magic", magic, bytes: bytes.length },
+      {
+        ok: false,
+        error: "invalid_artifact_magic",
+        revision,
+        magic,
+        bytes: bytes.length,
+      },
       502,
     );
   }
@@ -117,6 +187,7 @@ Deno.serve(async (req: Request) => {
       {
         ok: false,
         error: "artifact_size_mismatch",
+        revision,
         expected: fixture.bytes,
         actual: bytes.length,
       },
@@ -130,6 +201,7 @@ Deno.serve(async (req: Request) => {
       {
         ok: false,
         error: "artifact_hash_mismatch",
+        revision,
         expected: fixture.sha256,
         actual: sha256,
       },
@@ -147,6 +219,7 @@ Deno.serve(async (req: Request) => {
       "x-shortcut-fixture": fixture.slug,
       "x-shortcut-build-mode": fixture.mode ?? "external-control",
       "x-shortcut-action-count": String(fixture.action_count ?? ""),
+      "x-shortcut-revision": revision,
     },
   });
 });
