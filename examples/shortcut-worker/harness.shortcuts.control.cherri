@@ -13,7 +13,16 @@ action v18.1 'com.apple.shortcuts.RenameShortcutAction' renameShortcutNative(
     text name: 'name'
 ): variable
 
-comment('shortcuts.control v0.7 — resident native Shortcuts library authority.')
+action v18.1 'com.apple.shortcuts.CreateFolderAction' createShortcutFolderNative(
+    text name: 'name'
+): variable
+
+action v18.1 'com.apple.shortcuts.MoveShortcutToFolderAction' moveShortcutToFolderNative(
+    variable shortcuts: 'shortcuts',
+    variable folder: 'folder'
+): variable
+
+comment('shortcuts.control v0.8 — resident native Shortcuts library authority.')
 comment('Pure Shortcuts: no a-Shell, no long-running worker process, no UI automation.')
 
 comment('No-input runs are harmless diagnostics. Normal remote calls pass a JSON request through RPC Worker Harness.')
@@ -43,7 +52,7 @@ if ShortcutInput {
 
 if @op == "ping" {
     @handled = "true"
-    @result = "ok ping shortcuts.control 0.7"
+    @result = "ok ping shortcuts.control 0.8"
 }
 
 if @op == "capabilities" {
@@ -134,10 +143,7 @@ if @op == "create_folder" {
         @state = "error"
         @result = "error missing_folder"
     } else {
-        rawAction("com.apple.shortcuts.CreateFolderAction", {
-            "name": "${@folder}",
-            "OpenWhenRun": false
-        })
+        const createdFolder = createShortcutFolderNative(@folder)
         @result = "ok folder_created {@folder}"
     }
 }
@@ -159,15 +165,16 @@ if @op == "move_new_folder" {
                 @moveNameText = "{moveName}"
                 if @moveNameText == "{@name}" {
                     @foundMoveSource = "true"
-                    const createdFolder = rawAction("com.apple.shortcuts.CreateFolderAction", {
-                        "name": "${@folder}",
-                        "OpenWhenRun": false
-                    })
-                    rawAction("com.apple.shortcuts.MoveShortcutToFolderAction", {
-                        "shortcuts": "${@moveEntity}",
-                        "folder": "${createdFolder}"
-                    })
-                    @result = "ok moved {@name} -> new_folder {@folder}"
+                    const createdFolder = createShortcutFolderNative(@folder)
+                    const movedShortcut = moveShortcutToFolderNative(@moveEntity, createdFolder)
+                    const movedFolder = getShortcutDetail(@moveEntity, "Folder")
+                    @movedFolderText = "{movedFolder}"
+                    if @movedFolderText == "{@folder}" {
+                        @result = "ok moved {@name} -> new_folder {@folder}"
+                    } else {
+                        @state = "error"
+                        @result = "error move_folder_mismatch expected={@folder} actual={movedFolder}"
+                    }
                 }
             }
             if @foundMoveSource == "false" {
