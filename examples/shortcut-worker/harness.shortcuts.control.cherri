@@ -6,35 +6,30 @@
 #define version 27
 
 #include 'actions/shortcuts'
-#include 'actions/web'
 #include 'actions/text'
 
-comment('shortcuts.control v0.5 — resident native Shortcuts library authority.')
+comment('shortcuts.control v0.6 — resident native Shortcuts library authority.')
 comment('Pure Shortcuts: no a-Shell, no long-running worker process, no UI automation.')
-comment('Input is JSON. If callback is supplied, the controller POSTs the actual device result to the harness.')
-comment('bootstrap moves this Shortcut beside probe.echo so the existing folder-driven dispatcher can discover it.')
 
-comment('First-run bootstrap: an ordinary no-input run self-registers into the live tools folder.')
-@op = "bootstrap"
+comment('No-input runs are harmless diagnostics. Normal remote calls pass a JSON request through RPC Worker Harness.')
+@op = "ping"
 @name = ""
 @newName = ""
 @runInput = ""
 @confirm = ""
 @folder = ""
-@callback = ""
 
 if ShortcutInput {
     const request = getDictionary(ShortcutInput)
     @op = "{request['op']}"
     if !@op {
-        @op = "bootstrap"
+        @op = "ping"
     }
     @name = "{request['name']}"
     @newName = "{request['new_name']}"
     @runInput = "{request['input']}"
     @confirm = "{request['confirm']}"
     @folder = "{request['folder']}"
-    @callback = "{request['callback']}"
 }
 
 @handled = "false"
@@ -43,53 +38,12 @@ if ShortcutInput {
 
 if @op == "ping" {
     @handled = "true"
-    @result = "ok ping shortcuts.control 0.5"
+    @result = "ok ping shortcuts.control 0.6"
 }
 
 if @op == "capabilities" {
     @handled = "true"
-    @result = "bootstrap\nping\ncapabilities\nlist\nget\nrun\ncreate\nopen\ncreate_folder\nmove_new_folder\nrename\ndelete\ncreate_link\nreceipt:http"
-}
-
-comment('Bootstrap: use probe.echo as a known resident member of the live tools folder.')
-if @op == "bootstrap" {
-    @handled = "true"
-    @foundSelf = "false"
-    @foundAnchor = "false"
-
-    const bootstrapEntities = getShortcuts()
-
-    for bootstrapEntity in bootstrapEntities {
-        const bootstrapName = getShortcutDetail(@bootstrapEntity, "Name")
-        @bootstrapNameText = "{bootstrapName}"
-
-        if @bootstrapNameText == "shortcuts.control" {
-            @foundSelf = "true"
-            @selfEntity = @bootstrapEntity
-        }
-
-        if @bootstrapNameText == "probe.echo" {
-            @foundAnchor = "true"
-            @anchorEntity = @bootstrapEntity
-        }
-    }
-
-    if @foundSelf == "false" {
-        @state = "error"
-        @result = "error bootstrap_self_not_found"
-    } else {
-        if @foundAnchor == "false" {
-            @state = "error"
-            @result = "error bootstrap_anchor_not_found"
-        } else {
-            const toolsFolder = getShortcutDetail(@anchorEntity, "Folder")
-            rawAction("com.apple.shortcuts.MoveShortcutToFolderAction", {
-                "shortcuts": "${@selfEntity}",
-                "folder": "${toolsFolder}"
-            })
-            @result = "ok bootstrapped shortcuts.control beside probe.echo"
-        }
-    }
+    @result = "ping\ncapabilities\nlist\nget\nrun\ncreate\nopen\ncreate_folder\nmove_new_folder\nrename\ndelete\ncreate_link"
 }
 
 if @op == "list" {
@@ -275,13 +229,6 @@ if @op == "rename" || @op == "delete" || @op == "create_link" {
 if @handled == "false" {
     @state = "error"
     @result = "error unsupported_operation"
-}
-
-if @callback {
-    jsonRequest(@callback, "POST", {
-        "state": "{@state}",
-        "result": "{@result}"
-    })
 }
 
 output("{@result}")
