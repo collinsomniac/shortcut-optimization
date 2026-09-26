@@ -54,6 +54,7 @@ jobs:
             slug="$2"
             name="$3"
             mode="${4:-compact}"
+            allow_locked="${5:-false}"
             marker="$(mktemp)"
             touch "$marker"
 
@@ -82,6 +83,9 @@ jobs:
             echo "generated_plist=$generated"
             test -s "$generated"
             python tooling/normalize_shortcuts_appintents.py "$generated" "build/import-compat/$slug.plist"
+            if [ "$allow_locked" = "true" ]; then
+              python -c 'import pathlib,plistlib,sys; p=pathlib.Path(sys.argv[1]); o=plistlib.loads(p.read_bytes()); o["WFWorkflowIsDisabledOnLockScreen"]=False; p.write_bytes(plistlib.dumps(o,fmt=plistlib.FMT_XML,sort_keys=False))' "build/import-compat/$slug.plist"
+            fi
             set +e
             python tooling/validate_shortcuts_playground_runtime.py \
               .vendor/shortcuts-playground/codex/skills/shortcuts-playground/scripts/validate_shortcut.py \
@@ -114,18 +118,18 @@ jobs:
           compile_one experiments/import-compat/cherri-controlflow.cherri cherri-controlflow "SO Compat 5 - Cherri Control Flow" compact
 
           # Resident device controller: one installed Shortcut for agent-facing local control.
-          compile_one examples/shortcut-worker/harness.shortcuts.control.cherri harness.shortcuts.control "shortcuts.control" compact
+          compile_one examples/shortcut-worker/harness.shortcuts.control.cherri harness.shortcuts.control "harness.shortcuts.control" compact true
 
           # Device registration/execution proof. Uses a-Shell's headless Execute Command
           # AppIntent to write a marker into the same App Group used by iphone-main.
-          compile_one experiments/device-primitives/harness.import.probe.cherri device-import-exec-proof "harness.import.probe.v4" compact
+          compile_one experiments/device-primitives/harness.import.probe.cherri device-import-exec-proof "harness.import.probe.v4" compact true
 
           # Production-source controls: compact builds plus comment-heavy builds
           # matching the previous CI behavior.
           compile_one examples/shortcut-worker/harness.shortcuts.library.cherri manager-v03-compact "harness.shortcuts.library" compact
           compile_one examples/shortcut-worker/harness.shortcuts.library.cherri manager-v03-comments "harness.shortcuts.library" comments
-          compile_one examples/shortcut-worker/harness.shortcuts.stage.cherri stager-v01-compact "harness.shortcuts.stage" compact
-          compile_one examples/shortcut-worker/harness.shortcuts.stage.cherri stager-v01-comments "harness.shortcuts.stage" comments
+          compile_one examples/shortcut-worker/harness.shortcuts.stage.cherri stager-v01-compact "harness.shortcuts.stage" compact true
+          compile_one examples/shortcut-worker/harness.shortcuts.stage.cherri stager-v01-comments "harness.shortcuts.stage" comments true
 
           # Preserve the exact previously successful delivery/signing control.
           curl --fail --silent --show-error --location \
