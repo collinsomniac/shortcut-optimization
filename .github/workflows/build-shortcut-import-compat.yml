@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'experiments/import-compat/**'
+      - 'experiments/import-compat/*.cherri'
       - 'examples/shortcut-worker/harness.shortcuts.library.cherri'
       - 'examples/shortcut-worker/harness.shortcuts.stage.cherri'
       - '.github/workflows/build-shortcut-import-compat.yml'
@@ -152,14 +152,35 @@ jobs:
 
       - name: Commit signed public compatibility fixtures
         run: |
+          set -euo pipefail
           git config user.name "shortcut-optimization-ci"
           git config user.email "shortcut-optimization-ci@users.noreply.github.com"
+
+          # Publish the manifest and signed artifacts together first.
+          # current.json intentionally remains on the previous revision until
+          # this commit is durable on main.
           git add public/shortcut-import-compat
           if git diff --cached --quiet; then
             echo "No fixture changes"
             exit 0
           fi
           git commit -m "test: publish signed Shortcut import compatibility matrix [skip ci]"
+          publication_ref="$(git rev-parse HEAD)"
+          git push origin HEAD:main
+
+          # Flip one tiny pointer only after the immutable publication commit
+          # exists. Readers may see the old or new pointer, but either points
+          # at a self-consistent manifest + artifact set.
+          python - "$publication_ref" <<'PY'
+          import json, pathlib, sys
+          ref = sys.argv[1]
+          if len(ref) != 40 or any(c not in "0123456789abcdef" for c in ref):
+              raise SystemExit(f"invalid publication ref: {ref!r}")
+          path = pathlib.Path("public/shortcut-import-compat/current.json")
+          path.write_text(json.dumps({"schema_version":"1","ref":ref}, indent=2) + "\n")
+          PY
+          git add public/shortcut-import-compat/current.json
+          git commit -m "test: point Shortcut compatibility endpoint at ${publication_ref} [skip ci]"
           git push origin HEAD:main
 
       - uses: actions/upload-artifact@v4
