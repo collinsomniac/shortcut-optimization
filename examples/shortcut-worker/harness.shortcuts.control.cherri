@@ -10,7 +10,7 @@
 #include 'actions/documents'
 #include 'actions/text'
 
-comment('harness.shortcuts.control v0.1 — resident agent control plane.')
+comment('harness.shortcuts.control v0.2 — resident agent control plane.')
 comment('JSON input selects a native local operation. If callback is supplied, the controller POSTs the real device result back to the harness.')
 comment('Compiler/signing remains the content-authoring plane; install/edit stage a signed artifact and leave final import confirmation to Apple.')
 
@@ -32,12 +32,18 @@ const request = getDictionary(ShortcutInput)
 
 if @op == "ping" {
     @handled = "true"
-    @result = "ok ping harness.shortcuts.control 0.1"
+    const pingProof = rawAction("AsheKube.app.a-Shell.ExecuteCommandIntent", {
+        "ShowWhenRun": false,
+        "command": "echo harness-shortcuts-control-v0.2-ready > harness.shortcuts.control.proof",
+        "keepGoing": false,
+        "openWindow": "close"
+    })
+    @result = "ok ping harness.shortcuts.control 0.2"
 }
 
 if @op == "capabilities" {
     @handled = "true"
-    @result = "ping\ncapabilities\nlist\nget\nrun\ncreate\nopen\ncreate_folder\nrename\ndelete\ncreate_link\nstage\ninstall\nedit"
+    @result = "ping\ncapabilities\nlist\nget\nrun\ncreate\nopen\ncreate_folder\nrename\ndelete\ncreate_link\nstage\ninstall\nedit\nreceipt:app-group+http"
 }
 
 if @op == "list" {
