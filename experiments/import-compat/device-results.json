@@ -1,6 +1,6 @@
 {
   "schema_version": "1",
-  "updated_at": "2026-09-25T18:16:00-07:00",
+  "updated_at": "2026-09-25T18:31:00-07:00",
   "device": "target iPhone / iOS 27",
   "stages": [
     "transported",
@@ -13,42 +13,42 @@
     {
       "slug": "known-good-copy-actions",
       "expected_role": "transport positive control",
-      "transported": null,
-      "recognized": null,
-      "imported": "previously_yes",
+      "transported": "yes",
+      "recognized": "yes",
+      "imported": "yes",
       "executed": null,
       "verified": null,
-      "notes": "Exact SHA previously imported successfully; retest through new endpoint."
+      "notes": "Retested through shortcut-import-compat endpoint: iOS recognized and imported the exact previously known-good artifact; editor opened successfully."
     },
     {
       "slug": "manual-hubsign-probe",
       "expected_role": "manual plist + HubSign control",
-      "transported": null,
-      "recognized": null,
-      "imported": null,
+      "transported": "yes",
+      "recognized": "yes",
+      "imported": "yes",
       "executed": null,
       "verified": null,
-      "notes": "Tiny Comment + Show Result."
+      "notes": "Manual plist + HubSign artifact transported, was recognized by iOS, imported, and opened in the Shortcuts editor with expected Comment + Show actions."
     },
     {
       "slug": "cherri-basic",
       "expected_role": "minimal compact Cherri",
-      "transported": null,
-      "recognized": null,
-      "imported": null,
+      "transported": "yes",
+      "recognized": "yes",
+      "imported": "yes",
       "executed": null,
       "verified": null,
-      "notes": "1 action; static validator exits 1."
+      "notes": "Minimal compact Cherri artifact transported, was recognized by iOS, imported, and opened in the editor with the expected single Show action."
     },
     {
       "slug": "cherri-basic-comments",
       "expected_role": "same semantics with Cherri --comments",
-      "transported": null,
-      "recognized": null,
-      "imported": null,
+      "transported": "yes",
+      "recognized": "yes",
+      "imported": "yes",
       "executed": null,
       "verified": null,
-      "notes": "37 actions; isolates comment emission."
+      "notes": "Same Cherri source built with --comments transported, was recognized by iOS, imported, and opened in the editor with emitted documentation Comment actions plus the expected Show action."
     },
     {
       "slug": "cherri-inventory",
