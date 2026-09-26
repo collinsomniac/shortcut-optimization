@@ -1,0 +1,50 @@
+Create a Shortcut named "harness.shortcuts.run.v2".
+
+Purpose: a small reusable dispatcher for running any already-installed Shortcut by exact name.
+
+Important implementation requirement:
+Do NOT rely on anonymous Magic Variables named "Dictionary Value". Immediately save each parsed value into an explicitly named Set Variable action so later actions cannot bind to the wrong dictionary lookup.
+
+Input:
+- Receive Text as Shortcut Input.
+- Parse Shortcut Input as a Dictionary.
+- Read key "name".
+- Immediately Set Variable named "Target Shortcut Name" to that value.
+- Read key "input".
+- Immediately Set Variable named "Target Shortcut Input" to that value.
+
+Behavior:
+1. If "Target Shortcut Name" has no value, Stop and Output:
+   {"ok":false,"error":"missing_name"}
+
+2. Get My Shortcuts / Get Shortcuts from All Shortcuts.
+
+3. Filter that Shortcut collection where:
+   Name is exactly "Target Shortcut Name".
+   Do not use fuzzy matching.
+   Limit to 2 results if the Filter action supports a limit.
+
+4. Count the filtered items.
+   - If Count is 0, Stop and Output:
+     {"ok":false,"error":"not_found"}
+   - If Count is greater than 1, Stop and Output:
+     {"ok":false,"error":"ambiguous_name"}
+
+5. Get First Item from the filtered Shortcut list.
+
+6. Run that Shortcut object.
+   - Pass "Target Shortcut Input" as the target Shortcut's input.
+   - If "Target Shortcut Input" has no value, pass empty text.
+
+7. Stop and Output the Run Shortcut result directly.
+
+Constraints:
+- No Apple Intelligence or model actions after creation.
+- No network requests.
+- No user prompts.
+- No notifications.
+- Do not create, rename, edit, or delete Shortcuts.
+- Do not open the target Shortcut in the editor.
+- Keep the graph deterministic and as small as possible.
+- The resulting Shortcut must be reusable with a different JSON target on every invocation.
+
