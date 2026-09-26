@@ -114,7 +114,7 @@ jobs:
           compile_one experiments/import-compat/cherri-controlflow.cherri cherri-controlflow "SO Compat 5 - Cherri Control Flow" compact
 
           # Resident device controller: one installed Shortcut for agent-facing local control.
-          compile_one examples/shortcut-worker/harness.shortcuts.control.cherri harness.shortcuts.control "harness.shortcuts.control" compact
+          compile_one examples/shortcut-worker/harness.shortcuts.control.cherri harness.shortcuts.control "shortcuts.control" compact
 
           # Device registration/execution proof. Uses a-Shell's headless Execute Command
           # AppIntent to write a marker into the same App Group used by iphone-main.
