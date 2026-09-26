@@ -1,5 +1,7 @@
 # Shortcut Worker implementation status
 
+> **Current canonical path (2026-09-25 evening):** use [Shortcuts control plane](../architecture/shortcut-control-plane.md). `harness.shortcuts.control` v0.3 is now the resident agent-facing library authority; `harness.shortcuts.stage` v0.2 is the content handoff. `harness.shortcuts.library` remains compatibility evidence, not the preferred API.
+
 Updated: 2026-09-25 UTC.
 
 ## Current architecture
