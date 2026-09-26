@@ -165,8 +165,8 @@ if @op == "move_new_folder" {
                 @moveNameText = "{moveName}"
                 if @moveNameText == "{@name}" {
                     @foundMoveSource = "true"
-                    const createdFolder = createShortcutFolderNative(@folder)
-                    const movedShortcut = moveShortcutToFolderNative(@moveEntity, createdFolder)
+                    const moveCreatedFolder = createShortcutFolderNative(@folder)
+                    const movedShortcut = moveShortcutToFolderNative(@moveEntity, moveCreatedFolder)
                     const movedFolder = getShortcutDetail(@moveEntity, "Folder")
                     @movedFolderText = "{movedFolder}"
                     if @movedFolderText == "{@folder}" {
