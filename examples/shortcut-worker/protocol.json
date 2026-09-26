@@ -1,5 +1,5 @@
 {
-  "protocol": "shortcut-worker/0.4-draft",
+  "protocol": "shortcut-worker/0.5-live",
   "persistence_model": {
     "canonical_folder": "harness.shortcuts",
     "generated_folder": "Agent Generated",
@@ -8,10 +8,14 @@
     "mutation_conflict_policy": "expected_version/hash required when available"
   },
   "transport": {
-    "job_facade": "public.submit_shortcut_job(operation, params, ttl)",
+    "job_facade": "private.shortcut_call(op, params, ttl)",
+    "controller_update_facade": "private.shortcut_install_controller(ttl)",
     "worker": "iphone-main",
     "dispatch_method": "shortcuts.control",
-    "current_live_note": "Semantic protocol is ahead of the live phone dispatcher. Core target is a pure-native persistent manager plus separate artifact stager/compiler. Do not claim a method is routable until device verification succeeds."
+    "handoff_method": "shortcuts.open_url",
+    "wake": "Pushcut notification automation -> RPC Worker Harness",
+    "status": "device_verified_zero_touch",
+    "note": "Agents should normally call the private shortcut facade rather than raw rpc_submit. a-Shell is not on the Shortcuts critical path."
   },
   "methods": {
     "shortcuts.capabilities": {
@@ -27,7 +31,8 @@
       "backend": [
         "Get My Shortcuts"
       ],
-      "lifecycle": "persistent"
+      "lifecycle": "persistent",
+      "status": "device_verified"
     },
     "shortcuts.ensure": {
       "effect": "reversible_write",
@@ -45,7 +50,8 @@
         "Create Shortcut"
       ],
       "lifecycle": "persistent",
-      "note": "Create Shortcut creates a persistent empty/native Shortcut shell by name; it is not a general arbitrary action-graph installer."
+      "note": "Create Shortcut creates a persistent empty/native Shortcut shell by name; it is not a general arbitrary action-graph installer.",
+      "status": "typed_fix_v08_pending_device_acceptance"
     },
     "shortcuts.generate": {
       "effect": "reversible_write",
@@ -61,7 +67,8 @@
       "backend": [
         "inventory",
         "artifact compiler"
-      ]
+      ],
+      "status": "route_verified"
     },
     "shortcuts.snapshot": {
       "effect": "read",
@@ -101,7 +108,8 @@
         "Run Shortcut",
         "Pushcut"
       ],
-      "verify_receipt": true
+      "verify_receipt": true,
+      "status": "device_verified_input_output"
     },
     "shortcuts.open": {
       "effect": "ui_handoff",
@@ -113,19 +121,22 @@
       "effect": "reversible_write",
       "backend": [
         "Rename Shortcut"
-      ]
+      ],
+      "status": "typed_fix_v08_pending_device_acceptance"
     },
     "shortcuts.move": {
       "effect": "reversible_write",
       "backend": [
         "Move Shortcut"
-      ]
+      ],
+      "status": "typed_fix_v08_pending_device_acceptance"
     },
     "shortcuts.folder.create": {
       "effect": "reversible_write",
       "backend": [
         "Create Folder"
-      ]
+      ],
+      "status": "typed_fix_v08_pending_device_acceptance"
     },
     "shortcuts.folder.open": {
       "effect": "ui_handoff",
@@ -169,10 +180,10 @@
       "effect": "reversible_write",
       "backend": [
         "signed artifact",
-        "harness.shortcuts.stage",
+        "private.shortcut_install_controller",
         "Apple native import confirmation"
       ],
-      "status": "stager_under_validation",
+      "status": "native_handoff_verified_confirmation_required",
       "note": "Public iOS import remains user-confirmed; do not claim silent install into the Shortcuts database."
     },
     "shortcuts.delete": {
@@ -180,7 +191,8 @@
       "backend": [
         "Delete Shortcuts"
       ],
-      "requires": "confirm=true"
+      "requires": "confirm=true and device-verified controller implementation",
+      "status": "hold_unverified_entity_serialization"
     },
     "shortcuts.export_to_worker": {
       "effect": "read",
@@ -194,11 +206,10 @@
     "shortcuts.dispatch": {
       "effect": "runtime",
       "backend": [
-        "harness.shortcuts.run",
-        "harness.shortcuts.library"
+        "RPC Worker Harness -> shortcuts.control"
       ],
       "semantics": "Parameterized execution of an already-installed Shortcut by exact name with optional input; no generation/signing per run.",
-      "status": "runner_prompt_ready_not_device_verified"
+      "status": "superseded_by_shortcuts.control"
     },
     "shortcuts.stage": {
       "effect": "ui_handoff",
@@ -206,7 +217,7 @@
         "harness.shortcuts.stage"
       ],
       "semantics": "Download a signed .shortcut artifact on-device, save it into the Shortcuts/Files container, and open it for Apple's native Add Shortcut confirmation.",
-      "status": "compiler_build_under_validation"
+      "status": "compatibility_only"
     }
   },
   "result_statuses": [
@@ -226,5 +237,33 @@
     "unsupported",
     "failed",
     "cancelled"
-  ]
+  ],
+  "live_controller": {
+    "installed_version": "0.5",
+    "available_version": "0.8",
+    "stable_artifact_url": "https://zpdtlzpvshlpyqbfbzye.supabase.co/functions/v1/shortcut-bootstrap",
+    "available_artifact_sha256": "5128c52f0633df61102d5aa6f805a97629bf02c9c5954b1f16340730556b411e",
+    "verified": [
+      "ping",
+      "list",
+      "run"
+    ],
+    "route_verified": [
+      "get"
+    ],
+    "pending_v08_acceptance": [
+      "create",
+      "rename",
+      "create_folder",
+      "move_new_folder"
+    ],
+    "hold_until_verified": [
+      "delete"
+    ],
+    "compatibility_only": [
+      "harness.shortcuts.library",
+      "harness.shortcuts.stage",
+      "harness.shortcuts.run"
+    ]
+  }
 }
