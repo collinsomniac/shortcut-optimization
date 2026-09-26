@@ -8,16 +8,22 @@
 #include 'actions/web'
 #include 'actions/documents'
 
-comment('harness.shortcuts.stage v0.1 — stage a signed .shortcut artifact for native import.')
-comment('Input JSON: {"url":"https://...","filename":"name.shortcut"}.')
-comment('Downloads and saves the file, then opens it. Apple still owns the Add Shortcut confirmation.')
+comment('harness.shortcuts.stage v0.2 — content-plane handoff for a signed .shortcut artifact.')
+comment('Input JSON: url, filename, optional callback. Downloads and saves the file, posts staged receipt, then opens Apple native import.')
 
 const request = getDictionary(ShortcutInput)
 @url = "{request['url']}"
 @filename = "{request['filename']}"
+@callback = "{request['callback']}"
 
 if !@url {
-    output('{"ok":false,"error":"missing_url"}')
+    if @callback {
+        jsonRequest(@callback, "POST", {
+            "state": "error",
+            "result": "error missing_url"
+        })
+    }
+    output("error missing_url")
 }
 
 if !@filename {
@@ -33,10 +39,17 @@ rawAction("is.workflow.actions.documentpicker.save", {
     "WFAskWhereToSave": false
 })
 
+if @callback {
+    jsonRequest(@callback, "POST", {
+        "state": "success",
+        "result": "ok staged {@filename}; opening native import"
+    })
+}
+
 const staged = getFile("{@filename}")
 rawAction("is.workflow.actions.openin", {
     "WFInput": "${staged}",
     "WFOpenInAskWhenRun": false
 })
 
-output('{"ok":true,"status":"opened_import","filename":"{@filename}"}')
+output("ok opened_import {@filename}")
