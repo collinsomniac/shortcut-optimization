@@ -1,0 +1,88 @@
+name: Build Shortcut device probes
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'experiments/device-primitives/*.cherri'
+      - '.github/workflows/build-shortcut-device-probes.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: shortcut-device-probes
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/checkout@v4
+        with:
+          repository: electrikmilk/cherri
+          ref: d96eee9c7768649d441df0166b68a7e3c742690c
+          path: .vendor/cherri
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.x'
+
+      - name: Compile and sign import probe
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/device-primitives public/shortcut-device-probes
+          marker="$(mktemp)"
+          touch "$marker"
+          (
+            cd .vendor/cherri
+            go run . "$GITHUB_WORKSPACE/experiments/device-primitives/harness.import.probe.cherri"               --debug --skip-sign --no-ansi               --output "$GITHUB_WORKSPACE/build/device-primitives/harness.import.probe.shortcut"
+          )
+          mapfile -t emitted < <(
+            find "$GITHUB_WORKSPACE" -type f -name '*.plist' -newer "$marker"               ! -path '*/.vendor/*' -print
+          )
+          rm -f "$marker"
+          if [ "${#emitted[@]}" -ne 1 ]; then
+            printf 'Expected one emitted plist, found %s\n' "${#emitted[@]}"
+            printf '  %s\n' "${emitted[@]:-<none>}"
+            exit 1
+          fi
+          plist="${emitted[0]}"
+          python - "$plist" <<'PY'
+          import json, pathlib, sys
+          p=pathlib.Path(sys.argv[1])
+          pathlib.Path("build/device-primitives/hubsign.json").write_text(
+              json.dumps({"shortcutName":"harness.import.probe","shortcut":p.read_text()})
+          )
+          PY
+          curl --fail --silent --show-error --location             -H 'Content-Type: application/json'             -H 'User-Agent: Cherri/shortcut-optimization-device-probe'             --data-binary @build/device-primitives/hubsign.json             https://hubsign.routinehub.services/sign             --output public/shortcut-device-probes/harness.import.probe.shortcut
+          python - <<'PY'
+          import hashlib,json,pathlib
+          p=pathlib.Path("public/shortcut-device-probes/harness.import.probe.shortcut")
+          b=p.read_bytes()
+          if b[:4] != b"AEA1":
+              raise SystemExit(f"expected AEA1, got {b[:16]!r}")
+          pathlib.Path("public/shortcut-device-probes/manifest.json").write_text(
+              json.dumps({
+                "schema_version":"1",
+                "filename":p.name,
+                "bytes":len(b),
+                "sha256":hashlib.sha256(b).hexdigest(),
+                "shortcut_name":"harness.import.probe"
+              },indent=2)+"\n"
+          )
+          PY
+
+      - name: Publish signed probe
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "shortcut-optimization-ci"
+          git config user.email "shortcut-optimization-ci@users.noreply.github.com"
+          git add public/shortcut-device-probes
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "test: publish signed Shortcut device probe [skip ci]"
+          git push origin HEAD:main
