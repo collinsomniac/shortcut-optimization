@@ -8,7 +8,12 @@
 #include 'actions/shortcuts'
 #include 'actions/text'
 
-comment('shortcuts.control v0.6 — resident native Shortcuts library authority.')
+action v18.1 'com.apple.shortcuts.RenameShortcutAction' renameShortcutNative(
+    variable shortcut: 'shortcut',
+    text name: 'name'
+): variable
+
+comment('shortcuts.control v0.7 — resident native Shortcuts library authority.')
 comment('Pure Shortcuts: no a-Shell, no long-running worker process, no UI automation.')
 
 comment('No-input runs are harmless diagnostics. Normal remote calls pass a JSON request through RPC Worker Harness.')
@@ -38,7 +43,7 @@ if ShortcutInput {
 
 if @op == "ping" {
     @handled = "true"
-    @result = "ok ping shortcuts.control 0.6"
+    @result = "ok ping shortcuts.control 0.7"
 }
 
 if @op == "capabilities" {
@@ -96,11 +101,15 @@ if @op == "create" {
         @state = "error"
         @result = "error missing_name"
     } else {
-        rawAction("com.apple.shortcuts.CreateWorkflowAction", {
-            "name": "${@name}",
-            "OpenWhenRun": false
-        })
-        @result = "ok created {@name}"
+        const createdShortcut = makeShortcut(@name, false)
+        const createdName = getShortcutDetail(@createdShortcut, "Name")
+        @createdNameText = "{createdName}"
+        if @createdNameText == "{@name}" {
+            @result = "ok created {@name}"
+        } else {
+            @state = "error"
+            @result = "error create_name_mismatch requested={@name} actual={createdName}"
+        }
     }
 }
 
@@ -195,12 +204,15 @@ if @op == "rename" || @op == "delete" || @op == "create_link" {
                             @state = "error"
                             @result = "error missing_new_name"
                         } else {
-                            rawAction("com.apple.shortcuts.RenameShortcutAction", {
-                                "shortcut": "${@entity}",
-                                "name": "${@newName}",
-                                "OpenWhenRun": false
-                            })
-                            @result = "ok renamed {@name} -> {@newName}"
+                            const renamedShortcut = renameShortcutNative(@entity, @newName)
+                            const renamedName = getShortcutDetail(@entity, "Name")
+                            @renamedNameText = "{renamedName}"
+                            if @renamedNameText == "{@newName}" {
+                                @result = "ok renamed {@name} -> {@newName}"
+                            } else {
+                                @state = "error"
+                                @result = "error rename_name_mismatch expected={@newName} actual={renamedName}"
+                            }
                         }
                     }
 
