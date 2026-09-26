@@ -14,20 +14,28 @@ comment('Pure Shortcuts: no a-Shell, no long-running worker process, no UI autom
 comment('Input is JSON. If callback is supplied, the controller POSTs the actual device result to the harness.')
 comment('bootstrap moves this Shortcut beside probe.echo so the existing folder-driven dispatcher can discover it.')
 
-const request = getDictionary(ShortcutInput)
-
-@op = "{request['op']}"
-
 comment('First-run bootstrap: an ordinary no-input run self-registers into the live tools folder.')
-if !@op {
-    @op = "bootstrap"
+@op = "bootstrap"
+@name = ""
+@newName = ""
+@runInput = ""
+@confirm = ""
+@folder = ""
+@callback = ""
+
+if ShortcutInput {
+    const request = getDictionary(ShortcutInput)
+    @op = "{request['op']}"
+    if !@op {
+        @op = "bootstrap"
+    }
+    @name = "{request['name']}"
+    @newName = "{request['new_name']}"
+    @runInput = "{request['input']}"
+    @confirm = "{request['confirm']}"
+    @folder = "{request['folder']}"
+    @callback = "{request['callback']}"
 }
-@name = "{request['name']}"
-@newName = "{request['new_name']}"
-@runInput = "{request['input']}"
-@confirm = "{request['confirm']}"
-@folder = "{request['folder']}"
-@callback = "{request['callback']}"
 
 @handled = "false"
 @state = "success"
