@@ -1,0 +1,62 @@
+name: Diagnose Shortcut controller build
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'examples/shortcut-worker/harness.shortcuts.control.cherri'
+      - '.github/workflows/diagnose-shortcut-controller.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: shortcut-controller-diagnostic
+  cancel-in-progress: true
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/checkout@v4
+        with:
+          repository: electrikmilk/cherri
+          ref: d96eee9c7768649d441df0166b68a7e3c742690c
+          path: .vendor/cherri
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.x'
+
+      - name: Compile controller and capture diagnostics
+        id: compile
+        shell: bash
+        run: |
+          set +e
+          mkdir -p build/controller experiments/controller-build
+          (
+            cd .vendor/cherri
+            go run . "$GITHUB_WORKSPACE/examples/shortcut-worker/harness.shortcuts.control.cherri"               --debug --skip-sign --no-ansi               --output "$GITHUB_WORKSPACE/build/controller/harness.shortcuts.control.shortcut"
+          ) >experiments/controller-build/latest.log 2>&1
+          code=$?
+          set -e
+          printf '{"exit_code":%s,"commit":"%s"}\n' "$code" "$GITHUB_SHA"             > experiments/controller-build/status.json
+          cat experiments/controller-build/latest.log
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+
+      - name: Commit diagnostic result
+        if: always()
+        shell: bash
+        run: |
+          git config user.name "shortcut-optimization-ci"
+          git config user.email "shortcut-optimization-ci@users.noreply.github.com"
+          git add experiments/controller-build/latest.log experiments/controller-build/status.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "test: record Shortcut controller compiler diagnostic [skip ci]"
+          git push origin HEAD:main
+
+      - name: Fail after publishing diagnostics
+        if: steps.compile.outputs.exit_code != '0'
+        run: exit 1
