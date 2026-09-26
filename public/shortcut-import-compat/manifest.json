@@ -4,8 +4,8 @@
     {
       "slug": "cherri-basic-comments",
       "filename": "cherri-basic-comments.shortcut",
-      "bytes": 23416,
-      "sha256": "bac5ae9051ff4651139fbd0e94aecf3b3c54fc45cfbc222e8c9eca6a6ce7b50f",
+      "bytes": 23415,
+      "sha256": "b3c12fd1686c0c6f10084541cecec65482d990bd251bd1d6b092142642dccb10",
       "name": "SO Compat 2B - Cherri Basic Comments",
       "mode": "comments",
       "action_count": 37,
@@ -14,8 +14,8 @@
     {
       "slug": "cherri-basic",
       "filename": "cherri-basic.shortcut",
-      "bytes": 21923,
-      "sha256": "a22c45bde7c50b075c218b43a0f265a740ca17fa580aa43d11d7502b285bc09d",
+      "bytes": 21924,
+      "sha256": "1acb93bb1646b7ddd03ed01902b47b64ee7eb52f42ac6ed3d916364978ba29da",
       "name": "SO Compat 2 - Cherri Basic",
       "mode": "compact",
       "action_count": 1,
@@ -24,8 +24,8 @@
     {
       "slug": "cherri-controlflow",
       "filename": "cherri-controlflow.shortcut",
-      "bytes": 22474,
-      "sha256": "0937688573b377877894743d79ed57c75559f6f9f0c057a2ff0185db9a7b1e38",
+      "bytes": 22472,
+      "sha256": "4bee2b97166e2c87307bd2d951f768bceb0a7f9bfd21b59406914db610752089",
       "name": "SO Compat 5 - Cherri Control Flow",
       "mode": "compact",
       "action_count": 9,
@@ -35,7 +35,7 @@
       "slug": "cherri-create",
       "filename": "cherri-create.shortcut",
       "bytes": 22204,
-      "sha256": "7d43ea56620f6479549952721f8809b5227981a8b95c099da5ab70531067e8d4",
+      "sha256": "af6d6207df7ac64dfc7497694101ce525729e323dc434593d8f93d64c7b0294e",
       "name": "SO Compat 4 - Cherri Create",
       "mode": "compact",
       "action_count": 3,
@@ -45,7 +45,7 @@
       "slug": "cherri-inventory",
       "filename": "cherri-inventory.shortcut",
       "bytes": 22081,
-      "sha256": "dff6807ea6bc727e6747cde3c7c744bbf50d25f85432033f21fbba07b57cd669",
+      "sha256": "b241ceca069520958bb96127620b7bc9e79485e31d909ad6f15461944867d2f0",
       "name": "SO Compat 3 - Cherri Inventory",
       "mode": "compact",
       "action_count": 2,
@@ -54,8 +54,8 @@
     {
       "slug": "device-import-exec-proof",
       "filename": "device-import-exec-proof.shortcut",
-      "bytes": 23057,
-      "sha256": "4f1696baebbe171b915a2029274163bf480b4a28b993e25938a3dd77c33c4e58",
+      "bytes": 23052,
+      "sha256": "e3ce53ff1e46761c8729c78eaeb73c24b37179269240e794fb34e8cf812831cc",
       "name": "harness.import.probe.v3",
       "mode": "compact",
       "action_count": 14,
@@ -64,11 +64,11 @@
     {
       "slug": "harness.shortcuts.control",
       "filename": "harness.shortcuts.control.shortcut",
-      "bytes": 35018,
-      "sha256": "43b984b1af00643924f96c425c23b64a994c0718f645818f536bebea051d5df3",
+      "bytes": 35633,
+      "sha256": "e50c8110c36340f7abc1ef31bd46fbad93fee8e24ee1955fb4fd29a9b04be16f",
       "name": "harness.shortcuts.control",
       "mode": "compact",
-      "action_count": 278,
+      "action_count": 299,
       "validator_exit": 1
     },
     {
@@ -80,8 +80,8 @@
     {
       "slug": "manager-v03-comments",
       "filename": "manager-v03-comments.shortcut",
-      "bytes": 29813,
-      "sha256": "0f13cb8be7159d5099fc7059298d62fd50f10e3b1497a5a05862bfe820d971f0",
+      "bytes": 29805,
+      "sha256": "b333d6c1e169f67226e132b4adc1ae4dcd45feec15883cb3272221a89fb0d4cd",
       "name": "harness.shortcuts.library",
       "mode": "comments",
       "action_count": 176,
@@ -90,8 +90,8 @@
     {
       "slug": "manager-v03-compact",
       "filename": "manager-v03-compact.shortcut",
-      "bytes": 28155,
-      "sha256": "42e5f4f81e82b3dab9b04a293ef94619410897bc4a8bc2152e0e0a2c44e7126e",
+      "bytes": 28160,
+      "sha256": "e501320160896925bb05ce41a4379fd6714b05bbed8e7fc517e5b89788e6aff3",
       "name": "harness.shortcuts.library",
       "mode": "compact",
       "action_count": 134,
@@ -106,21 +106,21 @@
     {
       "slug": "stager-v01-comments",
       "filename": "stager-v01-comments.shortcut",
-      "bytes": 26930,
-      "sha256": "49b81d0ecd8850068ce6a3b2d87ae1988cca841c9d498f48def0a15af3af09df",
+      "bytes": 27686,
+      "sha256": "b6cb670b86ee4f0d51f10157b414ed6708381f0803d554c66c3588884104bd0c",
       "name": "harness.shortcuts.stage",
       "mode": "comments",
-      "action_count": 115,
+      "action_count": 126,
       "validator_exit": 0
     },
     {
       "slug": "stager-v01-compact",
       "filename": "stager-v01-compact.shortcut",
-      "bytes": 23506,
-      "sha256": "541a03d4bd02e0e2fda4d2ec38d113aa04088a88ffaa41c2ab8d3ab1f5fa0ba1",
+      "bytes": 24198,
+      "sha256": "df77fab4bce46d1bae1be645c3bdc8c9724c4909fd5ae85e859ec8cb6ff09b21",
       "name": "harness.shortcuts.stage",
       "mode": "compact",
-      "action_count": 24,
+      "action_count": 35,
       "validator_exit": 1
     }
   ]
