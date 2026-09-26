@@ -1,4 +1,4 @@
-#define name harness.shortcuts.control
+#define name shortcuts.control
 #define color blue
 #define glyph wrench
 #define inputs text
@@ -9,9 +9,10 @@
 #include 'actions/web'
 #include 'actions/text'
 
-comment('harness.shortcuts.control v0.3 — resident native Shortcuts library authority.')
-comment('Owns library CRUD, execution, organization primitives, and receipts. Content compilation/signing/staging is separate.')
+comment('shortcuts.control v0.4 — resident native Shortcuts library authority.')
+comment('Pure Shortcuts: no a-Shell, no long-running worker process, no UI automation.')
 comment('Input is JSON. If callback is supplied, the controller POSTs the actual device result to the harness.')
+comment('bootstrap moves this Shortcut beside probe.echo so the existing folder-driven dispatcher can discover it.')
 
 const request = getDictionary(ShortcutInput)
 
@@ -29,18 +30,53 @@ const request = getDictionary(ShortcutInput)
 
 if @op == "ping" {
     @handled = "true"
-    const pingProof = rawAction("AsheKube.app.a-Shell.ExecuteCommandIntent", {
-        "ShowWhenRun": false,
-        "command": "echo harness-shortcuts-control-v0.3-ready > harness.shortcuts.control.proof",
-        "keepGoing": false,
-        "openWindow": "close"
-    })
-    @result = "ok ping harness.shortcuts.control 0.3"
+    @result = "ok ping shortcuts.control 0.4"
 }
 
 if @op == "capabilities" {
     @handled = "true"
-    @result = "ping\ncapabilities\nlist\nget\nrun\ncreate\nopen\ncreate_folder\nmove_new_folder\nrename\ndelete\ncreate_link\nreceipt:http+app-group"
+    @result = "bootstrap\nping\ncapabilities\nlist\nget\nrun\ncreate\nopen\ncreate_folder\nmove_new_folder\nrename\ndelete\ncreate_link\nreceipt:http"
+}
+
+comment('Bootstrap: use probe.echo as a known resident member of the live tools folder.')
+if @op == "bootstrap" {
+    @handled = "true"
+    @foundSelf = "false"
+    @foundAnchor = "false"
+
+    const bootstrapEntities = getShortcuts()
+
+    for bootstrapEntity in bootstrapEntities {
+        const bootstrapName = getShortcutDetail(@bootstrapEntity, "Name")
+        @bootstrapNameText = "{bootstrapName}"
+
+        if @bootstrapNameText == "shortcuts.control" {
+            @foundSelf = "true"
+            @selfEntity = @bootstrapEntity
+        }
+
+        if @bootstrapNameText == "probe.echo" {
+            @foundAnchor = "true"
+            @anchorEntity = @bootstrapEntity
+        }
+    }
+
+    if @foundSelf == "false" {
+        @state = "error"
+        @result = "error bootstrap_self_not_found"
+    } else {
+        if @foundAnchor == "false" {
+            @state = "error"
+            @result = "error bootstrap_anchor_not_found"
+        } else {
+            const toolsFolder = getShortcutDetail(@anchorEntity, "Folder")
+            rawAction("com.apple.shortcuts.MoveShortcutToFolderAction", {
+                "shortcuts": "${@selfEntity}",
+                "folder": "${toolsFolder}"
+            })
+            @result = "ok bootstrapped shortcuts.control beside probe.echo"
+        }
+    }
 }
 
 if @op == "list" {
@@ -130,8 +166,6 @@ if @op == "create_folder" {
     }
 }
 
-comment('Reliable fully-native organize primitive: make a new folder entity, then move the exact named Shortcut into it.')
-comment('Moving into an already-existing empty folder remains unsupported until we have a name-to-folder-entity resolver.')
 if @op == "move_new_folder" {
     @handled = "true"
     if !@name {
