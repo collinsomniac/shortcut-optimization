@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
   "filename": "harness.import.probe.shortcut",
-  "bytes": 22773,
-  "sha256": "dd5bf9fad697b4d187a6c26000a73d67c29c643903480d988c233862097c223f",
+  "bytes": 22790,
+  "sha256": "6f9fefa05528d116dd4559890438d77e6337cff7c5d73676923b0cac83a2f511",
   "shortcut_name": "harness.import.probe.v4"
 }
