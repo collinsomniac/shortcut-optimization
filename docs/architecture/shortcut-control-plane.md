@@ -1,6 +1,6 @@
 # Shortcuts control plane
 
-Updated: 2026-09-25.
+Updated: 2026-09-26.
 
 This is the canonical agent-facing model for Shortcuts. Agents should reason in
 terms of primitives below, not helper Shortcut filenames, URL schemes, a-Shell
@@ -13,23 +13,23 @@ commands, HubSign requests, or Pushcut implementation details.
 | Author | `shortcuts.generate` | Cherri / deterministic plist construction | working |
 | Compile | `shortcuts.compile` | pinned Cherri → XML plist / unsigned shortcut | working |
 | Sign | `shortcuts.sign` | `shortcuts.artifacts` + HubSign + SHA-256 cache | working |
-| Transfer | `shortcuts.stage` | HTTPS signed artifact → `harness.shortcuts.stage` | working build; device v0.2 update pending |
-| Register | `shortcuts.install` | Apple native signed import | manual confirmation proven; legacy silent import under test |
-| Inspect | `shortcuts.list/get` | resident `harness.shortcuts.control` | working build; device install pending |
-| Execute | `shortcuts.run` | resident controller → Run Shortcut | working build; callback verification pending |
-| Manage | `shortcuts.create/rename/delete/link` | first-party Shortcuts App Intents | working build; device execution pending |
-| Organize | `shortcuts.create_folder/move_new_folder` | Create Folder + Move Shortcut | working build; device execution pending |
+| Transfer | `shortcuts.install` | stable signed artifact URL → native `shortcuts.open_url` | device verified handoff |
+| Register | `shortcuts.install` | Apple native signed import/replace | user confirmation boundary |
+| Inspect | `shortcuts.list/get` | resident `shortcuts.control` | list verified; get route verified |
+| Execute | `shortcuts.run` | resident controller → Run Shortcut | device verified input/output |
+| Manage | `shortcuts.create/rename/link` | first-party Shortcuts App Intents | create/rename typed fixes in v0.8; device acceptance pending |
+| Organize | `shortcuts.create_folder/move_new_folder` | typed Create Folder + Move Shortcut | v0.8 compiled/signed; device acceptance pending |
 | Edit content | `shortcuts.edit` | generate a replacement signed artifact, then import/replace | compiler path working; registration boundary remains |
 | Verify | receipt/callback | controller/stager HTTP POST → `shortcuts.callbacks` | broker implemented; device proof pending |
 
 ## Resident device components
 
-### `harness.shortcuts.control`
+### `shortcuts.control`
 
 The controller is the local library authority only. It does not compile or sign
 workflow content and it does not stage files.
 
-Current v0.5 operations:
+Current v0.8 operations:
 
 - `ping`
 - `capabilities`
@@ -44,9 +44,7 @@ Current v0.5 operations:
 - `delete` (requires `confirm=true`)
 - `create_link`
 
-The controller accepts JSON text and optionally a `callback` URL. Remote calls
-must include that callback. The Shortcut itself POSTs the device result; do not
-use shell-process completion or x-callback as execution proof.
+The controller accepts JSON text from the resident RPC worker and returns its result directly to the worker. v0.8 removes the old callback dependency entirely; the worker result is the canonical completion path. The installed v0.5 build still needs a callback as a compatibility workaround until v0.8 replaces it.
 
 ### `harness.shortcuts.stage`
 
@@ -78,13 +76,12 @@ another app.
 
 ### Native Shortcuts bridge
 
-The current worker router is explicit/hardcoded. The minimal bootstrap patch is:
+The live worker router now has two verified explicit native branches:
 
-- `shortcuts.open_url(url)` → first-party Open URLs;
-- `shortcuts.run(name,input)` → Get My Shortcuts + exact-name native Run Shortcut.
+- `shortcuts.control` → Run the installed `shortcuts.control` with JSON request input and return its child output through normal RPC completion;
+- `shortcuts.open_url(url)` → first-party Open URLs, used for signed artifact handoff.
 
-After those two methods exist, signed registration and execution stay entirely
-inside Shortcuts. The worker does not need a-Shell for Shortcuts control.
+Both have completed zero-touch on the target phone. Normal agents should use the server-side facade `private.shortcut_call(op, params, ttl)`; controller updates use `private.shortcut_install_controller(ttl)`. The worker does not need a-Shell for Shortcuts control.
 
 ### a-Shell boundary
 
@@ -100,21 +97,20 @@ execution bridge.
 
 ### Registration path
 
-The preferred registration primitive is the native Shortcuts URL importer,
-opened from inside the already-running Shortcuts worker:
+The verified registration handoff is:
 
 ```
-shortcuts://import-shortcut?url=<signed-artifact-url>&silent=true
+signed artifact
+→ stable HTTPS endpoint
+→ native worker `shortcuts.open_url`
+→ Apple's Add/Replace Shortcut surface
+→ user confirmation
+→ native inventory/version verification
 ```
 
-Current Apple documentation still describes x-callback completion after a
-Shortcut is imported, and iOS 27 binaries retain the signed Shortcut import
-engine. The final empirical gate is invoking this route from the native worker,
-rather than through a-Shell.
+Do not treat `opened=true` as installation proof. Legacy `silent=true` import attempts did not produce a reliable registered result on the target iOS 27 phone, so silent import is not a core dependency.
 
-Agent-built workflows are signed with
-`WFWorkflowIsDisabledOnLockScreen = false`, so imported tools are immediately
-eligible for locked execution.
+Agent-built workflows are signed with `WFWorkflowIsDisabledOnLockScreen = false`, so imported tools are eligible for locked execution after registration.
 
 ## Native content boundary
 
@@ -154,10 +150,17 @@ are different states. Record the strongest state actually observed.
 
 ## Current bootstrap target
 
-Install/update these two signed artifacts once:
+The only core resident artifact is now `shortcuts.control` v0.8.
 
-- `shortcuts.control` v0.5
-- `harness.shortcuts.stage` v0.2
+Stable endpoint:
+
+`https://zpdtlzpvshlpyqbfbzye.supabase.co/functions/v1/shortcut-bootstrap`
+
+Expected v0.8 SHA-256:
+
+`5128c52f0633df61102d5aa6f805a97629bf02c9c5954b1f16340730556b411e`
+
+`harness.shortcuts.stage` remains compatibility/research tooling rather than a prerequisite.
 
 After that, test in this order:
 
@@ -240,3 +243,30 @@ The preferred long-term bootstrap remains the surgical in-place worker edit in
 only `shortcuts.open_url` and `shortcuts.run`. Replacing the entire resident
 worker is avoided because the Pushcut automation already references the proven
 worker identity.
+
+
+## Live consolidation — 2026-09-26
+
+Empirically verified on the target phone:
+
+- Pushcut zero-touch wake;
+- request lease/completion in `RPC Worker Harness`;
+- explicit `shortcuts.control` routing;
+- controller `ping`;
+- live library `list`;
+- `run` with arbitrary input and exact returned output using `probe.echo`;
+- explicit `shortcuts.open_url` native artifact handoff;
+- stable v0.8 controller artifact endpoint;
+- server-side `private.shortcut_call(op, params, ttl)` facade;
+- server-side `private.shortcut_install_controller(ttl)` update facade;
+- stale RPC lease reaping.
+
+Observed implementation bugs in installed v0.5:
+
+- empty optional callback degraded to `Get Contents of URL` with no URL;
+- raw Create Shortcut serialization created `New Shortcut` instead of the requested name;
+- raw Rename Shortcut serialization degraded the name field into an interactive text prompt.
+
+v0.8 removes callback networking and uses typed Cherri/AppIntent serialization for create, rename, folder creation, and move. These mutation fixes are compiled/signed but still require device acceptance after v0.8 replacement.
+
+Delete remains outside the stable surface until its entity serialization and postcondition are verified. Do not use it merely because the older controller advertises it.
