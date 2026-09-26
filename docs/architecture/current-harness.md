@@ -1,6 +1,6 @@
 # Current harness architecture
 
-Snapshot: 2026-09-25. This is the canonical system overview for agents continuing the project.
+Snapshot: 2026-09-26. This is the canonical system overview for agents continuing the project.
 
 ## Mission
 
@@ -75,19 +75,21 @@ Shortcut-specific internal state now lives under `shortcuts`:
 - `callbacks`
 - `artifacts`
 
-The agent-facing service facade is currently:
+The canonical agent-facing service facade is now:
 
-`public.submit_shortcut_job(operation, params, ttl)`
+`private.shortcut_call(op, params, ttl)`
 
-which routes supported operations to:
+which routes to the verified native phone path:
 
-`iphone-main / shortcuts.control`
+`iphone-main → RPC Worker Harness → shortcuts.control`.
 
-Current v0.2 operations:
+Controller updates use:
 
-`register, capabilities, list, get, run, open, generate, edit, rename, move, delete, create_link`.
+`private.shortcut_install_controller(ttl)`
 
-The intended long-term direction is an `api` schema or equivalent narrow facade while keeping storage/credentials/helpers internal.
+which routes through the verified native `shortcuts.open_url` branch to the stable signed controller endpoint. `public.submit_shortcut_job` remains compatibility-only.
+
+Verified live controller primitives: `ping`, `list`, `run`; `get` routing is verified. Typed `create`, `rename`, `create_folder`, and `move_new_folder` are compiled in v0.8 and await device acceptance. Delete is held out of the stable surface until its entity serialization is verified.
 
 ## Workers
 
@@ -96,7 +98,9 @@ The intended long-term direction is an `api` schema or equivalent narrow facade 
 Phone-side execution authority.
 
 Verified capabilities from the existing harness include:
-- Pushcut/Supabase wake and leasing;
+- Pushcut/Supabase zero-touch wake and leasing;
+- explicit native `shortcuts.control` dispatch;
+- explicit native `shortcuts.open_url` handoff;
 - `harness.info`;
 - `phone.info`;
 - `shell.exec.simple`;
@@ -415,3 +419,20 @@ Current signed device candidates:
 
 See [execution boundaries](execution-boundaries.md) for the canonical placement
 policy.
+
+
+## Live Shortcut acceptance state — 2026-09-26
+
+The system has crossed the zero-touch control boundary:
+
+- `shortcuts.control` dispatch is device-verified;
+- live library listing is device-verified;
+- `Run Shortcut` with input/output is device-verified against `probe.echo`;
+- native `shortcuts.open_url` is device-verified;
+- stable controller serving is `shortcut-bootstrap`;
+- server-side agent facades are live;
+- stale RPC leases can be reaped with `public.rpc_reap_stale_leases()`.
+
+The installed controller remains v0.5 until Apple Add/Replace confirmation is completed. v0.8 is available at the stable endpoint with SHA-256 `5128c52f0633df61102d5aa6f805a97629bf02c9c5954b1f16340730556b411e`.
+
+Do not diagnose the red `pushcut.wake / Get Contents of URL` banner as a worker failure: the same worker completes normally when old v0.5 is given a callback. The banner is the known v0.5 empty-callback bug propagating through nested Run Shortcut. v0.8 removes callback networking.
