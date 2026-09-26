@@ -55,6 +55,8 @@ jobs:
           git add experiments/controller-build/latest.log experiments/controller-build/status.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "test: record Shortcut controller compiler diagnostic [skip ci]"
+          git fetch origin main
+          git rebase origin/main
           git push origin HEAD:main
 
       - name: Fail after publishing diagnostics
