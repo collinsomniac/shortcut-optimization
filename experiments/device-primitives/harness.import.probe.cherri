@@ -1,4 +1,4 @@
-#define name harness.import.probe
+#define name harness.import.probe.v2
 #define color blue
 #define glyph wrench
 #define inputs text
@@ -6,12 +6,15 @@
 #define version 27
 
 #include 'actions/web'
+#include 'actions/sharing'
 
 comment('Minimal device primitive probe. Input is a callback URL.')
 comment('When executed after import, POST success to the callback and output a deterministic marker.')
 
 @callback = "{ShortcutInput}"
-@result = "harness-import-probe-executed"
+@result = "harness-import-probe-v2-executed"
+
+setClipboard(@result, true)
 
 if @callback {
     jsonRequest(@callback, "POST", {
