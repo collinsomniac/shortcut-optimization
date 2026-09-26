@@ -141,11 +141,11 @@ if @op == "rename" || @op == "delete" || @op == "create_link" {
             @foundEntity = "false"
             const entities = getShortcuts()
 
-            for candidate in entities {
-                const candidateName = getShortcutDetail(@candidate, "Name")
-                @candidateNameText = "{candidateName}"
+            for entity in entities {
+                const entityName = getShortcutDetail(@entity, "Name")
+                @entityNameText = "{entityName}"
 
-                if @candidateNameText == "{@name}" {
+                if @entityNameText == "{@name}" {
                     @foundEntity = "true"
 
                     if @op == "rename" {
@@ -154,7 +154,7 @@ if @op == "rename" || @op == "delete" || @op == "create_link" {
                             @result = "error missing_new_name"
                         } else {
                             rawAction("com.apple.shortcuts.RenameShortcutAction", {
-                                "shortcut": "${@candidate}",
+                                "shortcut": "${@entity}",
                                 "name": "${@newName}",
                                 "OpenWhenRun": false
                             })
@@ -163,13 +163,13 @@ if @op == "rename" || @op == "delete" || @op == "create_link" {
                     }
 
                     if @op == "create_link" {
-                        const link = createShortcutLink(@candidate)
+                        const link = createShortcutLink(@entity)
                         @result = "{link}"
                     }
 
                     if @op == "delete" {
                         rawAction("com.apple.shortcuts.DeleteWorkflowAction", {
-                            "entities": "${@candidate}"
+                            "entities": "${@entity}"
                         })
                         @result = "ok deleted {@name}"
                     }
